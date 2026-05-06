@@ -88,8 +88,7 @@
   .empty-msg{padding:16px;text-align:center;color:#888;font-size:11px;font-style:italic}
 
   .premio-wrap{max-width:900px;margin:0 auto;padding:0 16px}
-  .premio-banner{display:none;background:#d4edda;border:1px solid #2d6a4f;border-radius:8px;padding:8px 10px;margin:8px 0;font-size:11px;color:#1a4731;font-weight:600;text-align:center}
-  .premio-banner.show{display:block}
+  .premio-banner{display:none;background:#d4edda;border:1px solid #2d6a4f;border-radius:8px;padding:8px 10px;margin:8px 0;font-size:11px;color:#1a1a1a;font-weight:600;text-align:center} /* Texto alterado para contraste escuro */
 
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center}
   .modal-overlay.open{display:flex}
@@ -341,6 +340,21 @@
 const KEY = 'bolao_v2';
 let modalPessoa = null;
 let selectedParticipante = null;
+
+// DEFINA A SUA SENHA ABAIXO:
+const SENHA_ACESSO = "6311";
+
+function verificarAcesso() {
+  const senhaDigitada = prompt("Digite a senha de acesso ao Bolão:");
+  if (senhaDigitada !== SENHA_ACESSO) {
+    alert("Senha incorreta. A página será bloqueada.");
+    document.body.innerHTML = "<h2 style='color: #c0392b; text-align: center; margin-top: 50px;'>Acesso Negado. Recarregue a página para tentar novamente.</h2>";
+    throw new Error("Acesso negado");
+  }
+}
+
+// Executa a verificação de senha assim que o script é iniciado
+verificarAcesso();
 
 let estado = {
   participantes: [],
