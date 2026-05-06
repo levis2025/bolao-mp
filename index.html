@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,7 +62,6 @@
   .row span{font-size:10px;text-align:center;color:#1a1a1a}
   .row span:first-child{text-align:left;font-weight:600;color:#1a4731; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100px;}
 
-  /* Específico para navegação na base geral */
   .base .row.selected {
     background: #c8e6c9 !important;
   }
@@ -113,7 +112,7 @@
   .export-section textarea{width:100%;min-height:120px;font-family:'Courier New',monospace;font-size:10px;padding:8px;border:1px solid #b2cfb2;border-radius:8px;resize:vertical;background:#f9fdf9;color:#1a1a1a}
   .export-btns{display:flex;gap:6px;margin-top:6px}
 
-  /* Dark Mode Styles */
+  /* Modo Escuro */
   body.dark-mode {
     background-color: #121212;
     color: #e0e0e0;
@@ -194,7 +193,6 @@
     color: #aaa;
   }
 
-  /* Responsive Adjustments for Mobile Screens */
   @media(max-width:480px) {
     .topbar { padding: 8px 10px; }
     .topbar h1 { font-size: 13px; }
@@ -206,12 +204,10 @@
     .main-wrap { padding: 0 8px; }
     .premio-wrap { padding: 0 8px; }
     
-    /* Configuração para o tamanho dos nomes e cabeçalhos */
     .col-header, .footer-row {
       font-size: 8px;
     }
     
-    /* AUMENTADO: Texto do participante mais legível em telas pequenas */
     .row span {
       font-size: 9px;
     }
@@ -346,39 +342,82 @@ const KEY = 'bolao_v2';
 let modalPessoa = null;
 let selectedParticipante = null;
 
-let estado = carregar();
+let estado = {
+  participantes: [],
+  cotas: {},
+  valorCota: 6,
+  premio: 0
+};
 
-function carregar() {
+async function carregarEstadoInicial() {
   try {
+    if (window.db) {
+      const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+      const docRef = doc(window.db, "boloes", "bolao_v2");
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        estado = docSnap.data();
+        const tag = document.getElementById('saved-tag');
+        tag.textContent = 'Dados carregados da nuvem';
+      } else {
+        throw new Error("Documento não encontrado");
+      }
+    } else {
+      throw new Error("DB não inicializado");
+    }
+  } catch(e) {
+    console.log("Usando localStorage", e);
     const s = localStorage.getItem(KEY);
-    if (s) return JSON.parse(s);
-  } catch(e) {}
-  return {
-    participantes: ["Breno","Clodoaldo","Denis","Dr. Claudio Rogério","Dr. Joel","Jorge Luiz","Larícia","Levi","Liis Gustavo","Marcos RH","Osmar","Paulo Ernica","Pedro","Reginaldo Faria","Renato Endo","Renato Ribeiro","Vanessa"],
-    cotas: {},
-    valorCota: 6,
-    premio: 0
-  };
+    if (s) {
+      estado = JSON.parse(s);
+      const tag = document.getElementById('saved-tag');
+      tag.textContent = 'Dados restaurados do dispositivo';
+    } else {
+      estado = {
+        participantes: ["Breno","Clodoaldo","Denis","Dr. Claudio Rogério","Dr. Joel","Jorge Luiz","Larícia","Levi","Liis Gustavo","Marcos RH","Osmar","Paulo Ernica","Pedro","Reginaldo Faria","Renato Endo","Renato Ribeiro","Vanessa"],
+        cotas: {},
+        valorCota: 6,
+        premio: 0
+      };
+    }
+  }
+  
+  document.getElementById('valor-cota').value = fmtBR(estado.valorCota || 6);
+  document.getElementById('valor-premio').value = fmtBR(estado.premio || 0);
+  recalcular();
 }
+
+window.carregarEstadoInicial = carregarEstadoInicial;
 
 function getNumberValue(id) {
   const val = document.getElementById(id).value;
   return parseFloat(val.toString().replace(/\./g, '').replace(',', '.')) || 0;
 }
 
-function salvar() {
+async function salvar() {
   estado.valorCota = getNumberValue('valor-cota') || 6;
   estado.premio = getNumberValue('valor-premio') || 0;
   
   try {
     localStorage.setItem(KEY, JSON.stringify(estado));
-    const t = document.getElementById('saved-tag');
-    const agora = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
-    t.textContent = 'Salvo às ' + agora;
-  } catch(e) {}
+    
+    if (window.db) {
+      const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+      await setDoc(doc(window.db, "boloes", "bolao_v2"), estado);
+      
+      const t = document.getElementById('saved-tag');
+      const agora = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+      t.textContent = 'Salvo na nuvem às ' + agora;
+    }
+  } catch(e) {
+    console.error("Erro ao salvar no Firestore", e);
+  }
 }
 
-function salvarERecalcular() { salvar(); recalcular(); }
+function salvarERecalcular() {
+  salvar();
+  recalcular();
+}
 
 function fmtBR(n) {
   return n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
@@ -659,13 +698,8 @@ document.getElementById('m-input').addEventListener('keydown', e => {
 document.getElementById('novo-nome').addEventListener('keydown', e => { if(e.key==='Enter') adicionarParticipante(); });
 document.getElementById('modal-overlay').addEventListener('click', e => { if(e.target===document.getElementById('modal-overlay')) fecharModal(); });
 
-// Inicialização dos campos formatados
-document.getElementById('valor-cota').value = fmtBR(estado.valorCota || 6);
-document.getElementById('valor-premio').value = fmtBR(estado.premio || 0);
-recalcular();
-
-const tag = document.getElementById('saved-tag');
-if (localStorage.getItem(KEY)) tag.textContent = 'Dados restaurados do dispositivo';
+// Inicialização automática do estado
+carregarEstadoInicial();
 
 if (localStorage.getItem('bolao_dark') === 'true') {
   document.body.classList.add('dark-mode');
@@ -675,6 +709,7 @@ if (localStorage.getItem('bolao_dark') === 'true') {
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCgiNwfaZQlS1IXcBA5Z52BzLZVde1Mg-c",
@@ -689,6 +724,11 @@ if (localStorage.getItem('bolao_dark') === 'true') {
   // Inicializa o Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+  window.db = getFirestore(app);
+
+  if (typeof window.carregarEstadoInicial === 'function') {
+    window.carregarEstadoInicial();
+  }
 </script>
 
 </body>
