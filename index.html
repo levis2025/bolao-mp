@@ -38,7 +38,7 @@
   .panel{background:#fff;display:flex;flex-direction:column}
   .panel+.panel{border-left:1px solid #d4e6d4}
 
-  .ph{background:#1a4731;color:#fff;padding:10px 12px;text-align:center;font-size:12px;font-weight:600;letter-spacing:.3px}
+  .ph{display:none;background:#1a4731;color:#fff;padding:10px 12px;text-align:center;font-size:12px;font-weight:600;letter-spacing:.3px}
 
   .cfg{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;background:#f9fdf9;border-bottom:1px solid #d4e6d4}
   .cfg-item{display:flex;flex-direction:column;gap:3px}
@@ -76,7 +76,7 @@
 
   .badge{background:#d4edda;color:#1a4731;border-radius:10px;padding:1px 6px;font-size:9px;font-weight:700;display:inline-block}
 
-  .footer-row{display:grid;background:#1a4731;color:#fff;padding:6px 6px;font-size:10px;font-weight:700}
+  .footer-row{display:grid;background:#1a4731;color:#fff;padding:6px 6px;font-size:12px;font-weight:700}
   .ativos .footer-row{grid-template-columns:1fr 44px 68px}
   .base .footer-row{grid-template-columns:1fr 44px 68px 20px}
   .footer-row span{text-align:center}
@@ -88,7 +88,7 @@
   .empty-msg{padding:16px;text-align:center;color:#888;font-size:11px;font-style:italic}
 
   .premio-wrap{max-width:900px;margin:0 auto;padding:0 16px}
-  .premio-banner{display:none;background:#d4edda;border:1px solid #2d6a4f;border-radius:8px;padding:8px 10px;margin:8px 0;font-size:11px;color:#1a1a1a;font-weight:600;text-align:center} /* Texto alterado para contraste escuro */
+  .premio-banner{display:none;background:#d4edda;border:1px solid #2d6a4f;border-radius:8px;padding:8px 10px;margin:8px 0;font-size:11px;color:#1a1a1a;font-weight:600;text-align:center}
 
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center}
   .modal-overlay.open{display:flex}
@@ -203,8 +203,12 @@
     .main-wrap { padding: 0 8px; }
     .premio-wrap { padding: 0 8px; }
     
-    .col-header, .footer-row {
+    .col-header {
       font-size: 8px;
+    }
+
+    .footer-row {
+      font-size: 13px; /* Aumentado para o mobile */
     }
     
     .row span {
@@ -288,8 +292,6 @@
 
   <div class="panel base">
     <div class="ph">Base Geral de Participantes</div>
-    <div style="padding:6px 8px;background:#f9fdf9;border-bottom:1px solid #d4e6d4;font-size:9.5px;color:#555;text-align:center">
-    </div>
     <div class="col-header"><span>Nome</span><span>Cotas</span><span>Valor Pago</span><span></span></div>
     <div class="list" id="lista-base" tabindex="0"></div>
     <div class="footer-row base">
