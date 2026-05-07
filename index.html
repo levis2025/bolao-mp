@@ -74,7 +74,8 @@
     opacity: 1;
   }
 
-  .badge{background:#d4edda;color:#1a4731;border-radius:10px;padding:1px 6px;font-size:9px;font-weight:700;display:inline-block}
+  /* Ajuste Geral do Badge */
+  .badge{background:#d4edda;color:#1a4731;border-radius:10px;padding:1px 6px;font-size:9px;font-weight:800;display:inline-block}
 
   .footer-row{display:grid;background:#1a4731;color:#fff;padding:6px 6px;font-size:12px;font-weight:700}
   .ativos .footer-row{grid-template-columns:1fr 44px 68px}
@@ -162,6 +163,25 @@
   body.dark-mode .row.even:hover {
     background-color: #243026;
   }
+  
+  body.dark-mode .base .row.selected {
+    background-color: #2c3e50 !important;
+  }
+  body.dark-mode .base .row.selected span {
+    color: #fff !important;
+  }
+  body.dark-mode .base .row.selected .delbtn {
+    color: #ff7675;
+  }
+
+  /* BADGE NO MODO ESCURO: Fundo verde escuro, Texto Branco e Negrito */
+  body.dark-mode .badge {
+    background-color: #2d6a4f;
+    color: #ffffff !important; 
+    border: 1px solid #69c288;
+    font-weight: 800;
+  }
+
   body.dark-mode .footer-row {
     background-color: #112d1b;
     color: #e0e0e0;
@@ -208,7 +228,7 @@
     }
 
     .footer-row {
-      font-size: 13px; /* Aumentado para o mobile */
+      font-size: 13px;
     }
     
     .row span {
@@ -343,7 +363,6 @@ const KEY = 'bolao_v2';
 let modalPessoa = null;
 let selectedParticipante = null;
 
-// DEFINA A SUA SENHA ABAIXO:
 const SENHA_ACESSO = "6311";
 
 function verificarAcesso() {
@@ -355,7 +374,6 @@ function verificarAcesso() {
   }
 }
 
-// Executa a verificação de senha assim que o script é iniciado
 verificarAcesso();
 
 let estado = {
@@ -457,12 +475,16 @@ function recalcular() {
       const c = estado.cotas[n] || 0;
       const r = document.createElement('div');
       r.className = 'row' + (i%2===0?' even':'');
-      r.innerHTML = `<span>${n}</span><span><span class="badge">${c}</span></span><span>${fmtBR(c*vPorCota)}</span>`;
+      
+      const exibicaoCotaA = c > 0 ? `<span class="badge">${c % 1 === 0 ? c : c.toFixed(2)}</span>` : '';
+      const exibicaoReceberA = (c > 0 && premio > 0) ? fmtBR(c * vPorCota) : '';
+
+      r.innerHTML = `<span>${n}</span><span>${exibicaoCotaA}</span><span>${exibicaoReceberA}</span>`;
       r.onclick = () => abrirModal(n, vCota);
       la.appendChild(r);
     });
   }
-  document.getElementById('fta-c').textContent = totalCotasA;
+  document.getElementById('fta-c').textContent = totalCotasA % 1 === 0 ? totalCotasA : totalCotasA.toFixed(2);
   document.getElementById('fta-v').textContent = fmtBR(premio);
 
   const lb = document.getElementById('lista-base');
@@ -472,7 +494,11 @@ function recalcular() {
     const r = document.createElement('div');
     r.className = 'row' + (i%2===0?' even':'');
     const nomeSafe = n.replace(/'/g,"\\'");
-    r.innerHTML = `<span>${n}</span><span>${c>0?`<span class="badge">${c}</span>`:'<span style="color:#999">-</span>'}</span><span>${c>0?fmtBR(c*vCota):'0,00'}</span><span><button class="delbtn" onclick="removerParticipante('${nomeSafe}',event)" title="Remover">x</button></span>`;
+    
+    const exibicaoCotaB = c > 0 ? `<span class="badge">${c % 1 === 0 ? c : c.toFixed(2)}</span>` : '';
+    const exibicaoPagoB = c > 0 ? fmtBR(c * vCota) : '';
+
+    r.innerHTML = `<span>${n}</span><span>${exibicaoCotaB}</span><span>${exibicaoPagoB}</span><span><button class="delbtn" onclick="removerParticipante('${nomeSafe}',event)" title="Remover">x</button></span>`;
     
     r.onclick = (e) => { 
       if(e.target.classList.contains('delbtn')) return; 
@@ -483,12 +509,12 @@ function recalcular() {
 
   const totalCotasB = todos.reduce((s,n) => s + (estado.cotas[n]||0), 0);
   document.getElementById('ftb-t').textContent = todos.length;
-  document.getElementById('ftb-c').textContent = totalCotasB;
+  document.getElementById('ftb-c').textContent = totalCotasB % 1 === 0 ? totalCotasB : totalCotasB.toFixed(2);
   document.getElementById('ftb-v').textContent = fmtBR(totalCotasB * vCota);
 
   const banner = document.getElementById('premio-banner');
   if (premio > 0 && totalCotasA > 0) {
-    banner.textContent = `Premio de R$ ${fmtBR(premio)} dividido em ${totalCotasA} cotas = R$ ${fmtBR(vPorCota)} por cota`;
+    banner.textContent = `Premio de R$ ${fmtBR(premio)} dividido em ${totalCotasA.toFixed(2)} cotas = R$ ${fmtBR(vPorCota)} por cota`;
     banner.classList.add('show');
   } else {
     banner.classList.remove('show');
@@ -550,7 +576,7 @@ function abrirModal(nome, vCota) {
   const valorAtual = cotasAtuais * vCota;
   
   document.getElementById('m-title').textContent = nome;
-  document.getElementById('m-hint').textContent = `Cota unitária: R$ ${fmtBR(vCota)} | Atual: ${cotasAtuais} cota(s) (Valor Pago: R$ ${fmtBR(valorAtual)})`;
+  document.getElementById('m-hint').textContent = `Cota unitária: R$ ${fmtBR(vCota)} | Atual: ${cotasAtuais % 1 === 0 ? cotasAtuais : cotasAtuais.toFixed(2)} cota(s) (Valor Pago: R$ ${fmtBR(valorAtual)})`;
   document.getElementById('m-input').value = valorAtual.toFixed(2);
   document.getElementById('modal-overlay').classList.add('open');
   setTimeout(() => document.getElementById('m-input').select(), 60);
@@ -566,7 +592,7 @@ function salvarModal() {
   const v = parseFloat(document.getElementById('m-input').value) || 0;
   const vCota = getNumberValue('valor-cota');
   
-  const cotas = vCota > 0 ? Math.round(v / vCota) : 0;
+  const cotas = vCota > 0 ? (v / vCota) : 0;
   
   estado.cotas[modalPessoa] = Math.max(0, cotas);
   fecharModal();
@@ -599,10 +625,11 @@ function exportarLista() {
   comCotas.forEach((n, i) => {
     const c = estado.cotas[n] || 0;
     const pago = fmtBR(c * vCota);
-    txt += `${String(i+1).padStart(2)}. ${n.padEnd(22).substring(0,22)}  ${c}x  R$ ${pago}\n`;
+    const cFormat = c % 1 === 0 ? c : c.toFixed(2);
+    txt += `${String(i+1).padStart(2)}. ${n.padEnd(22).substring(0,22)}  ${String(cFormat).padStart(4)}x  R$ ${pago}\n`;
   });
   txt += `${'-'.repeat(40)}\n`;
-  txt += `TOTAL: ${totalCotas} cotas  |  R$ ${fmtBR(totalPago)} arrecadado\n`;
+  txt += `TOTAL: ${totalCotas.toFixed(2)} cotas  |  R$ ${fmtBR(totalPago)} arrecadado\n`;
 
   document.getElementById('lista-text').value = txt;
   const sec = document.getElementById('lista-section');
@@ -625,7 +652,7 @@ function exportarResultado() {
   txt += `${'='.repeat(42)}\n`;
   txt += `Valor da cota:   R$ ${fmtBR(vCota)}\n`;
   txt += `Premio total:    R$ ${fmtBR(premio)}\n`;
-  txt += `Total de cotas:  ${totalCotas}\n`;
+  txt += `Total de cotas:  ${totalCotas.toFixed(2)}\n`;
   if (totalCotas > 0) txt += `Valor por cota:  R$ ${fmtBR(vPorCota)}\n`;
   txt += `${'='.repeat(42)}\n`;
   txt += `PARTICIPANTE            COTAS   A RECEBER\n`;
@@ -634,10 +661,11 @@ function exportarResultado() {
     const c = estado.cotas[n] || 0;
     const rec = fmtBR(c * vPorCota);
     const nPad = n.substring(0,22).padEnd(22);
-    txt += `${nPad}  ${String(c).padStart(5)}   R$ ${rec}\n`;
+    const cFormat = c % 1 === 0 ? c : c.toFixed(2);
+    txt += `${nPad}  ${String(cFormat).padStart(5)}   R$ ${rec}\n`;
   });
   txt += `${'-'.repeat(42)}\n`;
-  txt += `TOTAL                   ${String(totalCotas).padStart(5)}   R$ ${fmtBR(premio)}\n`;
+  txt += `TOTAL                   ${String(totalCotas.toFixed(2)).padStart(5)}   R$ ${fmtBR(premio)}\n`;
   if (premio === 0) txt += `\n(Premio ainda nao definido - informe o valor do premio)\n`;
 
   document.getElementById('export-text').value = txt;
@@ -714,8 +742,7 @@ document.getElementById('m-input').addEventListener('keydown', e => {
 document.getElementById('novo-nome').addEventListener('keydown', e => { if(e.key==='Enter') adicionarParticipante(); });
 document.getElementById('modal-overlay').addEventListener('click', e => { if(e.target===document.getElementById('modal-overlay')) fecharModal(); });
 
-// Inicialização automática do estado
-carregarEstadoInicial();
+carregarEstadoInitial();
 
 if (localStorage.getItem('bolao_dark') === 'true') {
   document.body.classList.add('dark-mode');
@@ -737,13 +764,12 @@ if (localStorage.getItem('bolao_dark') === 'true') {
     measurementId: "G-ETL11KYBJT"
   };
 
-  // Inicializa o Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   window.db = getFirestore(app);
 
   if (typeof window.carregarEstadoInicial === 'function') {
-    window.carregarEstadoInicial();
+    window.carregarEstadoInitial();
   }
 </script>
 
