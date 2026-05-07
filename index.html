@@ -9,156 +9,77 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;font-size:13px;background:#f0f4f0;color:#1a1a1a;min-height:100vh; transition: background 0.3s, color 0.3s;}
   h2{font-size:18px;font-weight:600;color:#1a4731;margin-bottom:4px}
-
   .topbar{background:#1a4731;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .topbar h1{font-size:16px;font-weight:600;letter-spacing:.5px}
   .saved-tag{font-size:11px;opacity:.8}
 
-  .container{max-width:900px;margin:0 auto;padding:0 16px}
-
-  .add-bar{background:#fff;border-bottom:1px solid #d4e6d4;padding:10px 16px}
+  /* Barra de Adicionar - Ajustada para remover fundo branco */
+  .add-bar{background:#e8f0e8;border-bottom:1px solid #d4e6d4;padding:10px 16px}
   .add-bar-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center}
-  .add-bar input[type=text]{padding:6px 10px;border:1px solid #b2cfb2;border-radius:8px;font-size:13px;background:#f9fdf9;width:100%}
-  .add-bar input[type=text]:focus{outline:none;border-color:#2d6a4f;box-shadow:0 0 0 2px rgba(45,106,79,.15)}
+  .add-bar input[type=text]{padding:6px 10px;border:1px solid #b2cfb2;border-radius:8px;font-size:13px;background:#f9fdf9;width:100%;color:#1a1a1a}
+  
   .add-bar-buttons{display:flex;gap:5px;flex-wrap:nowrap}
   .btn{padding:6px 12px;border-radius:8px;border:none;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s;white-space:nowrap}
-  .btn:active{transform:scale(.97)}
   .btn-add{background:#2d6a4f;color:#fff}
-  .btn-add:hover{background:#1a4731}
   .btn-export{background:#185FA5;color:#fff}
-  .btn-export:hover{background:#0C447C}
   .btn-limpar{background:#c0392b;color:#fff}
-  .btn-limpar:hover{background:#922b21}
   .btn-lista{background:#6d4c41;color:#fff}
-  .btn-lista:hover{background:#4e342e}
 
   .main-wrap{max-width:900px;margin:12px auto;padding:0 16px}
   .main{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.1)}
-
   .panel{background:#fff;display:flex;flex-direction:column}
   .panel+.panel{border-left:1px solid #d4e6d4}
 
-  .ph{display:none;background:#1a4731;color:#fff;padding:10px 12px;text-align:center;font-size:12px;font-weight:600;letter-spacing:.3px}
-
   .cfg{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;background:#f9fdf9;border-bottom:1px solid #d4e6d4}
   .cfg-item{display:flex;flex-direction:column;gap:3px}
-  .cfg-item label{font-size:9px;font-weight:600;color:#2d6a4f;text-transform:uppercase;letter-spacing:.2px}
-  .cfg-item input{padding:5px 6px;border:1px solid #b2cfb2;border-radius:6px;font-size:12px;font-weight:600;background:#fff;color:#1a1a1a}
-  .cfg-item input:focus{outline:none;border-color:#2d6a4f;box-shadow:0 0 0 2px rgba(45,106,79,.15)}
+  .cfg-item label{font-size:9px;font-weight:600;color:#2d6a4f;text-transform:uppercase}
+  .cfg-item input{padding:5px 6px;border:1px solid #b2cfb2;border-radius:6px;font-size:12px;font-weight:600;color:#1a1a1a;background:#fff}
 
-  .col-header{display:grid;background:#2d6a4f;color:#fff;font-size:9px;font-weight:700;padding:6px 6px;letter-spacing:0;text-transform:uppercase;gap:4px}
-  .ativos .col-header{grid-template-columns:1fr 44px 68px}
-  .base .col-header{grid-template-columns:1fr 44px 68px 20px}
-  .col-header span{text-align:center}
-  .col-header span:first-child{text-align:left}
+  .col-header{display:grid;background:#2d6a4f;color:#fff;font-size:9px;font-weight:700;padding:6px 6px;text-transform:uppercase}
+  .ativos .col-header, .ativos .row, .ativos .footer-row{grid-template-columns:1fr 44px 68px}
+  .base .col-header, .base .row, .base .footer-row{grid-template-columns:1fr 44px 68px 20px}
 
-  .list{overflow-y:auto;max-height:320px; outline: none;}
-  .row{display:grid;padding:5px 6px;border-bottom:1px solid #edf5ed;align-items:center;cursor:pointer;transition:background .12s}
-  .ativos .row{grid-template-columns:1fr 44px 68px}
-  .base .row{grid-template-columns:1fr 44px 68px 20px}
+  .list{overflow-y:auto;max-height:400px; outline: none;}
+  .row{display:grid;padding:6px 8px;border-bottom:1px solid #edf5ed;align-items:center;cursor:pointer}
   .row:hover{background:#e8f4e8}
   .row.even{background:#f5fbf5}
-  .row.even:hover{background:#e8f4e8}
-  .row span{font-size:10px;text-align:center;color:#1a1a1a}
-  .row span:first-child{text-align:left;font-weight:600;color:#1a4731; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100px;}
+  .row.selected { background: #c8e6c9 !important; }
 
-  .base .row.selected { background: #c8e6c9 !important; }
-  .base .delbtn { opacity: 0; transition: opacity 0.2s; }
-  .base .row:hover .delbtn, .base .row.selected .delbtn { opacity: 1; }
+  /* Nomes mais visíveis no modo claro */
+  .row span{font-size:11px;text-align:center;color:#1a1a1a}
+  .row span:first-child{text-align:left;font-weight:700;color:#1a4731; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 
-  .badge{background:#d4edda;color:#1a4731;border-radius:10px;padding:1px 6px;font-size:9px;font-weight:800;display:inline-block}
-
+  .badge{background:#d4edda;color:#1a4731;border-radius:10px;padding:1px 6px;font-size:9px;font-weight:800}
   .footer-row{display:grid;background:#1a4731;color:#fff;padding:6px 6px;font-size:12px;font-weight:700}
-  .ativos .footer-row{grid-template-columns:1fr 44px 68px}
-  .base .footer-row{grid-template-columns:1fr 44px 68px 20px}
-  .footer-row span{text-align:center}
-  .footer-row span:first-child{text-align:left}
-
-  .delbtn{background:none;border:none;color:#c0392b;cursor:pointer;font-size:12px;line-height:1;padding:0;font-weight:700}
-  .delbtn:hover{color:#922b21}
-
-  .empty-msg{padding:16px;text-align:center;color:#888;font-size:11px;font-style:italic}
-
-  .premio-wrap{max-width:900px;margin:0 auto;padding:0 16px}
-  .premio-banner{display:none;background:#d4edda;border:1px solid #2d6a4f;border-radius:8px;padding:8px 10px;margin:8px 0;font-size:11px;color:#1a1a1a;font-weight:600;text-align:center}
+  .delbtn{background:none;border:none;color:#c0392b;cursor:pointer;font-weight:700;opacity:0.3}
+  .row:hover .delbtn, .row.selected .delbtn { opacity: 1; }
 
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center}
   .modal-overlay.open{display:flex}
-  .modal{background:#fff;border-radius:12px;padding:16px;width:260px;box-shadow:0 8px 32px rgba(0,0,0,.2)}
-  .modal h3{font-size:14px;font-weight:700;color:#1a4731;margin-bottom:6px}
-  .modal-hint{font-size:10px;color:#666;margin-bottom:10px}
-  .modal input{width:100%;padding:7px 8px;border:1px solid #b2cfb2;border-radius:8px;font-size:14px;font-weight:700;margin-bottom:10px;color:#1a1a1a;background:#f9fdf9}
-  .modal input:focus{outline:none;border-color:#2d6a4f;box-shadow:0 0 0 2px rgba(45,106,79,.15)}
-  .modal-btns{display:flex;gap:6px;justify-content:flex-end}
-  .modal-btns button{padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none}
-  .btn-cancel{background:#f0f0f0;color:#333}
-  .btn-cancel:hover{background:#e0e0e0}
-  .btn-ok{background:#2d6a4f;color:#fff}
-  .btn-ok:hover{background:#1a4731}
+  .modal{background:#fff;border-radius:12px;padding:16px;width:260px}
+  .modal input{width:100%;padding:7px 8px;border:1px solid #b2cfb2;border-radius:8px;font-size:14px;margin-bottom:10px;color:#1a1a1a}
 
-  .export-section{display:none;padding:10px 16px;background:#fff;border-top:1px solid #d4e6d4}
-  .export-section .export-inner{max-width:900px;margin:0 auto;padding:0 16px}
+  .export-section{display:none;padding:10px 16px;background:#fff;border-top:1px solid #d4e6d4;max-width:900px;margin:0 auto}
   .export-section.show{display:block}
-  .export-section p{font-size:10px;color:#555;margin-bottom:4px;font-weight:600}
-  .export-section textarea{width:100%;min-height:120px;font-family:'Courier New',monospace;font-size:10px;padding:8px;border:1px solid #b2cfb2;border-radius:8px;resize:vertical;background:#f9fdf9;color:#1a1a1a}
-  .export-btns{display:flex;gap:6px;margin-top:6px}
+  textarea{width:100%;min-height:150px;font-family:monospace;font-size:11px;padding:10px;background:#f9fdf9;border:1px solid #b2cfb2;border-radius:8px;margin-bottom:10px;color:#1a1a1a}
 
-  /* Modo Escuro */
-  body.dark-mode { background-color: #121212; color: #e0e0e0; }
-  body.dark-mode .topbar { background-color: #0b2214; }
-  body.dark-mode .add-bar, body.dark-mode .main, body.dark-mode .panel, body.dark-mode .export-section { background-color: #1e1e1e; border-color: #333; }
-  body.dark-mode .panel+.panel { border-left: 1px solid #333; }
-  body.dark-mode .add-bar input[type=text], body.dark-mode .cfg-item input, body.dark-mode .export-section textarea, body.dark-mode .modal input { background-color: #2d2d2d; border-color: #555; color: #e0e0e0; }
-  body.dark-mode .cfg { background-color: #1a1a1a; border-color: #333; }
-  body.dark-mode .col-header { background-color: #1b4a34; color: #e0e0e0; }
-  body.dark-mode .row { border-bottom: 1px solid #333; background-color: #1e1e1e; }
-  body.dark-mode .row span { color: #e0e0e0; }
-  body.dark-mode .row span:first-child { color: #69c288; }
-  body.dark-mode .row:hover { background-color: #243026; }
-  body.dark-mode .row.even { background-color: #181818; }
-  body.dark-mode .row.even:hover { background-color: #243026; }
-  body.dark-mode .base .row.selected { background-color: #2c3e50 !important; }
-  body.dark-mode .base .row.selected span { color: #fff !important; }
-  body.dark-mode .base .row.selected .delbtn { color: #ff7675; }
-  body.dark-mode .badge { background-color: #2d6a4f; color: #ffffff !important; border: 1px solid #69c288; font-weight: 800; }
-  body.dark-mode .footer-row { background-color: #112d1b; color: #e0e0e0; }
-  body.dark-mode .premio-banner { background-color: #0c2b18; border-color: #1b4a34; color: #69c288; }
-  body.dark-mode .modal { background-color: #242424; border: 1px solid #444; }
-  body.dark-mode .modal h3 { color: #69c288; }
-  body.dark-mode .modal-hint { color: #aaa; }
-  body.dark-mode .btn-cancel { background-color: #333; color: #ddd; }
-  body.dark-mode .btn-cancel:hover { background-color: #444; }
-  body.dark-mode .export-section p { color: #aaa; }
-
-  @media(max-width:480px) {
-    .topbar { padding: 8px 10px; }
-    .topbar h1 { font-size: 13px; }
-    .add-bar { padding: 8px 10px; }
-    .add-bar-inner { grid-template-columns: 1fr; gap: 6px; }
-    .add-bar-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-    .btn { padding: 7px 6px; font-size: 11px; width: 100%; text-align: center; }
-    .main-wrap { padding: 0 8px; }
-    .premio-wrap { padding: 0 8px; }
-    .col-header { font-size: 8px; }
-    .footer-row { font-size: 13px; }
-    .row span { font-size: 9px; }
-    .row span:first-child { font-size: 11px; font-weight: bold; }
-    .col-header { padding: 4px 2px; }
-    .row { padding: 4px 2px; }
-    .footer-row { padding: 5px 2px; }
-    .ativos .col-header, .ativos .row, .ativos .footer-row { grid-template-columns: 1fr 40px 58px; }
-    .base .col-header, .base .row, .footer-row.base, .base .footer-row { grid-template-columns: 1fr 40px 58px 16px; }
-    .row span:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 115px; }
-    .cfg { grid-template-columns: 1fr; gap: 4px; padding: 6px 8px; }
-    .cfg-item label { font-size: 8px; }
-    .cfg-item input { font-size: 11px; padding: 3px 4px; }
-  }
-
-  @media(max-width:600px){
-    .main{grid-template-columns:1fr}
-    .panel+.panel{border-left:none;border-top:1px solid #d4e6d4}
-    .main-wrap{margin:8px auto}
-  }
+  /* Ajustes Modo Escuro */
+  body.dark-mode { background:#121212; color:#e0e0e0; }
+  body.dark-mode .topbar { background:#0b2214; }
+  body.dark-mode .add-bar { background:#1a1a1a; border-color:#333; }
+  body.dark-mode .panel, body.dark-mode .modal, body.dark-mode .export-section, body.dark-mode .cfg { background:#1e1e1e; border-color:#333; }
+  body.dark-mode .row { background:#1e1e1e; border-color:#333; }
+  body.dark-mode .row.even { background:#181818; }
+  
+  /* Nomes com brilho e cor de destaque no modo escuro */
+  body.dark-mode .row span { color: #d0d0d0; }
+  body.dark-mode .row span:first-child { color: #76d396; }
+  body.dark-mode .row:hover { background: #243026; }
+  body.dark-mode .row.selected { background:#2c3e50 !important; }
+  
+  body.dark-mode .cfg-item label { color: #76d396; }
+  body.dark-mode .cfg-item input, body.dark-mode .add-bar input[type=text], body.dark-mode .modal input, body.dark-mode textarea { background:#2d2d2d; border-color:#555; color:#fff; }
+  body.dark-mode .badge { background:#2d6a4f; color:#fff !important; border: 1px solid #76d396; }
 </style>
 </head>
 <body>
@@ -170,13 +91,13 @@
 
 <div class="add-bar">
   <div class="add-bar-inner">
-    <input type="text" id="novo-nome" placeholder="Nome do novo participante..." maxlength="30">
+    <input type="text" id="novo-nome" placeholder="Nome do participante..." maxlength="30">
     <div class="add-bar-buttons">
       <button class="btn btn-add" onclick="adicionarParticipante()">+ Adicionar</button>
-      <button class="btn btn-lista" onclick="exportarLista()">Exportar Lista</button>
-      <button class="btn btn-export" onclick="exportarResultado()">Exportar Prêmio</button>
+      <button class="btn btn-lista" onclick="exportarLista()">Lista</button>
+      <button class="btn btn-export" onclick="exportarResultado()">Prêmio</button>
       <button class="btn btn-limpar" onclick="limparCotas()">Limpar</button>
-      <button class="btn" style="background:#34495e; color:#fff;" onclick="toggleDarkMode()">Modo Escuro</button>
+      <button class="btn" style="background:#34495e; color:#fff;" onclick="toggleDarkMode()">🌙</button>
     </div>
   </div>
 </div>
@@ -184,68 +105,40 @@
 <div class="main-wrap">
 <div class="main">
   <div class="panel ativos">
-    <div class="ph">BASE DO BOLÃO</div>
     <div class="cfg">
-      <div class="cfg-item">
-        <label>Valor da Cota R$</label>
-        <input type="text" id="valor-cota" value="6,00" inputmode="decimal" oninput="salvarERecalcular()">
-      </div>
-      <div class="cfg-item">
-        <label>Valor do Prêmio R$</label>
-        <input type="text" id="valor-premio" value="0,00" inputmode="decimal" oninput="salvarERecalcular()">
-      </div>
+      <div class="cfg-item"><label>Cota R$</label><input type="text" id="valor-cota" value="6,00" oninput="salvarERecalcular()"></div>
+      <div class="cfg-item"><label>Prêmio R$</label><input type="text" id="valor-premio" value="0,00" oninput="salvarERecalcular()"></div>
     </div>
-    <div class="col-header"><span>Participante</span><span>Cotas</span><span>A Receber</span></div>
+    <div class="col-header"><span>Participante</span><span>Cotas</span><span>Receber</span></div>
     <div class="list" id="lista-ativos"></div>
-    <div class="footer-row ativos">
-      <span>Total</span><span id="fta-c">0</span><span id="fta-v">0,00</span>
-    </div>
+    <div class="footer-row ativos"><span>Total</span><span id="fta-c">0</span><span id="fta-v">0,00</span></div>
   </div>
 
   <div class="panel base">
-    <div class="ph">Base Geral de Participantes</div>
-    <div class="col-header"><span>Nome</span><span>Cotas</span><span>Valor Pago</span><span></span></div>
+    <div class="col-header"><span>Nome</span><span>Cotas</span><span>Pago</span><span></span></div>
     <div class="list" id="lista-base" tabindex="0"></div>
-    <div class="footer-row base">
-      <span id="ftb-t">0</span><span id="ftb-c">0</span><span id="ftb-v">0,00</span><span></span>
-    </div>
+    <div class="footer-row base"><span id="ftb-t">0</span><span id="ftb-c">0</span><span id="ftb-v">0,00</span><span></span></div>
   </div>
 </div>
-
-<div class="premio-wrap">
-<div class="premio-banner" id="premio-banner"></div>
 </div>
 
 <div class="export-section" id="export-section">
-  <div class="export-inner">
-  <p>Resultado para compartilhar:</p>
+  <p id="export-title" style="font-weight:bold; margin-bottom:5px; font-size:11px;"></p>
   <textarea id="export-text" readonly></textarea>
-  <div class="export-btns">
+  <div style="display:flex; gap:5px;">
     <button class="btn btn-add" onclick="copiarExport('export-text', this)">Copiar texto</button>
-    <button class="btn" style="background:#e0e0e0;color:#333" onclick="document.getElementById('export-section').classList.remove('show')">Fechar</button>
-  </div>
-  </div>
-</div>
-
-<div class="export-section" id="lista-section">
-  <div class="export-inner">
-  <p>Lista de participantes com cotas e valor pago:</p>
-  <textarea id="lista-text" readonly></textarea>
-  <div class="export-btns">
-    <button class="btn btn-add" onclick="copiarExport('lista-text', this)">Copiar texto</button>
-    <button class="btn" style="background:#e0e0e0;color:#333" onclick="document.getElementById('lista-section').classList.remove('show')">Fechar</button>
-  </div>
+    <button class="btn" style="background:#e0e0e0; color:#333;" onclick="document.getElementById('export-section').classList.remove('show')">Fechar</button>
   </div>
 </div>
 
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <h3 id="m-title"></h3>
-    <p class="modal-hint" id="m-hint"></p>
-    <input type="number" id="m-input" min="0" step="0.01" value="0.00" placeholder="Valor pago R$">
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="fecharModal()">Cancelar</button>
-      <button class="btn-ok" onclick="salvarModal()">Salvar</button>
+    <p id="m-hint" style="font-size:10px; margin-bottom:10px;"></p>
+    <input type="number" id="m-input" step="0.01">
+    <div style="display:flex; gap:5px; justify-content:flex-end;">
+      <button class="btn" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-add" onclick="salvarModal()">Salvar</button>
     </div>
   </div>
 </div>
@@ -257,192 +150,134 @@ let selectedParticipante = null;
 const SENHA_ACESSO = "6311";
 
 function verificarAcesso() {
-  const senhaDigitada = prompt("Digite a senha de acesso ao Bolão:");
-  if (senhaDigitada !== SENHA_ACESSO) {
-    alert("Senha incorreta. A página será bloqueada.");
-    document.body.innerHTML = "<h2 style='color: #c0392b; text-align: center; margin-top: 50px;'>Acesso Negado.</h2>";
-    throw new Error("Acesso negado");
-  }
+  const s = prompt("Senha:");
+  if (s !== SENHA_ACESSO) { document.body.innerHTML = "<h2 style='text-align:center; padding-top:50px; color:red;'>Acesso Negado</h2>"; throw new Error(); }
 }
-
 verificarAcesso();
 
-let estado = {
-  participantes: ["Adevita","Clodoaldo","Denis","Dr. Cláudio","Dr. Joel","Jorge","Larícia","Levi","Luis Gustavo","Marcos RH","Osmar","Paulo Ernica","Pedro","Reginaldo"],
-  cotas: {},
-  valorCota: 6,
-  premio: 0
-};
+let estado = { participantes: ["Adevita","Clodoaldo","Denis","Dr. Cláudio","Dr. Joel","Jorge","Larícia","Levi","Luis Gustavo","Marcos RH","Osmar","Paulo Ernica","Pedro","Reginaldo"], cotas: {}, valorCota: 6, premio: 0 };
 
-// FUNÇÃO CORRIGIDA E SINCRONIZADA
 async function carregarEstadoInicial() {
   const tag = document.getElementById('saved-tag');
-  tag.textContent = 'Sincronizando nuvem...';
-
+  tag.textContent = 'Sincronizando...';
   try {
     if (window.db) {
       const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
-      const docRef = doc(window.db, "boloes", "bolao_v2");
-      const docSnap = await getDoc(docRef);
+      const docSnap = await getDoc(doc(window.db, "boloes", "bolao_v2"));
       if (docSnap.exists()) {
         estado = docSnap.data();
-        tag.textContent = 'Nuvem atualizada às ' + new Date().toLocaleTimeString('pt-BR');
-        document.getElementById('valor-cota').value = fmtBR(estado.valorCota || 6);
-        document.getElementById('valor-premio').value = fmtBR(estado.premio || 0);
-        recalcular();
-        return;
+        tag.textContent = 'Nuvem OK: ' + new Date().toLocaleTimeString();
       }
     }
-  } catch(e) {
-    console.log("Erro nuvem, tentando local...", e);
-  }
-
-  const s = localStorage.getItem(KEY);
-  if (s) {
-    estado = JSON.parse(s);
-    tag.textContent = 'Dados do dispositivo (offline)';
-  }
-  
+  } catch(e) { tag.textContent = 'Modo Local'; }
   document.getElementById('valor-cota').value = fmtBR(estado.valorCota || 6);
   document.getElementById('valor-premio').value = fmtBR(estado.premio || 0);
   recalcular();
 }
 
-function getNumberValue(id) {
-  const val = document.getElementById(id).value;
-  return parseFloat(val.toString().replace(/\./g, '').replace(',', '.')) || 0;
+function fmtBR(n) { return n.toLocaleString('pt-BR', {minimumFractionDigits:2}); }
+function getNum(id) { return parseFloat(document.getElementById(id).value.replace(/\./g, '').replace(',', '.')) || 0; }
+
+function recalcular() {
+  const vCota = getNum('valor-cota');
+  const premio = getNum('valor-premio');
+  const todos = [...estado.participantes].sort((a,b) => a.localeCompare(b,'pt-BR'));
+  
+  const la = document.getElementById('lista-ativos');
+  la.innerHTML = '';
+  const ativos = todos.filter(n => (estado.cotas[n] || 0) > 0);
+  const totalC = ativos.reduce((s,n) => s + (estado.cotas[n] || 0), 0);
+  
+  ativos.forEach(n => {
+    const c = estado.cotas[n];
+    const rec = totalC > 0 ? (c * (premio / totalC)) : 0;
+    la.innerHTML += `<div class="row"><span>${n}</span><span><span class="badge">${c % 1 === 0 ? c : c.toFixed(2)}</span></span><span>${fmtBR(rec)}</span></div>`;
+  });
+
+  const lb = document.getElementById('lista-base');
+  lb.innerHTML = '';
+  todos.forEach(n => {
+    const c = estado.cotas[n] || 0;
+    const isSel = n === selectedParticipante ? ' selected' : '';
+    lb.innerHTML += `<div class="row${isSel}" onclick="abrirModal('${n.replace(/'/g,"\\'")}', ${vCota})">
+      <span>${n}</span><span>${c>0?'<span class="badge">'+(c % 1 === 0 ? c : c.toFixed(2))+'</span>':''}</span><span>${c>0?fmtBR(c*vCota):''}</span>
+      <span><button class="delbtn" onclick="remover('${n.replace(/'/g,"\\'")}',event)">x</button></span></div>`;
+  });
+  
+  document.getElementById('fta-c').textContent = totalC % 1 === 0 ? totalC : totalC.toFixed(2);
+  document.getElementById('fta-v').textContent = fmtBR(premio);
+  document.getElementById('ftb-t').textContent = todos.length;
+  document.getElementById('ftb-c').textContent = totalC % 1 === 0 ? totalC : totalC.toFixed(2);
+  document.getElementById('ftb-v').textContent = fmtBR(totalC * vCota);
+  if(selectedParticipante) document.querySelector('.row.selected')?.scrollIntoView({block:'nearest'});
 }
 
 async function salvar() {
-  estado.valorCota = getNumberValue('valor-cota') || 6;
-  estado.premio = getNumberValue('valor-premio') || 0;
-  
-  try {
-    localStorage.setItem(KEY, JSON.stringify(estado));
-    if (window.db) {
-      const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
-      await setDoc(doc(window.db, "boloes", "bolao_v2"), estado);
-      const agora = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
-      document.getElementById('saved-tag').textContent = 'Salvo na nuvem às ' + agora;
-    }
-  } catch(e) {
-    console.error("Erro salvar:", e);
+  estado.valorCota = getNum('valor-cota');
+  estado.premio = getNum('valor-premio');
+  localStorage.setItem(KEY, JSON.stringify(estado));
+  if (window.db) {
+    const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    await setDoc(doc(window.db, "boloes", "bolao_v2"), estado);
   }
 }
 
 function salvarERecalcular() { salvar(); recalcular(); }
 
-function fmtBR(n) { return n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
-
-function recalcular() {
-  const vCota = getNumberValue('valor-cota');
-  const premio = getNumberValue('valor-premio');
-  const todos = [...estado.participantes].sort((a,b) => a.localeCompare(b,'pt-BR'));
-  const ativos = todos.filter(n => (estado.cotas[n]||0) > 0);
-  const totalCotasA = ativos.reduce((s,n) => s + (estado.cotas[n]||0), 0);
-  const vPorCota = totalCotasA > 0 ? premio / totalCotasA : 0;
-
-  const la = document.getElementById('lista-ativos');
-  la.innerHTML = ativos.length === 0 ? '<div class="empty-msg">Nenhum participante ativo.</div>' : '';
-  ativos.forEach((n, i) => {
-    const c = estado.cotas[n] || 0;
-    const r = document.createElement('div');
-    r.className = 'row' + (i%2===0?' even':'');
-    r.innerHTML = `<span>${n}</span><span><span class="badge">${c % 1 === 0 ? c : c.toFixed(2)}</span></span><span>${premio > 0 ? fmtBR(c * vPorCota) : ''}</span>`;
-    la.appendChild(r);
-  });
-  document.getElementById('fta-c').textContent = totalCotasA % 1 === 0 ? totalCotasA : totalCotasA.toFixed(2);
-  document.getElementById('fta-v').textContent = fmtBR(premio);
-
-  const lb = document.getElementById('lista-base');
-  lb.innerHTML = '';
-  todos.forEach((n, i) => {
-    const c = estado.cotas[n] || 0;
-    const r = document.createElement('div');
-    r.className = 'row' + (i%2===0?' even':'');
-    const nomeSafe = n.replace(/'/g,"\\'");
-    r.innerHTML = `<span>${n}</span><span>${c > 0 ? '<span class="badge">'+(c%1===0?c:c.toFixed(2))+'</span>' : ''}</span><span>${c > 0 ? fmtBR(c * vCota) : ''}</span><span><button class="delbtn" onclick="removerParticipante('${nomeSafe}',event)">x</button></span>`;
-    r.onclick = (e) => { if(!e.target.classList.contains('delbtn')) abrirModal(n, vCota); };
-    lb.appendChild(r);
-  });
-
-  const totalCotasB = todos.reduce((s,n) => s + (estado.cotas[n]||0), 0);
-  document.getElementById('ftb-t').textContent = todos.length;
-  document.getElementById('ftb-c').textContent = totalCotasB % 1 === 0 ? totalCotasB : totalCotasB.toFixed(2);
-  document.getElementById('ftb-v').textContent = fmtBR(totalCotasB * vCota);
-
-  const banner = document.getElementById('premio-banner');
-  if (premio > 0 && totalCotasA > 0) {
-    banner.textContent = `Prêmio de R$ ${fmtBR(premio)} em ${totalCotasA.toFixed(2)} cotas = R$ ${fmtBR(vPorCota)} p/ cota`;
-    banner.style.display = 'block';
-  } else { banner.style.display = 'none'; }
-}
-
-function adicionarParticipante() {
-  const inp = document.getElementById('novo-nome');
-  const nome = inp.value.trim();
-  if (!nome || estado.participantes.includes(nome)) return;
-  estado.participantes.push(nome);
-  inp.value = '';
-  salvarERecalcular();
-}
-
-function removerParticipante(nome, e) {
-  e.stopPropagation();
-  if (!confirm(`Remover "${nome}"?`)) return;
-  estado.participantes = estado.participantes.filter(n => n !== nome);
-  delete estado.cotas[nome];
-  salvarERecalcular();
-}
-
 function abrirModal(nome, vCota) {
-  modalPessoa = nome;
+  modalPessoa = nome; selectedParticipante = nome;
   const c = estado.cotas[nome] || 0;
   document.getElementById('m-title').textContent = nome;
-  document.getElementById('m-hint').textContent = `Cota: R$ ${fmtBR(vCota)} | Atual: ${c%1===0?c:c.toFixed(2)} cota(s)`;
+  document.getElementById('m-hint').textContent = `Cota Unitária: R$ ${fmtBR(vCota)}`;
   document.getElementById('m-input').value = (c * vCota).toFixed(2);
   document.getElementById('modal-overlay').classList.add('open');
-  setTimeout(() => document.getElementById('m-input').select(), 100);
+  recalcular();
+  setTimeout(() => document.getElementById('m-input').select(), 50);
 }
 
-function fecharModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+function fecharModal() { 
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.getElementById('lista-base').focus();
+}
 
 function salvarModal() {
   const v = parseFloat(document.getElementById('m-input').value) || 0;
-  const vCota = getNumberValue('valor-cota');
-  estado.cotas[modalPessoa] = vCota > 0 ? (v / vCota) : 0;
-  fecharModal();
-  salvarERecalcular();
+  estado.cotas[modalPessoa] = v / getNum('valor-cota');
+  fecharModal(); salvarERecalcular();
+}
+
+function exportarLista() {
+  const vCota = getNum('valor-cota');
+  const ativos = estado.participantes.filter(n => (estado.cotas[n] || 0) > 0).sort();
+  const totalC = ativos.reduce((s,n) => s + estado.cotas[n], 0);
+  let txt = `BOLÃO - PAGAMENTOS\nCota: R$ ${fmtBR(vCota)}\n${'-'.repeat(20)}\n`;
+  ativos.forEach((n, i) => {
+    const c = estado.cotas[n];
+    txt += `${i+1}. ${n.padEnd(15)} ${c}x - R$ ${fmtBR(c*vCota)}\n`;
+  });
+  txt += `${'-'.repeat(20)}\nTOTAL: ${totalC} cotas | R$ ${fmtBR(totalC*vCota)}`;
+  document.getElementById('export-title').textContent = "Lista de Confirmados:";
+  document.getElementById('export-text').value = txt;
+  document.getElementById('export-section').classList.add('show');
+}
+
+function exportarResultado() {
+  const premio = getNum('valor-premio');
+  const ativos = estado.participantes.filter(n => (estado.cotas[n] || 0) > 0).sort();
+  const totalC = ativos.reduce((s,n) => s + estado.cotas[n], 0);
+  const vCotaP = totalC > 0 ? (premio / totalC) : 0;
+  let txt = `BOLÃO - PREMIAÇÃO\nPrêmio: R$ ${fmtBR(premio)}\nCota valendo: R$ ${fmtBR(vCotaP)}\n${'-'.repeat(20)}\n`;
+  ativos.forEach(n => {
+    const c = estado.cotas[n];
+    txt += `${n.padEnd(15)} R$ ${fmtBR(c * vCotaP)}\n`;
+  });
+  document.getElementById('export-title').textContent = "Resultado do Rateio:";
+  document.getElementById('export-text').value = txt;
+  document.getElementById('export-section').classList.add('show');
 }
 
 function limparCotas() {
   if (confirm('Zerar todas as cotas?')) { estado.cotas = {}; salvarERecalcular(); }
-}
-
-function exportarLista() {
-  const vCota = getNumberValue('valor-cota');
-  const comCotas = estado.participantes.filter(n => (estado.cotas[n]||0) > 0).sort();
-  let txt = `BOLÃO - LISTA (${new Date().toLocaleDateString()})\nCota: R$ ${fmtBR(vCota)}\n\n`;
-  comCotas.forEach((n, i) => {
-    const c = estado.cotas[n];
-    txt += `${i+1}. ${n.padEnd(20)} ${c%1===0?c:c.toFixed(2)}x  R$ ${fmtBR(c*vCota)}\n`;
-  });
-  document.getElementById('lista-text').value = txt;
-  document.getElementById('lista-section').classList.add('show');
-}
-
-function exportarResultado() {
-  const premio = getNumberValue('valor-premio');
-  const ativos = estado.participantes.filter(n => (estado.cotas[n]||0) > 0).sort();
-  const totalCotas = ativos.reduce((s,n) => s + (estado.cotas[n]||0), 0);
-  const vPorCota = totalCotas > 0 ? premio / totalCotas : 0;
-  let txt = `BOLÃO - RESULTADO\nPrêmio: R$ ${fmtBR(premio)}\nValor por Cota: R$ ${fmtBR(vPorCota)}\n\n`;
-  ativos.forEach(n => {
-    const c = estado.cotas[n];
-    txt += `${n.padEnd(20)} R$ ${fmtBR(c * vPorCota)}\n`;
-  });
-  document.getElementById('export-text').value = txt;
-  document.getElementById('export-section').classList.add('show');
 }
 
 function copiarExport(id, btn) {
@@ -453,34 +288,33 @@ function copiarExport(id, btn) {
   setTimeout(() => btn.textContent = 'Copiar texto', 2000);
 }
 
-function toggleDarkMode() {
-  document.body.classList.toggle('dark-mode');
-  localStorage.setItem('bolao_dark', document.body.classList.contains('dark-mode'));
+document.getElementById('lista-base').addEventListener('keydown', e => {
+  const todos = [...estado.participantes].sort((a,b) => a.localeCompare(b,'pt-BR'));
+  let idx = todos.indexOf(selectedParticipante);
+  if (e.key === 'ArrowDown') { e.preventDefault(); selectedParticipante = todos[Math.min(idx+1, todos.length-1)]; recalcular(); }
+  if (e.key === 'ArrowUp') { e.preventDefault(); selectedParticipante = todos[Math.max(idx-1, 0)]; recalcular(); }
+  if (e.key === 'Enter' && selectedParticipante) { e.preventDefault(); abrirModal(selectedParticipante, getNum('valor-cota')); }
+});
+
+document.getElementById('m-input').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); salvarModal(); } });
+
+function adicionarParticipante() {
+  const n = document.getElementById('novo-nome').value.trim();
+  if(n && !estado.participantes.includes(n)) { estado.participantes.push(n); document.getElementById('novo-nome').value=''; salvarERecalcular(); }
 }
+function remover(n, e) { e.stopPropagation(); if(confirm('Remover?')) { estado.participantes = estado.participantes.filter(x=>x!==n); delete estado.cotas[n]; salvarERecalcular(); } }
+function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('bolao_dark', document.body.classList.contains('dark-mode')); }
 
 if (localStorage.getItem('bolao_dark') === 'true') document.body.classList.add('dark-mode');
-document.getElementById('novo-nome').addEventListener('keydown', e => { if(e.key==='Enter') adicionarParticipante(); });
 </script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCgiNwfaZQlS1IXcBA5Z52BzLZVde1Mg-c",
-    authDomain: "boloa-mp.firebaseapp.com",
-    projectId: "boloa-mp",
-    storageBucket: "boloa-mp.firebasestorage.app",
-    messagingSenderId: "647562474908",
-    appId: "1:647562474908:web:658fd408da5d84eceac459"
-  };
-
+  const firebaseConfig = { apiKey: "AIzaSyCgiNwfaZQlS1IXcBA5Z52BzLZVde1Mg-c", authDomain: "boloa-mp.firebaseapp.com", projectId: "boloa-mp", storageBucket: "boloa-mp.firebasestorage.app", messagingSenderId: "647562474908", appId: "1:647562474908:web:658fd408da5d84eceac459" };
   const app = initializeApp(firebaseConfig);
   window.db = getFirestore(app);
-
-  // INICIALIZAÇÃO APÓS FIREBASE PRONTO
   carregarEstadoInicial();
 </script>
-
 </body>
 </html>
