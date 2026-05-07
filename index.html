@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,19 +62,10 @@
   .row span{font-size:10px;text-align:center;color:#1a1a1a}
   .row span:first-child{text-align:left;font-weight:600;color:#1a4731; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100px;}
 
-  .base .row.selected {
-    background: #c8e6c9 !important;
-  }
-  .base .delbtn {
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-  .base .row:hover .delbtn, 
-  .base .row.selected .delbtn {
-    opacity: 1;
-  }
+  .base .row.selected { background: #c8e6c9 !important; }
+  .base .delbtn { opacity: 0; transition: opacity 0.2s; }
+  .base .row:hover .delbtn, .base .row.selected .delbtn { opacity: 1; }
 
-  /* Ajuste Geral do Badge */
   .badge{background:#d4edda;color:#1a4731;border-radius:10px;padding:1px 6px;font-size:9px;font-weight:800;display:inline-block}
 
   .footer-row{display:grid;background:#1a4731;color:#fff;padding:6px 6px;font-size:12px;font-weight:700}
@@ -113,150 +104,51 @@
   .export-btns{display:flex;gap:6px;margin-top:6px}
 
   /* Modo Escuro */
-  body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-  }
+  body.dark-mode { background-color: #121212; color: #e0e0e0; }
   body.dark-mode .topbar { background-color: #0b2214; }
-  body.dark-mode .add-bar,
-  body.dark-mode .main,
-  body.dark-mode .panel,
-  body.dark-mode .export-section {
-    background-color: #1e1e1e;
-    border-color: #333;
-  }
-  body.dark-mode .panel+.panel {
-    border-left: 1px solid #333;
-  }
-  body.dark-mode .add-bar input[type=text],
-  body.dark-mode .cfg-item input,
-  body.dark-mode .export-section textarea,
-  body.dark-mode .modal input {
-    background-color: #2d2d2d;
-    border-color: #555;
-    color: #e0e0e0;
-  }
-  body.dark-mode .cfg {
-    background-color: #1a1a1a;
-    border-color: #333;
-  }
-  body.dark-mode .col-header {
-    background-color: #1b4a34;
-    color: #e0e0e0;
-  }
-  body.dark-mode .row {
-    border-bottom: 1px solid #333;
-    background-color: #1e1e1e;
-  }
-  body.dark-mode .row span {
-    color: #e0e0e0;
-  }
-  body.dark-mode .row span:first-child {
-    color: #69c288;
-  }
-  body.dark-mode .row:hover {
-    background-color: #243026;
-  }
-  body.dark-mode .row.even {
-    background-color: #181818;
-  }
-  body.dark-mode .row.even:hover {
-    background-color: #243026;
-  }
-  
-  body.dark-mode .base .row.selected {
-    background-color: #2c3e50 !important;
-  }
-  body.dark-mode .base .row.selected span {
-    color: #fff !important;
-  }
-  body.dark-mode .base .row.selected .delbtn {
-    color: #ff7675;
-  }
-
-  /* BADGE NO MODO ESCURO: Fundo verde escuro, Texto Branco e Negrito */
-  body.dark-mode .badge {
-    background-color: #2d6a4f;
-    color: #ffffff !important; 
-    border: 1px solid #69c288;
-    font-weight: 800;
-  }
-
-  body.dark-mode .footer-row {
-    background-color: #112d1b;
-    color: #e0e0e0;
-  }
-  body.dark-mode .premio-banner {
-    background-color: #0c2b18;
-    border-color: #1b4a34;
-    color: #69c288;
-  }
-  body.dark-mode .modal {
-    background-color: #242424;
-    border: 1px solid #444;
-  }
-  body.dark-mode .modal h3 {
-    color: #69c288;
-  }
-  body.dark-mode .modal-hint {
-    color: #aaa;
-  }
-  body.dark-mode .btn-cancel {
-    background-color: #333;
-    color: #ddd;
-  }
-  body.dark-mode .btn-cancel:hover {
-    background-color: #444;
-  }
-  body.dark-mode .export-section p {
-    color: #aaa;
-  }
+  body.dark-mode .add-bar, body.dark-mode .main, body.dark-mode .panel, body.dark-mode .export-section { background-color: #1e1e1e; border-color: #333; }
+  body.dark-mode .panel+.panel { border-left: 1px solid #333; }
+  body.dark-mode .add-bar input[type=text], body.dark-mode .cfg-item input, body.dark-mode .export-section textarea, body.dark-mode .modal input { background-color: #2d2d2d; border-color: #555; color: #e0e0e0; }
+  body.dark-mode .cfg { background-color: #1a1a1a; border-color: #333; }
+  body.dark-mode .col-header { background-color: #1b4a34; color: #e0e0e0; }
+  body.dark-mode .row { border-bottom: 1px solid #333; background-color: #1e1e1e; }
+  body.dark-mode .row span { color: #e0e0e0; }
+  body.dark-mode .row span:first-child { color: #69c288; }
+  body.dark-mode .row:hover { background-color: #243026; }
+  body.dark-mode .row.even { background-color: #181818; }
+  body.dark-mode .row.even:hover { background-color: #243026; }
+  body.dark-mode .base .row.selected { background-color: #2c3e50 !important; }
+  body.dark-mode .base .row.selected span { color: #fff !important; }
+  body.dark-mode .base .row.selected .delbtn { color: #ff7675; }
+  body.dark-mode .badge { background-color: #2d6a4f; color: #ffffff !important; border: 1px solid #69c288; font-weight: 800; }
+  body.dark-mode .footer-row { background-color: #112d1b; color: #e0e0e0; }
+  body.dark-mode .premio-banner { background-color: #0c2b18; border-color: #1b4a34; color: #69c288; }
+  body.dark-mode .modal { background-color: #242424; border: 1px solid #444; }
+  body.dark-mode .modal h3 { color: #69c288; }
+  body.dark-mode .modal-hint { color: #aaa; }
+  body.dark-mode .btn-cancel { background-color: #333; color: #ddd; }
+  body.dark-mode .btn-cancel:hover { background-color: #444; }
+  body.dark-mode .export-section p { color: #aaa; }
 
   @media(max-width:480px) {
     .topbar { padding: 8px 10px; }
     .topbar h1 { font-size: 13px; }
-    
     .add-bar { padding: 8px 10px; }
     .add-bar-inner { grid-template-columns: 1fr; gap: 6px; }
     .add-bar-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
     .btn { padding: 7px 6px; font-size: 11px; width: 100%; text-align: center; }
     .main-wrap { padding: 0 8px; }
     .premio-wrap { padding: 0 8px; }
-    
-    .col-header {
-      font-size: 8px;
-    }
-
-    .footer-row {
-      font-size: 13px;
-    }
-    
-    .row span {
-      font-size: 9px;
-    }
-    .row span:first-child {
-      font-size: 11px;
-      font-weight: bold;
-    }
-    
+    .col-header { font-size: 8px; }
+    .footer-row { font-size: 13px; }
+    .row span { font-size: 9px; }
+    .row span:first-child { font-size: 11px; font-weight: bold; }
     .col-header { padding: 4px 2px; }
     .row { padding: 4px 2px; }
     .footer-row { padding: 5px 2px; }
-    
-    .ativos .col-header, .ativos .row, .ativos .footer-row {
-      grid-template-columns: 1fr 40px 58px;
-    }
-    .base .col-header, .base .row, .footer-row.base, .base .footer-row {
-      grid-template-columns: 1fr 40px 58px 16px;
-    }
-    
-    .row span:first-child {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 115px;
-    }
-    
+    .ativos .col-header, .ativos .row, .ativos .footer-row { grid-template-columns: 1fr 40px 58px; }
+    .base .col-header, .base .row, .footer-row.base, .base .footer-row { grid-template-columns: 1fr 40px 58px 16px; }
+    .row span:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 115px; }
     .cfg { grid-template-columns: 1fr; gap: 4px; padding: 6px 8px; }
     .cfg-item label { font-size: 8px; }
     .cfg-item input { font-size: 11px; padding: 3px 4px; }
@@ -281,10 +173,10 @@
     <input type="text" id="novo-nome" placeholder="Nome do novo participante..." maxlength="30">
     <div class="add-bar-buttons">
       <button class="btn btn-add" onclick="adicionarParticipante()">+ Adicionar</button>
-      <button class="btn btn-lista" onclick="exportarLista()">&#1287101;Exportar Lista</button>
-      <button class="btn btn-export" onclick="exportarResultado()">&#127942;Exportar Prêmio</button>
-      <button class="btn btn-limpar" onclick="limparCotas()">&#10006; Limpar</button>
-      <button class="btn" style="background:#34495e; color:#fff;" onclick="toggleDarkMode()">&#127769; Modo Escuro</button>
+      <button class="btn btn-lista" onclick="exportarLista()">Exportar Lista</button>
+      <button class="btn btn-export" onclick="exportarResultado()">Exportar Prêmio</button>
+      <button class="btn btn-limpar" onclick="limparCotas()">Limpar</button>
+      <button class="btn" style="background:#34495e; color:#fff;" onclick="toggleDarkMode()">Modo Escuro</button>
     </div>
   </div>
 </div>
@@ -326,7 +218,7 @@
 
 <div class="export-section" id="export-section">
   <div class="export-inner">
-  <p>Resultado para compartilhar (copie e cole no WhatsApp):</p>
+  <p>Resultado para compartilhar:</p>
   <textarea id="export-text" readonly></textarea>
   <div class="export-btns">
     <button class="btn btn-add" onclick="copiarExport('export-text', this)">Copiar texto</button>
@@ -337,7 +229,7 @@
 
 <div class="export-section" id="lista-section">
   <div class="export-inner">
-  <p>Lista de participantes com cotas e valor pago (para divulgar no grupo):</p>
+  <p>Lista de participantes com cotas e valor pago:</p>
   <textarea id="lista-text" readonly></textarea>
   <div class="export-btns">
     <button class="btn btn-add" onclick="copiarExport('lista-text', this)">Copiar texto</button>
@@ -362,14 +254,13 @@
 const KEY = 'bolao_v2';
 let modalPessoa = null;
 let selectedParticipante = null;
-
 const SENHA_ACESSO = "6311";
 
 function verificarAcesso() {
   const senhaDigitada = prompt("Digite a senha de acesso ao Bolão:");
   if (senhaDigitada !== SENHA_ACESSO) {
     alert("Senha incorreta. A página será bloqueada.");
-    document.body.innerHTML = "<h2 style='color: #c0392b; text-align: center; margin-top: 50px;'>Acesso Negado. Recarregue a página para tentar novamente.</h2>";
+    document.body.innerHTML = "<h2 style='color: #c0392b; text-align: center; margin-top: 50px;'>Acesso Negado.</h2>";
     throw new Error("Acesso negado");
   }
 }
@@ -377,13 +268,17 @@ function verificarAcesso() {
 verificarAcesso();
 
 let estado = {
-  participantes: [],
+  participantes: ["Adevita","Clodoaldo","Denis","Dr. Cláudio","Dr. Joel","Jorge","Larícia","Levi","Luis Gustavo","Marcos RH","Osmar","Paulo Ernica","Pedro","Reginaldo"],
   cotas: {},
   valorCota: 6,
   premio: 0
 };
 
+// FUNÇÃO CORRIGIDA E SINCRONIZADA
 async function carregarEstadoInicial() {
+  const tag = document.getElementById('saved-tag');
+  tag.textContent = 'Sincronizando nuvem...';
+
   try {
     if (window.db) {
       const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
@@ -391,37 +286,27 @@ async function carregarEstadoInicial() {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         estado = docSnap.data();
-        const tag = document.getElementById('saved-tag');
-        tag.textContent = 'Dados carregados da nuvem';
-      } else {
-        throw new Error("Documento não encontrado");
+        tag.textContent = 'Nuvem atualizada às ' + new Date().toLocaleTimeString('pt-BR');
+        document.getElementById('valor-cota').value = fmtBR(estado.valorCota || 6);
+        document.getElementById('valor-premio').value = fmtBR(estado.premio || 0);
+        recalcular();
+        return;
       }
-    } else {
-      throw new Error("DB não inicializado");
     }
   } catch(e) {
-    console.log("Usando localStorage", e);
-    const s = localStorage.getItem(KEY);
-    if (s) {
-      estado = JSON.parse(s);
-      const tag = document.getElementById('saved-tag');
-      tag.textContent = 'Dados restaurados do dispositivo';
-    } else {
-      estado = {
-        participantes: ["Adevita","Breno","Clodoaldo","Denis","Dr. Claudio Rogério","Dr. Joel","Jorge Luiz","Larícia","Levi","Liis Gustavo","Marcos RH","Osmar","Paulo Ernica","Pedro","Reginaldo Faria","Renato Endo","Renato Ribeiro","Vanessa"],
-        cotas: {},
-        valorCota: 6,
-        premio: 0
-      };
-    }
+    console.log("Erro nuvem, tentando local...", e);
+  }
+
+  const s = localStorage.getItem(KEY);
+  if (s) {
+    estado = JSON.parse(s);
+    tag.textContent = 'Dados do dispositivo (offline)';
   }
   
   document.getElementById('valor-cota').value = fmtBR(estado.valorCota || 6);
   document.getElementById('valor-premio').value = fmtBR(estado.premio || 0);
   recalcular();
 }
-
-window.carregarEstadoInicial = carregarEstadoInicial;
 
 function getNumberValue(id) {
   const val = document.getElementById(id).value;
@@ -434,56 +319,38 @@ async function salvar() {
   
   try {
     localStorage.setItem(KEY, JSON.stringify(estado));
-    
     if (window.db) {
       const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
       await setDoc(doc(window.db, "boloes", "bolao_v2"), estado);
-      
-      const t = document.getElementById('saved-tag');
       const agora = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
-      t.textContent = 'Salvo na nuvem às ' + agora;
+      document.getElementById('saved-tag').textContent = 'Salvo na nuvem às ' + agora;
     }
   } catch(e) {
-    console.error("Erro ao salvar no Firestore", e);
+    console.error("Erro salvar:", e);
   }
 }
 
-function salvarERecalcular() {
-  salvar();
-  recalcular();
-}
+function salvarERecalcular() { salvar(); recalcular(); }
 
-function fmtBR(n) {
-  return n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
-}
+function fmtBR(n) { return n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
 
 function recalcular() {
   const vCota = getNumberValue('valor-cota');
   const premio = getNumberValue('valor-premio');
-  
   const todos = [...estado.participantes].sort((a,b) => a.localeCompare(b,'pt-BR'));
   const ativos = todos.filter(n => (estado.cotas[n]||0) > 0);
   const totalCotasA = ativos.reduce((s,n) => s + (estado.cotas[n]||0), 0);
   const vPorCota = totalCotasA > 0 ? premio / totalCotasA : 0;
 
   const la = document.getElementById('lista-ativos');
-  la.innerHTML = '';
-  if (ativos.length === 0) {
-    la.innerHTML = '<div class="empty-msg">Nenhum participante com cotas ainda.</div>';
-  } else {
-    ativos.forEach((n, i) => {
-      const c = estado.cotas[n] || 0;
-      const r = document.createElement('div');
-      r.className = 'row' + (i%2===0?' even':'');
-      
-      const exibicaoCotaA = c > 0 ? `<span class="badge">${c % 1 === 0 ? c : c.toFixed(2)}</span>` : '';
-      const exibicaoReceberA = (c > 0 && premio > 0) ? fmtBR(c * vPorCota) : '';
-
-      r.innerHTML = `<span>${n}</span><span>${exibicaoCotaA}</span><span>${exibicaoReceberA}</span>`;
-      r.onclick = () => abrirModal(n, vCota);
-      la.appendChild(r);
-    });
-  }
+  la.innerHTML = ativos.length === 0 ? '<div class="empty-msg">Nenhum participante ativo.</div>' : '';
+  ativos.forEach((n, i) => {
+    const c = estado.cotas[n] || 0;
+    const r = document.createElement('div');
+    r.className = 'row' + (i%2===0?' even':'');
+    r.innerHTML = `<span>${n}</span><span><span class="badge">${c % 1 === 0 ? c : c.toFixed(2)}</span></span><span>${premio > 0 ? fmtBR(c * vPorCota) : ''}</span>`;
+    la.appendChild(r);
+  });
   document.getElementById('fta-c').textContent = totalCotasA % 1 === 0 ? totalCotasA : totalCotasA.toFixed(2);
   document.getElementById('fta-v').textContent = fmtBR(premio);
 
@@ -494,16 +361,8 @@ function recalcular() {
     const r = document.createElement('div');
     r.className = 'row' + (i%2===0?' even':'');
     const nomeSafe = n.replace(/'/g,"\\'");
-    
-    const exibicaoCotaB = c > 0 ? `<span class="badge">${c % 1 === 0 ? c : c.toFixed(2)}</span>` : '';
-    const exibicaoPagoB = c > 0 ? fmtBR(c * vCota) : '';
-
-    r.innerHTML = `<span>${n}</span><span>${exibicaoCotaB}</span><span>${exibicaoPagoB}</span><span><button class="delbtn" onclick="removerParticipante('${nomeSafe}',event)" title="Remover">x</button></span>`;
-    
-    r.onclick = (e) => { 
-      if(e.target.classList.contains('delbtn')) return; 
-      abrirModal(n, vCota); 
-    };
+    r.innerHTML = `<span>${n}</span><span>${c > 0 ? '<span class="badge">'+(c%1===0?c:c.toFixed(2))+'</span>' : ''}</span><span>${c > 0 ? fmtBR(c * vCota) : ''}</span><span><button class="delbtn" onclick="removerParticipante('${nomeSafe}',event)">x</button></span>`;
+    r.onclick = (e) => { if(!e.target.classList.contains('delbtn')) abrirModal(n, vCota); };
     lb.appendChild(r);
   });
 
@@ -514,41 +373,15 @@ function recalcular() {
 
   const banner = document.getElementById('premio-banner');
   if (premio > 0 && totalCotasA > 0) {
-    banner.textContent = `Premio de R$ ${fmtBR(premio)} dividido em ${totalCotasA.toFixed(2)} cotas = R$ ${fmtBR(vPorCota)} por cota`;
-    banner.classList.add('show');
-  } else {
-    banner.classList.remove('show');
-  }
-
-  if (selectedParticipante) {
-    highlightRow();
-  }
-}
-
-function highlightRow() {
-  const lb = document.getElementById('lista-base');
-  const rows = lb.querySelectorAll('.row');
-  rows.forEach((r) => {
-    const nameSpan = r.querySelector('span:first-child');
-    if (nameSpan && nameSpan.textContent === selectedParticipante) {
-      r.classList.add('selected');
-      r.scrollIntoView({ block: 'nearest' });
-    } else {
-      r.classList.remove('selected');
-    }
-  });
+    banner.textContent = `Prêmio de R$ ${fmtBR(premio)} em ${totalCotasA.toFixed(2)} cotas = R$ ${fmtBR(vPorCota)} p/ cota`;
+    banner.style.display = 'block';
+  } else { banner.style.display = 'none'; }
 }
 
 function adicionarParticipante() {
   const inp = document.getElementById('novo-nome');
   const nome = inp.value.trim();
-  if (!nome) return;
-  if (estado.participantes.map(n=>n.toLowerCase()).includes(nome.toLowerCase())) {
-    inp.style.borderColor = '#c0392b';
-    inp.title = 'Participante já existe';
-    setTimeout(() => { inp.style.borderColor = ''; inp.title = ''; }, 2000);
-    return;
-  }
+  if (!nome || estado.participantes.includes(nome)) return;
   estado.participantes.push(nome);
   inp.value = '';
   salvarERecalcular();
@@ -556,202 +389,81 @@ function adicionarParticipante() {
 
 function removerParticipante(nome, e) {
   e.stopPropagation();
-  if (!confirm(`Remover "${nome}" da base?`)) return;
+  if (!confirm(`Remover "${nome}"?`)) return;
   estado.participantes = estado.participantes.filter(n => n !== nome);
   delete estado.cotas[nome];
-  
-  if (selectedParticipante === nome) {
-    selectedParticipante = null;
-  }
-  
   salvarERecalcular();
 }
 
 function abrirModal(nome, vCota) {
   modalPessoa = nome;
-  selectedParticipante = nome;
-  highlightRow();
-  
-  const cotasAtuais = estado.cotas[nome] || 0;
-  const valorAtual = cotasAtuais * vCota;
-  
+  const c = estado.cotas[nome] || 0;
   document.getElementById('m-title').textContent = nome;
-  document.getElementById('m-hint').textContent = `Cota unitária: R$ ${fmtBR(vCota)} | Atual: ${cotasAtuais % 1 === 0 ? cotasAtuais : cotasAtuais.toFixed(2)} cota(s) (Valor Pago: R$ ${fmtBR(valorAtual)})`;
-  document.getElementById('m-input').value = valorAtual.toFixed(2);
+  document.getElementById('m-hint').textContent = `Cota: R$ ${fmtBR(vCota)} | Atual: ${c%1===0?c:c.toFixed(2)} cota(s)`;
+  document.getElementById('m-input').value = (c * vCota).toFixed(2);
   document.getElementById('modal-overlay').classList.add('open');
-  setTimeout(() => document.getElementById('m-input').select(), 60);
+  setTimeout(() => document.getElementById('m-input').select(), 100);
 }
 
-function fecharModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-  modalPessoa = null;
-}
+function fecharModal() { document.getElementById('modal-overlay').classList.remove('open'); }
 
 function salvarModal() {
-  if (!modalPessoa) return;
   const v = parseFloat(document.getElementById('m-input').value) || 0;
   const vCota = getNumberValue('valor-cota');
-  
-  const cotas = vCota > 0 ? (v / vCota) : 0;
-  
-  estado.cotas[modalPessoa] = Math.max(0, cotas);
+  estado.cotas[modalPessoa] = vCota > 0 ? (v / vCota) : 0;
   fecharModal();
   salvarERecalcular();
-  
-  const lb = document.getElementById('lista-base');
-  if (lb) lb.focus();
 }
 
 function limparCotas() {
-  if (!confirm('Zerar todas as cotas de todos os participantes? Os nomes serão mantidos.')) return;
-  estado.cotas = {};
-  salvarERecalcular();
+  if (confirm('Zerar todas as cotas?')) { estado.cotas = {}; salvarERecalcular(); }
 }
 
 function exportarLista() {
   const vCota = getNumberValue('valor-cota');
-  const todos = [...estado.participantes].sort((a,b) => a.localeCompare(b,'pt-BR'));
-  const comCotas = todos.filter(n => (estado.cotas[n]||0) > 0);
-  const totalCotas = comCotas.reduce((s,n) => s + (estado.cotas[n]||0), 0);
-  const totalPago = totalCotas * vCota;
-  const agora = new Date().toLocaleString('pt-BR');
-
-  let txt = `BOLAO - LISTA DE PARTICIPANTES\n`;
-  txt += `Data: ${agora}\n`;
-  txt += `Valor da cota: R$ ${fmtBR(vCota)}\n`;
-  txt += `${'='.repeat(40)}\n\n`;
-  txt += `CONFIRMADOS (${comCotas.length} participantes):\n`;
-  txt += `${'-'.repeat(40)}\n`;
+  const comCotas = estado.participantes.filter(n => (estado.cotas[n]||0) > 0).sort();
+  let txt = `BOLÃO - LISTA (${new Date().toLocaleDateString()})\nCota: R$ ${fmtBR(vCota)}\n\n`;
   comCotas.forEach((n, i) => {
-    const c = estado.cotas[n] || 0;
-    const pago = fmtBR(c * vCota);
-    const cFormat = c % 1 === 0 ? c : c.toFixed(2);
-    txt += `${String(i+1).padStart(2)}. ${n.padEnd(22).substring(0,22)}  ${String(cFormat).padStart(4)}x  R$ ${pago}\n`;
+    const c = estado.cotas[n];
+    txt += `${i+1}. ${n.padEnd(20)} ${c%1===0?c:c.toFixed(2)}x  R$ ${fmtBR(c*vCota)}\n`;
   });
-  txt += `${'-'.repeat(40)}\n`;
-  txt += `TOTAL: ${totalCotas.toFixed(2)} cotas  |  R$ ${fmtBR(totalPago)} arrecadado\n`;
-
   document.getElementById('lista-text').value = txt;
-  const sec = document.getElementById('lista-section');
-  sec.classList.add('show');
-  document.getElementById('export-section').classList.remove('show');
-  sec.scrollIntoView({behavior:'smooth'});
+  document.getElementById('lista-section').classList.add('show');
 }
 
 function exportarResultado() {
-  const vCota = getNumberValue('valor-cota');
   const premio = getNumberValue('valor-premio');
-  const todos = [...estado.participantes].sort((a,b) => a.localeCompare(b,'pt-BR'));
-  const ativos = todos.filter(n => (estado.cotas[n]||0) > 0);
+  const ativos = estado.participantes.filter(n => (estado.cotas[n]||0) > 0).sort();
   const totalCotas = ativos.reduce((s,n) => s + (estado.cotas[n]||0), 0);
   const vPorCota = totalCotas > 0 ? premio / totalCotas : 0;
-  const agora = new Date().toLocaleString('pt-BR');
-
-  let txt = `BOLAO - RESULTADO\n`;
-  txt += `Data: ${agora}\n`;
-  txt += `${'='.repeat(42)}\n`;
-  txt += `Valor da cota:   R$ ${fmtBR(vCota)}\n`;
-  txt += `Premio total:    R$ ${fmtBR(premio)}\n`;
-  txt += `Total de cotas:  ${totalCotas.toFixed(2)}\n`;
-  if (totalCotas > 0) txt += `Valor por cota:  R$ ${fmtBR(vPorCota)}\n`;
-  txt += `${'='.repeat(42)}\n`;
-  txt += `PARTICIPANTE            COTAS   A RECEBER\n`;
-  txt += `${'-'.repeat(42)}\n`;
+  let txt = `BOLÃO - RESULTADO\nPrêmio: R$ ${fmtBR(premio)}\nValor por Cota: R$ ${fmtBR(vPorCota)}\n\n`;
   ativos.forEach(n => {
-    const c = estado.cotas[n] || 0;
-    const rec = fmtBR(c * vPorCota);
-    const nPad = n.substring(0,22).padEnd(22);
-    const cFormat = c % 1 === 0 ? c : c.toFixed(2);
-    txt += `${nPad}  ${String(cFormat).padStart(5)}   R$ ${rec}\n`;
+    const c = estado.cotas[n];
+    txt += `${n.padEnd(20)} R$ ${fmtBR(c * vPorCota)}\n`;
   });
-  txt += `${'-'.repeat(42)}\n`;
-  txt += `TOTAL                   ${String(totalCotas.toFixed(2)).padStart(5)}   R$ ${fmtBR(premio)}\n`;
-  if (premio === 0) txt += `\n(Premio ainda nao definido - informe o valor do premio)\n`;
-
   document.getElementById('export-text').value = txt;
-  const sec = document.getElementById('export-section');
-  sec.classList.add('show');
-  document.getElementById('lista-section').classList.remove('show');
-  sec.scrollIntoView({behavior:'smooth'});
+  document.getElementById('export-section').classList.add('show');
 }
 
 function copiarExport(id, btn) {
   const ta = document.getElementById(id);
   ta.select();
-  ta.setSelectionRange(0, 99999);
-  try {
-    document.execCommand('copy');
-    const orig = btn.textContent;
-    btn.textContent = 'Copiado!';
-    setTimeout(() => btn.textContent = orig, 2000);
-  } catch(e) {
-    alert('Copie manualmente o texto acima.');
-  }
+  document.execCommand('copy');
+  btn.textContent = 'Copiado!';
+  setTimeout(() => btn.textContent = 'Copiar texto', 2000);
 }
 
 function toggleDarkMode() {
-  const body = document.body;
-  body.classList.toggle('dark-mode');
-  if (body.classList.contains('dark-mode')) {
-    localStorage.setItem('bolao_dark', 'true');
-  } else {
-    localStorage.removeItem('bolao_dark');
-  }
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('bolao_dark', document.body.classList.contains('dark-mode'));
 }
 
-const lb = document.getElementById('lista-base');
-lb.addEventListener('keydown', (e) => {
-  if (document.getElementById('modal-overlay').classList.contains('open')) return;
-  if (document.activeElement.tagName === 'INPUT') return;
-
-  const todos = [...estado.participantes].sort((a,b) => a.localeCompare(b,'pt-BR'));
-  if (todos.length === 0) return;
-
-  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-    e.preventDefault();
-    let currentIdx = todos.indexOf(selectedParticipante);
-    
-    if (currentIdx === -1) {
-      currentIdx = 0;
-    } else {
-      if (e.key === 'ArrowDown') {
-        currentIdx = Math.min(currentIdx + 1, todos.length - 1);
-      } else {
-        currentIdx = Math.max(currentIdx - 1, 0);
-      }
-    }
-    
-    selectedParticipante = todos[currentIdx];
-    highlightRow();
-  } else if (e.key === 'Enter') {
-    e.preventDefault();
-    if (selectedParticipante) {
-      const vCota = getNumberValue('valor-cota');
-      abrirModal(selectedParticipante, vCota);
-    }
-  }
-});
-
-document.getElementById('m-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
-    e.stopPropagation();
-    salvarModal();
-  }
-});
-
+if (localStorage.getItem('bolao_dark') === 'true') document.body.classList.add('dark-mode');
 document.getElementById('novo-nome').addEventListener('keydown', e => { if(e.key==='Enter') adicionarParticipante(); });
-document.getElementById('modal-overlay').addEventListener('click', e => { if(e.target===document.getElementById('modal-overlay')) fecharModal(); });
-
-carregarEstadoInitial();
-
-if (localStorage.getItem('bolao_dark') === 'true') {
-  document.body.classList.add('dark-mode');
-}
 </script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
   import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -760,17 +472,14 @@ if (localStorage.getItem('bolao_dark') === 'true') {
     projectId: "boloa-mp",
     storageBucket: "boloa-mp.firebasestorage.app",
     messagingSenderId: "647562474908",
-    appId: "1:647562474908:web:658fd408da5d84eceac459",
-    measurementId: "G-ETL11KYBJT"
+    appId: "1:647562474908:web:658fd408da5d84eceac459"
   };
 
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
   window.db = getFirestore(app);
 
-  if (typeof window.carregarEstadoInicial === 'function') {
-    window.carregarEstadoInitial();
-  }
+  // INICIALIZAÇÃO APÓS FIREBASE PRONTO
+  carregarEstadoInicial();
 </script>
 
 </body>
