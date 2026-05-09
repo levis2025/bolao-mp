@@ -43,7 +43,8 @@
   .cfg-item input{padding:5px 6px;border:1px solid #b2cfb2;border-radius:6px;font-size:12px;font-weight:600;color:#1a1a1a;background:#fff}
 
   .col-header{display:grid;background:#2d6a4f;color:#fff;font-size:9px;font-weight:700;padding:6px 6px;text-transform:uppercase}
-  .ativos .col-header, .ativos .row, .ativos .footer-row{grid-template-columns:1fr 44px 68px}
+  .ativos .col-header, .ativos .row{grid-template-columns:1fr 44px 68px}
+  .ativos .footer-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .base .col-header, .base .row, .base .footer-row{grid-template-columns:1fr 44px 68px 20px}
   
   @media (max-width: 480px) {
@@ -63,7 +64,8 @@
     .row span:first-child{font-size:10px}
     .badge{font-size:8px;padding:1px 4px}
     .footer-row{padding:5px 5px;font-size:9px}
-    .ativos .col-header, .ativos .row, .ativos .footer-row{grid-template-columns:1fr 38px 52px}
+    .footer-row.ativos{padding:6px 8px;font-size:9px}
+    .ativos .col-header, .ativos .row{grid-template-columns:1fr 38px 52px}
     .base .col-header, .base .row, .base .footer-row{grid-template-columns:1fr 38px 52px 16px}
     .list{max-height:250px}
     .add-bar-buttons{gap:3px}
@@ -89,11 +91,7 @@
     .row span:first-child{font-size:9px}
     .badge{font-size:7px;padding:1px 3px}
     .footer-row{padding:4px 4px;font-size:8px}
-    .ativos .col-header, .ativos .row, .ativos .footer-row{grid-template-columns:1fr 32px 45px}
-    .base .col-header, .base .row, .base .footer-row{grid-template-columns:1fr 32px 45px 14px}
-    .list{max-height:200px}
-    .add-bar-buttons{gap:2px}
-    .cnt-partic{padding:8px 8px;font-size:9px}
+    .ativos .col-header, .ativos .row{grid-template-columns:1fr 32px 45px}
   }
 
   .list{overflow-y:auto;max-height:350px;outline: none;}
@@ -107,6 +105,8 @@
 
   .badge{background:#d4edda;color:#1a1a1a;border-radius:10px;padding:1px 6px;font-size:9px;font-weight:700;display:inline-block}
   .footer-row{display:grid;background:#1a4731;color:#fff;padding:6px 6px;font-size:10px;font-weight:700}
+  .footer-row.ativos{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px}
+  .footer-row.ativos span { display: inline-block; }
   
   .footer-row.ativos span:first-child { text-align: right; padding-right: 10px; }
 
@@ -123,12 +123,8 @@
   .export-section.show{display:block}
   textarea{width:100%;min-height:150px;font-family:'Courier New',monospace;font-size:10px;padding:10px;background:#f9fdf9;border:1px solid #b2cfb2;border-radius:8px;margin-bottom:10px;color:#1a1a1a}
 
-  /* Estilo do Contador de Participantes */
-  .cnt-partic { padding: 10px 12px; font-size: 10px; font-weight: bold; color: #1a1a1a; }
-
   /* Ajustes Modo Escuro */
   body.dark-mode { background:#121212; color:#e0e0e0; }
-  body.dark-mode .cnt-partic { color: #ffffff; }
   body.dark-mode .topbar { background:#0b2214; }
   body.dark-mode .add-bar, body.dark-mode .panel, body.dark-mode .modal, body.dark-mode .export-section, body.dark-mode .cfg { background:#1e1e1e; border-color:#333; }
   body.dark-mode .row { background:#1e1e1e; border-color:#333; }
@@ -174,7 +170,7 @@
         </div>
         <div class="col-header"><span>Participante</span><span>Cotas</span><span>Receber</span></div>
         <div class="list" id="lista-ativos"></div>
-        <div class="footer-row ativos"><span>Total</span><span id="fta-c">0</span><span id="fta-v">0,00</span></div>
+        <div class="footer-row ativos"><span id="fta-p">0</span> Participante(s) | Total cotas <span id="fta-c">0</span> | Valor R$ <span id="fta-v">0,00</span></div>
       </div>
 
       <div class="panel base">
@@ -280,10 +276,7 @@
       </div>`;
     }).join('') || '<div style="padding:16px;text-align:center;color:#888;font-style:italic">Nenhum ativo</div>';
 
-    // Adiciona contagem de participantes com a classe cnt-partic para controle de cor via CSS
-    if (ativos.length > 0) {
-      la.innerHTML += `<div class="cnt-partic">Participantes: ${ativos.length}</div>`;
-    }
+
 
     const lb = document.getElementById('lista-base');
     lb.innerHTML = todos.map((n, i) => {
@@ -298,6 +291,7 @@
       </div>`;
     }).join('');
 
+    document.getElementById('fta-p').textContent = ativos.length;
     document.getElementById('fta-c').textContent = totalC % 1 === 0 ? totalC : totalC.toFixed(2);
     document.getElementById('fta-v').textContent = fmtBR(premio);
     document.getElementById('ftb-t').textContent = todos.length;
