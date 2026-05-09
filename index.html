@@ -163,7 +163,7 @@
   <div class="main-wrap">
     <div class="main">
       <div class="panel ativos">
-        <div class="ph">Participantes Ativos</div>
+        <div class="ph">Lista dos participante do (Bolão)</div>
         <div class="cfg">
           <div class="cfg-item"><label>Valor Cota R$</label><input type="text" id="valor-cota" value="6,00" onkeydown="if(event.key==='Enter'){window.estado.valorCota = parseFloat(document.getElementById('valor-cota').value.replace(/\./g, '').replace(',', '.')) || 0; document.getElementById('valor-cota').value = fmtBR(window.estado.valorCota); fSalvar(); recalcular();}"></div>
           <div class="cfg-item"><label>Prêmio R$</label><input type="text" id="valor-premio" value="0,00" onkeydown="if(event.key==='Enter'){window.estado.premio = parseFloat(document.getElementById('valor-premio').value.replace(/\./g, '').replace(',', '.')) || 0; document.getElementById('valor-premio').value = fmtBR(window.estado.premio); fSalvar(); recalcular();}"></div>
@@ -174,7 +174,7 @@
       </div>
 
       <div class="panel base">
-        <div class="ph">Base Geral</div>
+        <div class="ph">Lista fixa dos participantes</div>
         <div class="col-header"><span>Nome</span><span>Cotas</span><span>Pago</span><span></span></div>
         <div class="list" id="lista-base" tabindex="0"></div>
         <div class="footer-row base"><span id="ftb-t">0</span><span id="ftb-c">0</span><span id="ftb-v">0,00</span><span></span></div>
