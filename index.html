@@ -123,6 +123,51 @@
   .export-section.show{display:block}
   textarea{width:100%;min-height:150px;font-family:'Courier New',monospace;font-size:10px;padding:10px;background:#f9fdf9;border:1px solid #b2cfb2;border-radius:8px;margin-bottom:10px;color:#1a1a1a}
 
+  /* Tela de Login */
+  #login-overlay {
+    display:flex; position:fixed; inset:0; z-index:999;
+    background:linear-gradient(135deg,#0b2214 0%,#1a4731 60%,#2d6a4f 100%);
+    align-items:center; justify-content:center; padding:20px;
+  }
+  #login-box {
+    background:#fff; border-radius:16px; padding:28px 24px;
+    width:100%; max-width:300px;
+    box-shadow:0 12px 40px rgba(0,0,0,.4);
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  #login-box .login-icon { font-size:40px; line-height:1; }
+  #login-box h2 { font-size:17px; font-weight:700; color:#1a4731; text-align:center; }
+  #login-box p { font-size:11px; color:#666; text-align:center; margin-top:-8px; }
+  #login-box input[type=password] {
+    width:100%; padding:10px 12px; border:1.5px solid #b2cfb2;
+    border-radius:10px; font-size:16px; text-align:center;
+    background:#f9fdf9; color:#1a1a1a; outline:none;
+    letter-spacing:4px;
+  }
+  #login-box input[type=password]:focus { border-color:#2d6a4f; }
+  #login-box .btn-entrar {
+    width:100%; padding:10px; background:#2d6a4f; color:#fff;
+    border:none; border-radius:10px; font-size:14px; font-weight:700;
+    cursor:pointer; transition:background .15s;
+  }
+  #login-box .btn-entrar:hover { background:#1a4731; }
+  #login-box .lembrar-wrap {
+    display:flex; align-items:center; gap:8px;
+    font-size:11px; color:#444; cursor:pointer; user-select:none;
+  }
+  #login-box .lembrar-wrap input[type=checkbox] {
+    width:15px; height:15px; accent-color:#2d6a4f; cursor:pointer;
+  }
+  #login-erro {
+    font-size:11px; color:#c0392b; font-weight:600;
+    min-height:16px; text-align:center;
+  }
+  body.dark-mode #login-box { background:#1e1e1e; }
+  body.dark-mode #login-box h2 { color:#76d396; }
+  body.dark-mode #login-box p { color:#999; }
+  body.dark-mode #login-box input[type=password] { background:#2d2d2d; border-color:#555; color:#fff; }
+  body.dark-mode #login-box .lembrar-wrap { color:#ccc; }
+
   /* Ajustes Modo Escuro */
   body.dark-mode { background:#121212; color:#e0e0e0; }
   body.dark-mode .topbar { background:#0b2214; }
@@ -140,6 +185,22 @@
 </style>
 </head>
 <body class="dark-mode">
+
+<div id="login-overlay">
+  <div id="login-box">
+    <div class="login-icon">🍀</div>
+    <h2>Bolão M.P.</h2>
+    <p>Digite a senha para acessar</p>
+    <input type="password" id="login-senha" placeholder="••••" maxlength="20"
+      onkeydown="if(event.key==='Enter') tentarLogin()">
+    <div id="login-erro"></div>
+    <label class="lembrar-wrap">
+      <input type="checkbox" id="login-lembrar" checked>
+      Não pedir senha neste dispositivo
+    </label>
+    <button class="btn-entrar" onclick="tentarLogin()">Entrar</button>
+  </div>
+</div>
 
 <div id="app-content">
   <div class="topbar">
@@ -221,11 +282,35 @@
   const docRef = doc(db, "boloes", "bolao_v2");
 
   const SENHA = "6311";
-  if (prompt("Senha:") !== SENHA) {
-    document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;color:red'>Acesso Negado</h2>";
-    document.body.style.display = "block";
+  const TOKEN_KEY = "bolao_auth_token";
+  const TOKEN_VALOR = btoa("bolao_ok_" + SENHA);
+
+  function liberarAcesso() {
+    document.getElementById('login-overlay').style.display = 'none';
+    document.body.style.display = 'block';
+  }
+
+  function tentarLogin() {
+    const digitada = document.getElementById('login-senha').value;
+    if (digitada === SENHA) {
+      if (document.getElementById('login-lembrar').checked) {
+        localStorage.setItem(TOKEN_KEY, TOKEN_VALOR);
+      }
+      liberarAcesso();
+    } else {
+      document.getElementById('login-erro').textContent = 'Senha incorreta. Tente novamente.';
+      document.getElementById('login-senha').value = '';
+      document.getElementById('login-senha').focus();
+    }
+  }
+  window.tentarLogin = tentarLogin;
+
+  // Verifica se dispositivo já está autorizado
+  if (localStorage.getItem(TOKEN_KEY) === TOKEN_VALOR) {
+    liberarAcesso();
   } else {
-    document.body.style.display = "block";
+    document.body.style.display = 'block';
+    setTimeout(() => document.getElementById('login-senha').focus(), 100);
   }
 
   window.estado = { participantes: [], cotas: {}, valorCota: 6, premio: 0 };
