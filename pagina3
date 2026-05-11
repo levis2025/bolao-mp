@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Bolão M.P.</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍀</text></svg>">
+<style>
+  /* Proteção inicial e Ocultar Zeros */
+  body { display: none; }
+  .zero-val { visibility: hidden; }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;font-size:13px;background:#f0f4f0;color:#1a1a1a;min-height:100vh; transition: background 0.3s, color 0.3s;}
+  
+  .topbar{background:#1a4731;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .topbar h1{font-size:16px;font-weight:600;letter-spacing:.5px}
+  .saved-tag{font-size:11px;opacity:.8}
+
+  .add-bar{background:#fff;border-bottom:1px solid #d4e6d4;padding:10px 16px}
+  .add-bar-inner{max-width:900px;margin:0 auto;display:grid;gap:6px;align-items:center}
+  .add-bar input[type=text]{padding:6px 10px;border:1px solid #b2cfb2;border-radius:8px;font-size:13px;background:#f9fdf9;width:100%;color:#1a1a1a}
+  
+  .add-bar-buttons{display:flex;gap:5px;flex-wrap:wrap;justify-content:stretch}
+  .btn{padding:6px 12px;border-radius:8px;border:none;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s;white-space:nowrap;flex:1;min-width:60px}
+  .btn:active{transform:scale(.97)}
+  .btn-add{background:#2d6a4f;color:#fff}
+  .btn-export{background:#185FA5;color:#fff}
+  .btn-limpar{background:#c0392b;color:#fff}
+  .btn-lista{background:#6d4c41;color:#fff}
+  .btn-dark{background:#34495e;color:#fff}
+
+  .main-wrap{max-width:900px;margin:12px auto;padding:0 16px;width:100%}
+  .main{display:grid;grid-template-columns:1fr;gap:0;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.1)}
+  .panel{background:#fff;display:flex;flex-direction:column}
+  .panel+.panel{border-top:1px solid #d4e6d4}
+
+  .ph{background:#1a4731;color:#fff;padding:10px 12px;text-align:center;font-size:12px;font-weight:600;letter-spacing:.3px}
+
+  .cfg{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;background:#f9fdf9;border-bottom:1px solid #d4e6d4}
+  .cfg-item{display:flex;flex-direction:column;gap:3px}
+  .cfg-item label{font-size:9px;font-weight:600;color:#2d6a4f;text-transform:uppercase}
+  .cfg-item input{padding:5px 6px;border:1px solid #b2cfb2;border-radius:6px;font-size:12px;font-weight:600;color:#1a1a1a;background:#fff}
+
+  .col-header{display:grid;background:#2d6a4f;color:#fff;font-size:9px;font-weight:700;padding:6px 6px;text-transform:uppercase}
+  .ativos .col-header, .ativos .row{grid-template-columns:1fr 44px 68px}
+  .ativos .footer-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .base .col-header, .base .row, .base .footer-row{grid-template-columns:1fr 44px 68px 20px}
+  
+  @media (max-width: 480px) {
+    body{font-size:11px}
+    .topbar{padding:10px 12px}
+    .topbar h1{font-size:14px}
+    .add-bar{padding:8px 12px}
+    .add-bar-inner{gap:4px}
+    .btn{padding:5px 8px;font-size:11px;min-width:50px}
+    .main-wrap{margin:8px auto;padding:0 10px}
+    .ph{padding:8px 10px;font-size:11px}
+    .cfg{padding:8px 10px;gap:6px}
+    .cfg-item input{font-size:11px;padding:4px 5px}
+    .col-header{padding:5px 5px;font-size:8px}
+    .row{padding:5px 6px;font-size:9px}
+    .row span{font-size:9px}
+    .row span:first-child{font-size:10px}
+    .badge{font-size:8px;padding:1px 4px}
+    .footer-row{padding:5px 5px;font-size:9px}
+    .footer-row.ativos{padding:6px 8px;font-size:9px}
+    .ativos .col-header, .ativos .row{grid-template-columns:1fr 38px 52px}
+    .base .col-header, .base .row, .base .footer-row{grid-template-columns:1fr 38px 52px 16px}
+    .list{max-height:250px}
+    .add-bar-buttons{gap:3px}
+    .modal{max-width:95%;width:100%;padding:12px}
+    .modal h3{font-size:13px}
+    .modal input{font-size:12px;padding:6px 7px;margin-bottom:8px}
+    .delbtn{font-size:11px}
+    textarea{font-size:9px;min-height:120px;padding:8px}
+  }
+  
+  @media (max-width: 380px) {
+    .topbar{padding:8px 10px}
+    .topbar h1{font-size:13px}
+    .add-bar{padding:6px 10px}
+    .add-bar-inner{gap:3px}
+    .btn{padding:4px 6px;font-size:10px;min-width:45px}
+    .main-wrap{margin:6px auto;padding:0 8px}
+    .ph{padding:6px 8px;font-size:10px}
+    .cfg{padding:6px 8px;gap:5px}
+    .col-header{padding:4px 4px;font-size:7px}
+    .row{padding:4px 5px;font-size:8px}
+    .row span{font-size:8px}
+    .row span:first-child{font-size:9px}
+    .badge{font-size:7px;padding:1px 3px}
+    .footer-row{padding:4px 4px;font-size:8px}
+    .ativos .col-header, .ativos .row{grid-template-columns:1fr 32px 45px}
+  }
+
+  .list{overflow-y:auto;max-height:350px;outline: none;}
+  .row{display:grid;padding:6px 8px;border-bottom:1px solid #edf5ed;align-items:center;cursor:pointer;transition:background .12s}
+  .row:hover{background:#e8f4e8}
+  .row.even{background:#f5fbf5}
+  .row.selected { background: #bbdefb !important; }
+
+  .row span{font-size:10px;text-align:center;color:#1a1a1a}
+  .row span:first-child{text-align:left;font-weight:600;color:#1a4731; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+  .badge{background:#d4edda;color:#1a1a1a;border-radius:10px;padding:1px 6px;font-size:9px;font-weight:700;display:inline-block}
+  .footer-row{display:grid;background:#1a4731;color:#fff;padding:6px 6px;font-size:10px;font-weight:700}
+  .footer-row.ativos{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px}
+  .footer-row.ativos span { display: inline-block; }
+  
+  .footer-row.ativos span:first-child { text-align: right; padding-right: 10px; }
+
+  .delbtn{background:none;border:none;color:#c0392b;cursor:pointer;font-weight:700;font-size:12px;opacity:0.3}
+  .row:hover .delbtn, .row.selected .delbtn { opacity: 1; }
+
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center;padding:16px}
+  .modal-overlay.open{display:flex}
+  .modal{background:#fff;border-radius:12px;padding:16px;width:100%;max-width:300px;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+  .modal h3{font-size:14px;font-weight:700;color:#1a4731;margin-bottom:6px}
+  .modal input{width:100%;padding:7px 8px;border:1px solid #b2cfb2;border-radius:8px;font-size:14px;margin-bottom:10px;color:#1a1a1a;background:#f9fdf9}
+
+  .export-section{display:none;padding:10px 16px;background:#fff;border-top:1px solid #d4e6d4;width:100%;max-width:900px;margin:0 auto}
+  .export-section.show{display:block}
+  textarea{width:100%;min-height:150px;font-family:'Courier New',monospace;font-size:10px;padding:10px;background:#f9fdf9;border:1px solid #b2cfb2;border-radius:8px;margin-bottom:10px;color:#1a1a1a}
+
+  /* Tela de Login */
+  #login-overlay {
+    display:flex; position:fixed; inset:0; z-index:999;
+    background:linear-gradient(135deg,#0b2214 0%,#1a4731 60%,#2d6a4f 100%);
+    align-items:center; justify-content:center; padding:20px;
+  }
+  #login-box {
+    background:#fff; border-radius:16px; padding:28px 24px;
+    width:100%; max-width:300px;
+    box-shadow:0 12px 40px rgba(0,0,0,.4);
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  #login-box .login-icon { font-size:40px; line-height:1; }
+  #login-box h2 { font-size:17px; font-weight:700; color:#1a4731; text-align:center; }
+  #login-box p { font-size:11px; color:#666; text-align:center; margin-top:-8px; }
+  #login-box input[type=password] {
+    width:100%; padding:10px 12px; border:1.5px solid #b2cfb2;
+    border-radius:10px; font-size:16px; text-align:center;
+    background:#f9fdf9; color:#1a1a1a; outline:none;
+    letter-spacing:4px;
+  }
+  #login-box input[type=password]:focus { border-color:#2d6a4f; }
+  #login-box .btn-entrar {
+    width:100%; padding:10px; background:#2d6a4f; color:#fff;
+    border:none; border-radius:10px; font-size:14px; font-weight:700;
+    cursor:pointer; transition:background .15s;
+  }
+  #login-box .btn-entrar:hover { background:#1a4731; }
+  #login-box .lembrar-wrap {
+    display:flex; align-items:center; gap:8px;
+    font-size:11px; color:#444; cursor:pointer; user-select:none;
+  }
+  #login-box .lembrar-wrap input[type=checkbox] {
+    width:15px; height:15px; accent-color:#2d6a4f; cursor:pointer;
+  }
+  #login-erro {
+    font-size:11px; color:#c0392b; font-weight:600;
+    min-height:16px; text-align:center;
+  }
+  body.dark-mode #login-box { background:#1e1e1e; }
+  body.dark-mode #login-box h2 { color:#76d396; }
+  body.dark-mode #login-box p { color:#999; }
+  body.dark-mode #login-box input[type=password] { background:#2d2d2d; border-color:#555; color:#fff; }
+  body.dark-mode #login-box .lembrar-wrap { color:#ccc; }
+
+  /* Ajustes Modo Escuro */
+  body.dark-mode { background:#121212; color:#e0e0e0; }
+  body.dark-mode .topbar { background:#0b2214; }
+  body.dark-mode .add-bar, body.dark-mode .panel, body.dark-mode .modal, body.dark-mode .export-section, body.dark-mode .cfg { background:#1e1e1e; border-color:#333; }
+  body.dark-mode .row { background:#1e1e1e; border-color:#333; }
+  body.dark-mode .row.even { background:#181818; }
+  body.dark-mode .row span { color: #d0d0d0; }
+  body.dark-mode .row span:first-child { color: #76d396; }
+  body.dark-mode .row:hover { background: #243026; }
+  body.dark-mode .row.selected { background:#1a3a5c !important; }
+  body.dark-mode .cfg-item label { color: #76d396; }
+  body.dark-mode .cfg-item input, body.dark-mode .add-bar input[type=text], body.dark-mode .modal input, body.dark-mode textarea { background:#2d2d2d; border-color:#555; color:#fff; }
+  body.dark-mode .footer-row { background:#112d1b; }
+  body.dark-mode .badge { background:#1b4a34; color:#fff; }
+</style>
+</head>
+<body class="dark-mode">
+
+<div id="login-overlay">
+  <div id="login-box">
+    <div class="login-icon">🍀</div>
+    <h2>Bolão M.P.</h2>
+    <p>Digite a senha para acessar</p>
+    <input type="password" id="login-senha" placeholder="••••" maxlength="20"
+      onkeydown="if(event.key==='Enter') tentarLogin()">
+    <div id="login-erro"></div>
+    <label class="lembrar-wrap">
+      <input type="checkbox" id="login-lembrar" checked>
+      Não pedir senha neste dispositivo
+    </label>
+    <button class="btn-entrar" onclick="tentarLogin()">Entrar</button>
+  </div>
+</div>
+
+<div id="app-content">
+  <div class="topbar">
+    <h1>🍀 Bolão M.P.</h1>
+    <span class="saved-tag" id="sync-status">Conectando Nuvem...</span>
+  </div>
+
+  <div class="add-bar">
+    <div class="add-bar-inner">
+      <input type="text" id="novo-nome" placeholder="Nome do participante..." maxlength="30" onkeydown="if(event.key==='Enter') adicionarParticipante()">
+      <div class="add-bar-buttons">
+        <button class="btn btn-add" onclick="adicionarParticipante()">+ Add</button>
+        <button class="btn btn-lista" onclick="exportarLista()">Lista</button>
+        <button class="btn btn-export" onclick="exportarResultado()">Prêmio</button>
+        <button class="btn btn-limpar" onclick="limparCotas()">Limpar</button>
+        <button class="btn btn-dark" onclick="toggleDarkMode()">🌙</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-wrap">
+    <div class="main">
+      <div class="panel ativos">
+        <div class="ph">Lista dos participante do (Bolão)</div>
+        <div class="cfg">
+          <div class="cfg-item"><label>Valor Cota R$</label><input type="text" id="valor-cota" value="6,00" onkeydown="if(event.key==='Enter'){window.estado.valorCota = parseFloat(document.getElementById('valor-cota').value.replace(/\./g, '').replace(',', '.')) || 0; document.getElementById('valor-cota').value = fmtBR(window.estado.valorCota); fSalvar(); recalcular();}"></div>
+          <div class="cfg-item"><label>Prêmio R$</label><input type="text" id="valor-premio" value="0,00" onkeydown="if(event.key==='Enter'){window.estado.premio = parseFloat(document.getElementById('valor-premio').value.replace(/\./g, '').replace(',', '.')) || 0; document.getElementById('valor-premio').value = fmtBR(window.estado.premio); fSalvar(); recalcular();}"></div>
+        </div>
+        <div class="col-header"><span>Participante</span><span>Cotas</span><span>Receber</span></div>
+        <div class="list" id="lista-ativos"></div>
+        <div class="footer-row ativos"><span id="fta-p">0</span> Participante(s) | Total cotas <span id="fta-c">0</span> | Valor R$ <span id="fta-v">0,00</span></div>
+      </div>
+
+      <div class="panel base">
+        <div class="ph">Lista fixa dos participantes</div>
+        <div class="col-header"><span>Nome</span><span>Cotas</span><span>Pago</span><span></span></div>
+        <div class="list" id="lista-base" tabindex="0"></div>
+        <div class="footer-row base"><span id="ftb-t">0</span><span id="ftb-c">0</span><span id="ftb-v">0,00</span><span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="export-section" id="export-section">
+  <textarea id="export-text" readonly></textarea>
+  <div style="display:flex; gap:5px; margin-top:5px">
+    <button class="btn btn-add" onclick="copiarExport()">Copiar texto</button>
+    <button class="btn" style="background:#e0e0e0; color:#333" onclick="document.getElementById('export-section').classList.remove('show')">Fechar</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h3 id="m-title"></h3>
+    <p id="m-hint" style="font-size:10px; color:#666; margin-bottom:10px">Valor Total Pago R$:</p>
+    <input type="number" id="m-input" step="0.01" onkeydown="if(event.key==='Enter') salvarModal()">
+    <div style="display:flex; gap:5px; justify-content:flex-end">
+      <button class="btn" style="background:#f0f0f0;" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-add" onclick="salvarModal()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = { 
+    apiKey: "AIzaSyCgiNwfaZQlS1IXcBA5Z52BzLZVde1Mg-c", 
+    authDomain: "boloa-mp.firebaseapp.com", 
+    projectId: "boloa-mp", 
+    storageBucket: "boloa-mp.firebasestorage.app", 
+    messagingSenderId: "647562474908", 
+    appId: "1:647562474908:web:658fd408da5d84eceac459" 
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const docRef = doc(db, "boloes", "bolao_v2");
+
+  const SENHA = "6311";
+  const TOKEN_KEY = "bolao_auth_token";
+  const TOKEN_VALOR = btoa("bolao_ok_" + SENHA);
+
+  function liberarAcesso() {
+    document.getElementById('login-overlay').style.display = 'none';
+    document.body.style.display = 'block';
+  }
+
+  function tentarLogin() {
+    const digitada = document.getElementById('login-senha').value;
+    if (digitada === SENHA) {
+      if (document.getElementById('login-lembrar').checked) {
+        localStorage.setItem(TOKEN_KEY, TOKEN_VALOR);
+      }
+      liberarAcesso();
+    } else {
+      document.getElementById('login-erro').textContent = 'Senha incorreta. Tente novamente.';
+      document.getElementById('login-senha').value = '';
+      document.getElementById('login-senha').focus();
+    }
+  }
+  window.tentarLogin = tentarLogin;
+
+  // Verifica se dispositivo já está autorizado
+  if (localStorage.getItem(TOKEN_KEY) === TOKEN_VALOR) {
+    liberarAcesso();
+  } else {
+    document.body.style.display = 'block';
+    setTimeout(() => document.getElementById('login-senha').focus(), 100);
+  }
+
+  window.estado = { participantes: [], cotas: {}, valorCota: 6, premio: 0 };
+
+  onSnapshot(docRef, (snap) => {
+    if (snap.exists()) {
+      window.estado = snap.data();
+      document.getElementById('valor-cota').value = fmtBR(window.estado.valorCota);
+      document.getElementById('valor-premio').value = fmtBR(window.estado.premio);
+      recalcular();
+      document.getElementById('sync-status').textContent = "Nuvem OK: " + new Date().toLocaleTimeString();
+    }
+  });
+
+  window.salvarNuvem = async () => {
+    document.getElementById('sync-status').textContent = "Salvando...";
+    window.estado.valorCota = getNum('valor-cota');
+    window.estado.premio = getNum('valor-premio');
+    await setDoc(docRef, window.estado);
+  };
+</script>
+
+<script>
+  let timeoutSalvar;
+  let selectedParticipante = null;
+
+  function fSalvar() {
+    clearTimeout(timeoutSalvar);
+    timeoutSalvar = setTimeout(() => { window.salvarNuvem(); }, 300);
+  }
+
+  function fmtBR(n) { return n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+  function getNum(id) { return parseFloat(document.getElementById(id).value.replace(/\./g, '').replace(',', '.')) || 0; }
+
+  function recalcular() {
+    const vCota = window.estado.valorCota;
+    const premio = window.estado.premio;
+    const todos = [...window.estado.participantes].sort((a,b) => a.localeCompare(b,'pt-BR'));
+    const ativos = todos.filter(n => (window.estado.cotas[n]||0) > 0);
+    const totalC = ativos.reduce((s,n) => s + (window.estado.cotas[n]||0), 0);
+    const vPorCota = totalC > 0 ? premio / totalC : 0;
+
+    const la = document.getElementById('lista-ativos');
+    la.innerHTML = ativos.map((n, i) => {
+      const c = window.estado.cotas[n];
+      return `<div class="row ${i%2===0?'even':''}">
+        <span>${n}</span><span><span class="badge">${c % 1 === 0 ? c : c.toFixed(2)}</span></span><span>${fmtBR(c*vPorCota)}</span>
+      </div>`;
+    }).join('') || '<div style="padding:16px;text-align:center;color:#888;font-style:italic">Nenhum ativo</div>';
+
+
+
+    const lb = document.getElementById('lista-base');
+    lb.innerHTML = todos.map((n, i) => {
+      const c = window.estado.cotas[n] || 0;
+      const valorPago = c * vCota;
+      const isSelected = n === selectedParticipante ? 'selected' : '';
+      return `<div class="row ${i%2===0?'even':''} ${isSelected}" onclick="abrirModal('${n.replace(/'/g,"\\'")}')">
+        <span>${n}</span>
+        <span class="${c===0?'zero-val':''}"><span class="badge">${c % 1 === 0 ? c : c.toFixed(2)}</span></span>
+        <span class="${valorPago===0?'zero-val':''}">${fmtBR(valorPago)}</span>
+        <span><button class="delbtn" onclick="event.stopPropagation();remover('${n.replace(/'/g,"\\'")}')">x</button></span>
+      </div>`;
+    }).join('');
+
+    document.getElementById('fta-p').textContent = ativos.length;
+    document.getElementById('fta-c').textContent = totalC % 1 === 0 ? totalC : totalC.toFixed(2);
+    document.getElementById('fta-v').textContent = fmtBR(premio);
+    document.getElementById('ftb-t').textContent = todos.length;
+    document.getElementById('ftb-c').textContent = totalC % 1 === 0 ? totalC : totalC.toFixed(2);
+    document.getElementById('ftb-v').textContent = fmtBR(totalC * vCota);
+
+    if (selectedParticipante) {
+      const row = lb.querySelector('.row.selected');
+      if (row) row.scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  function adicionarParticipante() {
+    const inp = document.getElementById('novo-nome');
+    const n = inp.value.trim();
+    if(!n || window.estado.participantes.includes(n)) return;
+    window.estado.participantes.push(n);
+    inp.value = '';
+    window.salvarNuvem();
+  }
+
+  function remover(n) {
+    if(!confirm(`Remover ${n}?`)) return;
+    window.estado.participantes = window.estado.participantes.filter(p => p !== n);
+    delete window.estado.cotas[n];
+    if (selectedParticipante === n) selectedParticipante = null;
+    window.salvarNuvem();
+  }
+
+  let modalPessoa;
+  function abrirModal(n) {
+    modalPessoa = n;
+    selectedParticipante = n;
+    recalcular();
+    document.getElementById('m-title').textContent = n;
+    document.getElementById('m-input').value = ((window.estado.cotas[n] || 0) * window.estado.valorCota).toFixed(2);
+    document.getElementById('modal-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('m-input').select(), 60);
+  }
+
+  function fecharModal() { 
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.getElementById('lista-base').focus();
+  }
+  
+  function salvarModal() {
+    const v = parseFloat(document.getElementById('m-input').value) || 0;
+    window.estado.cotas[modalPessoa] = v / window.estado.valorCota;
+    fecharModal(); window.salvarNuvem();
+  }
+
+  // Navegação por teclado
+  document.getElementById('lista-base').addEventListener('keydown', e => {
+    const todos = [...window.estado.participantes].sort((a,b) => a.localeCompare(b,'pt-BR'));
+    let idx = todos.indexOf(selectedParticipante);
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedParticipante = todos[Math.min(idx + 1, todos.length - 1)];
+      if (idx === -1) selectedParticipante = todos[0];
+      recalcular();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedParticipante = todos[Math.max(idx - 1, 0)];
+      recalcular();
+    } else if (e.key === 'Enter' && selectedParticipante) {
+      e.preventDefault();
+      abrirModal(selectedParticipante);
+    }
+  });
+
+  function exportarLista() {
+    const vCota = window.estado.valorCota;
+    const ativos = window.estado.participantes.filter(n => (window.estado.cotas[n]||0) > 0).sort();
+    const totalC = ativos.reduce((s,n) => s + window.estado.cotas[n], 0);
+    const agora = new Date().toLocaleString('pt-BR');
+    let txt = `BOLAO - LISTA DE PARTICIPANTES\nData: ${agora}\nValor da cota: R$ ${fmtBR(vCota)}\n${'='.repeat(40)}\n\n`;
+    txt += `CONFIRMADOS (${ativos.length} participantes):\n${'-'.repeat(40)}\n`;
+    ativos.forEach((n, i) => {
+      const c = window.estado.cotas[n];
+      txt += `${String(i+1).padStart(2)}. ${n.padEnd(22).substring(0,22)}  ${c}x  R$ ${fmtBR(c*vCota)}\n`;
+    });
+    txt += `${'-'.repeat(40)}\nTOTAL: ${totalC} cotas  |  R$ ${fmtBR(totalC * vCota)} arrecadado\n`;
+    document.getElementById('export-text').value = txt;
+    document.getElementById('export-section').classList.add('show');
+  }
+
+  function exportarResultado() {
+    const premio = window.estado.premio;
+    const ativos = window.estado.participantes.filter(n => (window.estado.cotas[n]||0) > 0).sort();
+    const totalC = ativos.reduce((s,n) => s + window.estado.cotas[n], 0);
+    const vCotaP = totalC > 0 ? premio / totalC : 0;
+    const agora = new Date().toLocaleString('pt-BR');
+    let txt = `BOLAO - RESULTADO\nData: ${agora}\n${'='.repeat(42)}\n`;
+    txt += `Valor da cota:   R$ ${fmtBR(window.estado.valorCota)}\nPremio total:    R$ ${fmtBR(premio)}\nTotal de cotas:  ${totalC}\n`;
+    if (totalC > 0) txt += `Valor por cota:  R$ ${fmtBR(vCotaP)}\n`;
+    txt += `${'='.repeat(42)}\nPARTICIPANTE            COTAS   A RECEBER\n${'-'.repeat(42)}\n`;
+    ativos.forEach(n => {
+      txt += `${n.substring(0,22).padEnd(22)}  ${String(window.estado.cotas[n]).padStart(5)}   R$ ${fmtBR(window.estado.cotas[n] * vCotaP)}\n`;
+    });
+    txt += `${'-'.repeat(42)}\nTOTAL                   ${String(totalC).padStart(5)}   R$ ${fmtBR(premio)}\n`;
+    document.getElementById('export-text').value = txt;
+    document.getElementById('export-section').classList.add('show');
+  }
+
+  function limparCotas() { if(confirm("Zerar todas as cotas?")) { window.estado.cotas = {}; window.salvarNuvem(); } }
+  function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('bolao_dark', document.body.classList.contains('dark-mode')); }
+  function copiarExport() { 
+    const ta = document.getElementById('export-text'); ta.select(); document.execCommand('copy'); 
+    alert("Copiado!"); document.getElementById('export-section').classList.remove('show');
+  }
+
+  if (localStorage.getItem('bolao_dark') === 'true') document.body.classList.add('dark-mode');
+</script>
+</body>
+</html>
