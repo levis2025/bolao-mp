@@ -490,6 +490,13 @@
   }
 
   if (localStorage.getItem('bolao_dark') === 'true') document.body.classList.add('dark-mode');
+
+<nav style="margin: 20px; text-align: center;">
+<a href="index.html" style="margin: 0 10px;">Página 1</a>
+<a href="pagina2.html" style="margin: 0 10px;">Página 2</a>
+<a href="pagina3.html" style="margin: 0 10px;">Página 3</a>
+</nav>
+
 </script>
 </body>
 </html>
