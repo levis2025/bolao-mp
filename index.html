@@ -182,6 +182,26 @@
   body.dark-mode .cfg-item input, body.dark-mode .add-bar input[type=text], body.dark-mode .modal input, body.dark-mode textarea { background:#2d2d2d; border-color:#555; color:#fff; }
   body.dark-mode .footer-row { background:#112d1b; }
   body.dark-mode .badge { background:#1b4a34; color:#ffffff; }
+
+  /* CORREÇÃO DA BARRA INFERIOR */
+  .bottom-nav {
+    margin: 0;
+    padding: 15px;
+    text-align: center;
+    background: #1a4731; /* Verde exato da barra superior */
+    border-top: 1px solid #2d6a4f;
+    transition: background 0.3s;
+  }
+  .bottom-nav a {
+    margin: 0 15px;
+    color: #ffffff; /* Texto branco para contraste em ambos os modos */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  body.dark-mode .bottom-nav {
+    background: #0b2214; /* Tom mais escuro para o modo noturno */
+  }
 </style>
 </head>
 <body class="dark-mode">
@@ -492,10 +512,9 @@
   if (localStorage.getItem('bolao_dark') === 'true') document.body.classList.add('dark-mode');
 </script>
 
-<nav style="margin: 20px; text-align: center; background: #f0f4f0; padding: 10px; border-top: 1px solid #d4e6d4;">
-  <a href="index.html" style="margin: 0 10px; color: #000000; text-decoration: none; font-weight: 600;">Mega-Sena</a>
-  <a href="pagina2.html" style="margin: 0 10px; color: #000000; text-decoration: none; font-weight: 600;">Lotofacil</a>
-  <a href="pagina3.html" style="margin: 0 10px; color: #000000; text-decoration: none; font-weight: 600;">Outros</a>
+<nav class="bottom-nav">
+  <a href="pagina2.html">Lotofácil</a>
+  <a href="pagina3.html">Outros</a>
 </nav>
 
 </body>
