@@ -600,8 +600,9 @@
     let txt = `BOLAO - LISTA DE PARTICIPANTES\nData: ${agora}\nValor da cota: R$ ${fmtBR(vCota)}\n${'='.repeat(40)}\n\n`;
     txt += `CONFIRMADOS (${ativos.length} participantes):\n${'-'.repeat(40)}\n`;
     ativos.forEach((n, i) => {
-      const c = window.estado.cotas[n];
-      txt += `${String(i+1).padStart(2)}. ${n.padEnd(22).substring(0,22)}  ${c} ${c === 1 ? 'cota' : 'cotas'}\n`;
+  const c = window.estado.cotas[n];
+  const numOrdem = `${i+1}. `;
+  txt += `${numOrdem}${n.padEnd(25 - numOrdem.length).substring(0, 25 - numOrdem.length)}  ${c} ${c === 1 ? 'cota' : 'cotas'}\n`;
     });
     txt += `${'-'.repeat(40)}\nTOTAL: ${totalC} cotas  |  R$ ${fmtBR(totalC * vCota)} arrecadado\n`;
     document.getElementById('export-text').value = txt;
