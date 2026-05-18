@@ -224,7 +224,7 @@
 <div id="app-content">
   <div class="topbar">
     <h1>🍀 Bolão M.P. (Outros)</h1>
-    <span class="saved-tag" id="sync-status">Nuvem OK: 22:29:30</span>
+    <span class="saved-tag" id="sync-status">Nuvem OK: 15:55:58</span>
   </div>
 
   <div class="add-bar">
@@ -249,30 +249,8 @@
           <div class="cfg-item"><label>Prêmio R$</label><input type="text" id="valor-premio" value="0,00" onkeydown="if(event.key===&#39;Enter&#39;){window.estado.premio = parseFloat(document.getElementById(&#39;valor-premio&#39;).value.replace(/\./g, &#39;&#39;).replace(&#39;,&#39;, &#39;.&#39;)) || 0; document.getElementById(&#39;valor-premio&#39;).value = fmtBR(window.estado.premio); fSalvar(); recalcular();}"></div>
         </div>
         <div class="col-header"><span>Participante</span><span>Cotas</span><span>Receber</span></div>
-        <div class="list" id="lista-ativos"><div class="row even">
-        <span>Ana Paula</span><span><span class="badge">2</span></span><span>12,00</span>
-      </div><div class="row ">
-        <span>Breno</span><span><span class="badge">5</span></span><span>30,00</span>
-      </div><div class="row even">
-        <span>Denis</span><span><span class="badge">2</span></span><span>12,00</span>
-      </div><div class="row ">
-        <span>Dr. Joel</span><span><span class="badge">5</span></span><span>30,00</span>
-      </div><div class="row even">
-        <span>Felipe</span><span><span class="badge">2</span></span><span>12,00</span>
-      </div><div class="row ">
-        <span>Larícia</span><span><span class="badge">1</span></span><span>6,00</span>
-      </div><div class="row even">
-        <span>Levi</span><span><span class="badge">2</span></span><span>12,00</span>
-      </div><div class="row ">
-        <span>Reginaldo</span><span><span class="badge">1</span></span><span>6,00</span>
-      </div><div class="row even">
-        <span>Renato Endo</span><span><span class="badge">2</span></span><span>12,00</span>
-      </div><div class="row ">
-        <span>Renato Ribeiro</span><span><span class="badge">2</span></span><span>12,00</span>
-      </div><div class="row even">
-        <span>Vanessa</span><span><span class="badge">1</span></span><span>6,00</span>
-      </div></div>
-        <div class="footer-row ativos"><span id="fta-p">11</span> Participante(s) | Total cotas <span id="fta-c">25</span> | Valor R$ <span id="fta-v">150,00</span></div>
+        <div class="list" id="lista-ativos"><div style="padding:16px;text-align:center;color:#000000;font-style:italic">Nenhum ativo</div></div>
+        <div class="footer-row ativos"><span id="fta-p">0</span> Participante(s) | Total cotas <span id="fta-c">0</span> | Valor R$ <span id="fta-v">150,00</span></div>
       </div>
 
       <div class="panel base">
@@ -288,7 +266,7 @@
         <span class="zero-val"><span class="badge">0</span></span>
         <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Adriano&#39;)">x</button></span>
-      </div><div class="row even selected" onclick="abrirModal(&#39;Alexandre Amaral&#39;)">
+      </div><div class="row even " onclick="abrirModal(&#39;Alexandre Amaral&#39;)">
         <span>Alexandre Amaral</span>
         <span class="zero-val"><span class="badge">0</span></span>
         <span class="zero-val">0,00</span>
@@ -300,34 +278,44 @@
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Alexandre Isaís&#39;)">x</button></span>
       </div><div class="row even " onclick="abrirModal(&#39;Ana Paula&#39;)">
         <span>Ana Paula</span>
-        <span class=""><span class="badge">2</span></span>
-        <span class="">12,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Ana Paula&#39;)">x</button></span>
       </div><div class="row  " onclick="abrirModal(&#39;Breno&#39;)">
         <span>Breno</span>
-        <span class=""><span class="badge">5</span></span>
-        <span class="">30,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Breno&#39;)">x</button></span>
       </div><div class="row even " onclick="abrirModal(&#39;Denis&#39;)">
         <span>Denis</span>
-        <span class=""><span class="badge">2</span></span>
-        <span class="">12,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Denis&#39;)">x</button></span>
       </div><div class="row  " onclick="abrirModal(&#39;Dr. Cláudio&#39;)">
         <span>Dr. Cláudio</span>
         <span class="zero-val"><span class="badge">0</span></span>
         <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Dr. Cláudio&#39;)">x</button></span>
-      </div><div class="row even " onclick="abrirModal(&#39;Dr. Joel&#39;)">
+      </div><div class="row even " onclick="abrirModal(&#39;Dr. Emir&#39;)">
+        <span>Dr. Emir</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
+        <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Dr. Emir&#39;)">x</button></span>
+      </div><div class="row  " onclick="abrirModal(&#39;Dr. Joel&#39;)">
         <span>Dr. Joel</span>
-        <span class=""><span class="badge">5</span></span>
-        <span class="">30,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Dr. Joel&#39;)">x</button></span>
-      </div><div class="row  " onclick="abrirModal(&#39;Felipe&#39;)">
+      </div><div class="row even " onclick="abrirModal(&#39;Felipe&#39;)">
         <span>Felipe</span>
-        <span class=""><span class="badge">2</span></span>
-        <span class="">12,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Felipe&#39;)">x</button></span>
+      </div><div class="row  " onclick="abrirModal(&#39;Gabriela&#39;)">
+        <span>Gabriela</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
+        <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Gabriela&#39;)">x</button></span>
       </div><div class="row even " onclick="abrirModal(&#39;Jorge&#39;)">
         <span>Jorge</span>
         <span class="zero-val"><span class="badge">0</span></span>
@@ -335,13 +323,13 @@
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Jorge&#39;)">x</button></span>
       </div><div class="row  " onclick="abrirModal(&#39;Larícia&#39;)">
         <span>Larícia</span>
-        <span class=""><span class="badge">1</span></span>
-        <span class="">6,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Larícia&#39;)">x</button></span>
       </div><div class="row even " onclick="abrirModal(&#39;Levi&#39;)">
         <span>Levi</span>
-        <span class=""><span class="badge">2</span></span>
-        <span class="">12,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Levi&#39;)">x</button></span>
       </div><div class="row  " onclick="abrirModal(&#39;Luis Gustavo&#39;)">
         <span>Luis Gustavo</span>
@@ -370,26 +358,31 @@
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Pedro&#39;)">x</button></span>
       </div><div class="row even " onclick="abrirModal(&#39;Reginaldo&#39;)">
         <span>Reginaldo</span>
-        <span class=""><span class="badge">1</span></span>
-        <span class="">6,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Reginaldo&#39;)">x</button></span>
       </div><div class="row  " onclick="abrirModal(&#39;Renato Endo&#39;)">
         <span>Renato Endo</span>
-        <span class=""><span class="badge">2</span></span>
-        <span class="">12,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Renato Endo&#39;)">x</button></span>
       </div><div class="row even " onclick="abrirModal(&#39;Renato Ribeiro&#39;)">
         <span>Renato Ribeiro</span>
-        <span class=""><span class="badge">2</span></span>
-        <span class="">12,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Renato Ribeiro&#39;)">x</button></span>
-      </div><div class="row  " onclick="abrirModal(&#39;Vanessa&#39;)">
+      </div><div class="row  " onclick="abrirModal(&#39;Salvador&#39;)">
+        <span>Salvador</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
+        <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Salvador&#39;)">x</button></span>
+      </div><div class="row even " onclick="abrirModal(&#39;Vanessa&#39;)">
         <span>Vanessa</span>
-        <span class=""><span class="badge">1</span></span>
-        <span class="">6,00</span>
+        <span class="zero-val"><span class="badge">0</span></span>
+        <span class="zero-val">0,00</span>
         <span><button class="delbtn" onclick="event.stopPropagation();remover(&#39;Vanessa&#39;)">x</button></span>
       </div></div>
-        <div class="footer-row base"><span id="ftb-t">22</span><span id="ftb-c">25</span><span id="ftb-v">150,00</span><span></span></div>
+        <div class="footer-row base"><span id="ftb-t">25</span><span id="ftb-c">0</span><span id="ftb-v">0,00</span><span></span></div>
       </div>
     </div>
   </div>
@@ -608,7 +601,7 @@
     txt += `CONFIRMADOS (${ativos.length} participantes):\n${'-'.repeat(40)}\n`;
     ativos.forEach((n, i) => {
       const c = window.estado.cotas[n];
-      txt += `${String(i+1).padStart(2)}. ${n.padEnd(22).substring(0,22)}  ${c}x  R$ ${fmtBR(c*vCota)}\n`;
+      txt += `${String(i+1).padStart(2)}. ${n.padEnd(22).substring(0,22)}  ${c} ${c === 1 ? 'cota' : 'cotas'}\n`;
     });
     txt += `${'-'.repeat(40)}\nTOTAL: ${totalC} cotas  |  R$ ${fmtBR(totalC * vCota)} arrecadado\n`;
     document.getElementById('export-text').value = txt;
