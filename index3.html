@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title> Bolão — Outros</title>
+  
+  <!-- Favicon Emoji via SVG Inline -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+  
+  <!-- Preload Dark Mode State to Prevent Flickering -->
+  <script>
+    (function() {
+      const darkPref = localStorage.getItem('bolao_dark_ot');
+      if (darkPref === 'true' || darkPref === null) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
+  <!-- External libraries -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#27272a",
+            "on-secondary": "#09090b",
+            "inverse-surface": "#fafafa",
+            "on-background": "#fafafa",
+            "on-tertiary-fixed": "#003318",
+            "surface-container-low": "#0f0f12",
+            "error-container": "#3b1111",
+            "primary-container": "#7c3aed",
+            "on-error": "#1a0000",
+            "tertiary": "#34d399",
+            "surface-container": "#121215",
+            "surface-container-high": "#18181b",
+            "inverse-primary": "#5b21b6",
+            "surface": "#0c0c0f",
+            "tertiary-fixed-dim": "#6ee7b7",
+            "secondary-fixed": "#a1a1aa",
+            "on-tertiary": "#001a12",
+            "on-primary-fixed": "#2e1065",
+            "inverse-on-surface": "#09090b",
+            "primary": "#a78bfa",
+            "on-primary": "#0a0012",
+            "surface-bright": "#18181b",
+            "on-tertiary-fixed-variant": "#047857",
+            "secondary-container": "#27272a",
+            "on-tertiary-container": "#bbf7d0",
+            "on-secondary-container": "#a1a1aa",
+            "surface-tint": "#a78bfa",
+            "primary-fixed": "#ede9fe",
+            "surface-variant": "#18181b",
+            "surface-container-lowest": "#09090b",
+            "on-primary-container": "#ede9fe",
+            "on-secondary-fixed-variant": "#3f3f46",
+            "error": "#ef4444",
+            "secondary-fixed-dim": "#71717a",
+            "secondary": "#71717a",
+            "tertiary-container": "#065f46",
+            "background": "#09090b",
+            "surface-dim": "#0c0c0f",
+            "on-secondary-fixed": "#18181b",
+            "tertiary-fixed": "#bbf7d0",
+            "on-error-container": "#fca5a5",
+            "surface-container-highest": "#1e1e22",
+            "primary-fixed-dim": "#c4b5fd",
+            "on-surface-variant": "#a1a1aa",
+            "outline": "#52525b",
+            "on-primary-fixed-variant": "#5b21b6",
+            "on-surface": "#fafafa"
+          },
+          "fontFamily": {
+            "headline": ["Geist"],
+            "display": ["Geist"],
+            "body": ["Geist"],
+            "label": ["Geist"]
+          }
+        },
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Geist', sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #09090b; }
+    ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+
+    /* Custom Shake Animation */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .shake-anim {
+      animation: shake 0.4s ease-in-out;
+    }
+    .btn-toggle-lista {
+      background-color: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: bold;
+      color: #fafafa;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    .btn-toggle-lista:hover {
+      background-color: #27272a;
+      border-color: #52525b;
+    }
+    .btn-toggle-lista:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background antialiased overflow-x-hidden min-h-screen flex">
+
+  <!-- ================= TELA DE LOGIN OVERLAY ================= -->
+  <div id="login-overlay" class="fixed inset-0 bg-background/95 backdrop-blur-md z-[9999] flex items-center justify-center p-4 transition-all duration-300">
+    <div class="bg-surface-container border border-outline-variant w-full max-w-sm rounded-2xl p-8 shadow-2xl relative overflow-hidden group" id="login-card">
+      <div class="absolute -right-16 -top-16 w-32 h-32 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-500 pointer-events-none"></div>
+      
+      <div class="relative z-10 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-primary-container/10 border border-primary/20 flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">
+          💎
+        </div>
+        <h2 class="text-xl font-bold tracking-tight text-on-surface">Bolão M.P.</h2>
+        <p class="text-xs text-secondary mt-1 font-semibold uppercase tracking-wider">Outros</p>
+        
+        <div class="mt-8 text-left">
+          <label for="password-field" class="text-[10px] font-bold text-secondary uppercase tracking-widest block mb-2">Senha de Acesso</label>
+          <input type="password" id="password-field" class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl px-4 py-1 text-lg font-bold font-mono tracking-widest text-center text-on-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" maxlength="6" inputmode="numeric" placeholder="••••">
+        </div>
+        
+        <label class="flex items-center gap-2 mt-4 text-xs text-secondary cursor-pointer hover:text-on-surface transition-colors select-none">
+          <input type="checkbox" id="keep-logged-in" checked class="rounded border-outline-variant bg-surface-container-lowest text-primary focus:ring-primary w-4 h-4">
+          Não pedir senha neste dispositivo
+        </label>
+        
+        <button class="w-full mt-6 bg-primary text-on-primary py-1 rounded-xl text-sm font-bold shadow-lg shadow-primary-container/10 hover:brightness-110 active:scale-95 transition-all" onclick="window.tentarLogin()">
+          Acessar Painel
+        </button>
+        
+        <div id="login-error-msg" class="text-xs text-error font-semibold mt-4 min-h-[18px]"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SIDEBAR LATERAL ================= -->
+  <div id="sidebar-overlay" class="fixed inset-0 bg-background/60 backdrop-blur-sm z-40 hidden lg:hidden" onclick="window.toggleSidebar(false)"></div>
+
+  <aside id="sidebar-menu" class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-6 px-4 z-50 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+    <div class="mb-8 px-2 flex justify-between items-start">
+      <div>
+        <h1 class="text-xl font-headline tracking-tighter font-bold text-on-surface">Bolões</h1>
+        <p class="text-xs text-secondary font-medium"></p>
+      </div>
+      <button class="lg:hidden text-secondary hover:text-on-surface p-1 rounded transition-colors flex items-center justify-center" onclick="window.toggleSidebar(false)">
+        <span class="material-symbols-outlined text-lg">close</span>
+      </button>
+    </div>
+    
+    <nav class="flex-1 space-y-1">
+      <a class="flex items-center gap-3 px-3 py-2 text-secondary hover:bg-surface-container hover:text-on-surface transition-all duration-150" href="index.html">
+        <span class="text-lg">🍀</span>
+        <span class="text-sm">Mega-Sena</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 text-secondary hover:bg-surface-container hover:text-on-surface transition-all duration-150" href="index2.html">
+        <span class="text-lg">⚡</span>
+        <span class="text-sm">Lotofácil</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 text-primary font-bold border-r-2 border-primary transition-all duration-150" href="index3.html">
+        <span class="text-lg">💎</span>
+        <span class="text-sm">Outros</span>
+      </a>
+    </nav>
+    
+    <div class="mt-auto pt-6 border-t border-outline-variant space-y-1">
+      <button class="w-full flex items-center gap-3 px-3 py-2 text-secondary hover:bg-surface-container hover:text-on-surface transition-colors rounded text-left" onclick="window.mostrarAjuda()">
+        <span class="material-symbols-outlined text-sm">help</span>
+        <span class="text-sm">Ajuda</span>
+      </button>
+      <button class="w-full flex items-center gap-3 px-3 py-2 text-secondary hover:bg-surface-container hover:text-on-surface transition-colors rounded text-left" onclick="window.logout()">
+        <span class="material-symbols-outlined text-sm">logout</span>
+        <span class="text-sm">Sair</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= CONTEÚDO PRINCIPAL ================= -->
+  <div class="flex-1 pl-0 lg:pl-64 flex flex-col min-h-screen transition-all duration-300">
+    
+    <!-- TopAppBar -->
+    <header class="h-16 border-b border-outline-variant bg-surface-container flex justify-between items-center px-4 sm:px-8 sticky top-0 z-40">
+      <div class="flex items-center gap-2 sm:gap-4">
+        <button class="lg:hidden text-on-surface p-1 hover:bg-surface-container-high rounded transition-colors flex items-center justify-center" onclick="window.toggleSidebar(true)">
+          <span class="material-symbols-outlined text-xl">menu</span>
+        </button>
+        <h2 class="text-sm sm:text-base font-bold text-on-surface flex items-center gap-1.5">
+          <span>💎</span>
+          <span class="hidden sm:inline">Outros — Dashboard</span>
+          <span class="sm:hidden">Outros</span>
+        </h2>
+        <div class="h-4 w-px bg-outline-variant hidden sm:block"></div>
+        <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-high border border-outline-variant text-[10px] font-mono text-secondary">
+          <span id="sync-status-dot" class="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></span>
+          Conectando...
+        </span>
+      </div>
+      
+      <div class="flex items-center gap-3 sm:gap-6">
+        <div class="relative group">
+          <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-secondary text-xs sm:text-sm">search</span>
+          <input id="topbar-search" class="bg-surface-container-lowest border border-outline-variant rounded-lg pl-8 pr-3 py-1 text-xs w-28 min-[400px]:w-36 sm:w-48 md:w-64 focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all text-on-surface" placeholder="Filtrar..." type="text"/>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="flex-1 p-4 sm:p-8 max-w-6xl w-full mx-auto space-y-6">
+      
+      <!-- Stats Section (Bento Style) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        
+        <!-- Total do Prêmio -->
+        <div class="bg-surface-container border border-outline-variant rounded-xl p-3 relative overflow-hidden group">
+          <div class="relative z-10 flex flex-col justify-between h-full">
+            <div>
+              <p class="text-secondary text-[10px] font-bold uppercase tracking-widest mb-1">Total do Prêmio</p>
+              <h3 class="text-2xl font-normal text-on-surface font-headline leading-none mt-1"" id="card-premio-display">R$ 0,00</h3>
+            </div>
+            <div class="mt-4 pt-3 border-t border-outline-variant/50">
+              <label class="text-[10px] text-secondary uppercase font-bold tracking-wider block mb-1">Ajustar Prêmio</label>
+              <input type="text" id="config-premio-total" class="w-full bg-surface-container-lowest border border-outline-variant rounded px-2.5 py-1 text-sm text-on-surface font-mono font-bold focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="0,00"/>
+            </div>
+          </div>
+          <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-all duration-300 pointer-events-none">
+            <span class="material-symbols-outlined text-8xl">payments</span>
+          </div>
+        </div>
+
+        <!-- Valor por Cota -->
+        <div class="bg-surface-container border border-outline-variant rounded-xl p-3 relative overflow-hidden group">
+          <div class="relative z-10 flex flex-col justify-between h-full">
+            <div>
+              <p class="text-secondary text-[10px] font-bold uppercase tracking-widest mb-1">Valor por Cota</p>
+              <h3 class="text-2xl font-normal text-on-surface font-headline leading-none mt-1"" id="card-valor-display">R$ 0,00</h3>
+            </div>
+            <div class="mt-4 pt-3 border-t border-outline-variant/50">
+              <label class="text-[10px] text-secondary uppercase font-bold tracking-wider block mb-1">Ajustar Cota</label>
+              <input type="text" id="config-valor-cota" class="w-full bg-surface-container-lowest border border-outline-variant rounded px-2.5 py-1 text-sm text-on-surface font-mono font-bold focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="0,00"/>
+            </div>
+          </div>
+          <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-all duration-300 pointer-events-none">
+            <span class="material-symbols-outlined text-8xl">sell</span>
+          </div>
+        </div>
+
+        <!-- Cotas Vendidas -->
+        <div class="bg-surface-container border border-outline-variant rounded-xl p-3 relative overflow-hidden group">
+          <div class="relative z-10 flex flex-col justify-between h-full">
+            <div>
+              <p class="text-secondary text-[10px] font-bold uppercase tracking-widest mb-1">Cotas Ativas</p>
+              <div class="flex items-baseline gap-2 mt-1">
+                <h3 class="text-2xl font-normal text-on-surface font-headline leading-none" id="card-cotas-display">0</h3>
+                <span class="text-secondary text-xs font-semibold" id="card-total-pago-display">R$ 0,00 Arrecadado</span>
+              </div>
+            </div>
+            <div class="mt-4">
+              <div class="flex justify-between items-center text-[20px] font-bold uppercase tracking-wider text-secondary mb-1">
+                <span></span>
+                <span id="progress-percentage-label">0%</span>
+              </div>
+              <div class="w-full bg-surface-container-lowest border border-outline-variant h-2 rounded-full overflow-hidden">
+                <div id="cotas-progress-bar" class="bg-primary h-full w-[0%] rounded-full shadow-[0_0_8px_rgba(167,139,250,0.5)] transition-all duration-500 ease-out"></div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-all duration-300 pointer-events-none">
+            <span class="material-symbols-outlined text-8xl">pie_chart</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Panel & Add Participant -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-surface-container border border-outline-variant rounded-xl p-1">
+        <div>
+          <h4 class="text-base font-bold text-on-surface flex items-center gap-2">
+            <span>Gestão de Participantes</span>
+          </h4>
+        </div>
+        
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="relative w-full sm:w-64">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-sm">person_add</span>
+            <input type="text" id="novo-participante" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-9 pr-4 py-2 text-xs text-on-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Nome do participante..." onkeydown="if(event.key==='Enter') window.adicionarParticipante()"/>
+          </div>
+          <button class="flex items-center gap-1.5 bg-primary text-on-primary px-4 py-2 rounded-lg text-xs font-bold shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all" onclick="window.adicionarParticipante()">
+            <span class="material-symbols-outlined text-sm">add</span>
+            Adicionar
+          </button>
+          <div class="h-6 w-px bg-outline-variant mx-1"></div>
+          <button class="flex items-center gap-1.5 bg-transparent border border-outline-variant text-on-surface px-3 py-2 rounded-lg text-xs font-medium hover:bg-surface-container-high active:scale-95 transition-all" onclick="window.gerarListaConfirmados()">
+            <span class="material-symbols-outlined text-sm">share</span>
+            WhatsApp
+          </button>
+          <button class="flex items-center gap-1.5 bg-transparent border border-outline-variant text-on-surface px-3 py-2 rounded-lg text-xs font-medium hover:bg-surface-container-high active:scale-95 transition-all" onclick="window.gerarRelatorioPremio()">
+            <span class="material-symbols-outlined text-sm">receipt_long</span>
+            Rateio
+          </button>
+          <button class="flex items-center gap-1.5 bg-transparent border border-error/30 text-error px-3 py-2 rounded-lg text-xs font-medium hover:bg-error-container/20 active:scale-95 transition-all" onclick="window.limparCotas()">
+            <span class="material-symbols-outlined text-sm">clear_all</span>
+            Zerar Cotas
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Directory Table (Full List) -->
+      <div class="bg-surface-container border border-outline-variant rounded-xl overflow-hidden">
+        <div class="px-5 py-2 bg-surface-container-high/30 border-b border-outline-variant flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <h5 class="text-sm font-bold text-on-surface">Base Geral de Participantes</h5>
+            <button id="btn-toggle-lista" class="btn-toggle-lista" onclick="window.toggleListaBase()">Recolher</button>
+          </div>
+          <span class="text-[10px] text-secondary font-bold uppercase tracking-wider hidden sm:inline">Pressione ↑ ↓ e Enter para Editar rapidamente</span>
+        </div>
+        <div class="table-container panel-table-base outline-none overflow-x-auto" id="lista-base-wrapper" tabindex="0">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-surface-container-high/50 border-b border-outline-variant">
+                <th class="px-6 py-0.5.5 text-xs font-bold text-secondary uppercase tracking-wider">Participante</th>
+                <th class="px-6 py-0.5.5 text-xs font-bold text-secondary uppercase tracking-wider text-center w-24">Cotas</th>
+                <th class="px-6 py-0.5.5 text-xs font-bold text-secondary uppercase tracking-wider text-right w-36">Total Pago</th>
+                <th class="px-6 py-0.5.5 text-xs font-bold text-secondary uppercase tracking-wider text-center w-32">Status</th>
+                <th class="px-6 py-0.5.5 text-xs font-bold text-secondary uppercase tracking-wider text-right w-28">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="lista-base" class="divide-y divide-outline-variant/40">
+              <!-- Dinâmico -->
+            </tbody>
+          </table>
+        </div>
+        <div class="px-6 py-2 bg-surface-container-high/30 border-t border-outline-variant flex items-center justify-between text-xs text-secondary font-semibold" id="footer-base">
+          Total: 0 Participantes | 0 Cotas | R$ 0,00 Arrecadado
+        </div>
+      </div>
+
+      <!-- Grid of Active Payouts & Export Text Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Rateio Tab -->
+        <div class="bg-surface-container border border-outline-variant rounded-xl overflow-hidden flex flex-col justify-between">
+          <div>
+            <div class="px-5 py-2 bg-surface-container-high/30 border-b border-outline-variant flex items-center justify-between">
+              <h5 class="text-sm font-bold text-on-surface"> Rateio de Prêmio (Participantes Ativos)</h5>
+              <span class="material-symbols-outlined text-secondary text-sm">info</span>
+            </div>
+            <div class="table-container max-h-[300px] overflow-y-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-surface-container-high/50 border-b border-outline-variant">
+                    <th class="px-5 py-1 text-xs font-bold text-secondary uppercase tracking-wider">Participante</th>
+                    <th class="px-5 py-1 text-xs font-bold text-secondary uppercase tracking-wider text-center w-20">Cotas</th>
+                    <th class="px-5 py-1 text-xs font-bold text-secondary uppercase tracking-wider text-right w-32">A Receber</th>
+                  </tr>
+                </thead>
+                <tbody id="lista-ativos" class="divide-y divide-outline-variant/40">
+                  <!-- Dinâmico -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="px-5 py-1 bg-surface-container-high/30 border-t border-outline-variant text-[11px] font-bold text-secondary text-right" id="footer-ativos">
+            0 Participante(s) | Total cotas 0 | Valor R$ 0,00
+          </div>
+        </div>
+
+        <!-- Export Tab -->
+        <div class="bg-surface-container border border-outline-variant rounded-xl p-5 flex flex-col justify-between min-h-[360px]" id="export-section">
+          <div class="flex-1 flex flex-col">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="material-symbols-outlined text-primary text-base">sms</span>
+              <h5 class="text-sm font-bold text-on-surface" id="export-title-text">Relatório Pronto para Compartilhar</h5>
+            </div>
+            <textarea id="export-text" class="flex-1 w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-3 text-xs text-on-surface font-mono resize-none focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" readonly placeholder="Os relatórios do WhatsApp e rateio de prêmios aparecerão formatados aqui..."></textarea>
+          </div>
+          <div class="flex justify-end gap-2 mt-4 pt-3 border-t border-outline-variant/50">
+            <button class="flex items-center gap-1.5 bg-primary text-on-primary px-4 py-2 rounded-lg text-xs font-bold shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all" onclick="window.copiarTextoExport()">
+              <span class="material-symbols-outlined text-sm">content_copy</span>
+              Copiar Relatório
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ================= MODAL DE EDICÃO DE COTAS ================= -->
+  <div class="fixed inset-0 bg-background/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300" id="modal-edicao" onclick="if(event.target===this) window.fecharModal()">
+    <div class="bg-surface-container border border-outline-variant w-full max-w-md rounded-2xl p-6 shadow-2xl relative overflow-hidden transform scale-95 transition-all duration-300">
+      <div class="flex justify-between items-center pb-4 border-b border-outline-variant/60">
+        <h3 class="text-base font-bold text-on-surface">Editar Cotas: <span id="modal-nome-usuario" class="text-primary font-black">-</span></h3>
+        <button class="text-secondary hover:text-on-surface transition-colors" onclick="window.fecharModal()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div class="py-6">
+        <div class="flex flex-col gap-2">
+          <label for="modal-input-pago" class="text-[10px] font-bold text-secondary uppercase tracking-widest">Valor Total Pago R$</label>
+          <input type="text" id="modal-input-pago" class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl px-4 py-1 text-lg font-mono font-bold text-on-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="0,00" autocomplete="off"/>
+          
+          <div class="mt-3 flex justify-between items-center text-xs bg-surface-container-high/40 rounded-lg p-3 border border-outline-variant/30 text-secondary">
+            <span>Equivale a: <strong id="modal-calculo-cotas" class="text-primary font-bold">0</strong> cotas</span>
+            <span>Cota: <strong id="modal-txt-valor-cota" class="text-on-surface font-bold">R$ 5,00</strong></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex justify-end gap-3 pt-4 border-t border-outline-variant/60">
+        <button class="bg-transparent border border-outline-variant text-on-surface px-5 py-2.5 rounded-xl text-xs font-semibold hover:bg-surface-container-high active:scale-95 transition-all" onclick="window.fecharModal()">
+          Cancelar
+        </button>
+        <button class="bg-primary text-on-primary px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all" onclick="window.salvarModal()">
+          Salvar Alterações
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    (function() {
+      'use strict';
+
+      const firebaseConfig = { 
+        apiKey: "AIzaSyCgiNwfaZQlS1IXcBA5Z52BzLZVde1Mg-c", 
+        authDomain: "boloa-mp.firebaseapp.com", 
+        projectId: "boloa-mp", 
+        storageBucket: "boloa-mp.firebasestorage.app", 
+        messagingSenderId: "647562474908", 
+        appId: "1:647562474908:web:658fd408da5d84eceac459" 
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const docRef = doc(db, "boloes", "bolao_outras");
+
+      // --- SECURITY & CONFIGURATION ---
+      const AUTH_KEY = 'bolao_auth_token_ot';
+      const AUTH_SUCCESS_VAL = btoa("bolao_ok_6311");
+      const SENHA_FIXA = "6311";
+
+      const checkInitialAuth = () => {
+        const token = localStorage.getItem(AUTH_KEY);
+        const overlay = document.getElementById('login-overlay');
+        if (token === AUTH_SUCCESS_VAL) {
+          overlay.style.display = 'none';
+        }
+      };
+      
+      window.tentarLogin = () => {
+        const passwordInput = document.getElementById('password-field');
+        const keepLogged = document.getElementById('keep-logged-in');
+        const errorMsg = document.getElementById('login-error-msg');
+        const loginCard = document.getElementById('login-card');
+
+        if (passwordInput.value === SENHA_FIXA) {
+          if (keepLogged.checked) {
+            localStorage.setItem(AUTH_KEY, AUTH_SUCCESS_VAL);
+          }
+          errorMsg.textContent = "";
+          
+          const overlay = document.getElementById('login-overlay');
+          overlay.style.opacity = '0';
+          overlay.style.visibility = 'hidden';
+          setTimeout(() => {
+            overlay.style.display = 'none';
+          }, 400);
+        } else {
+          loginCard.classList.remove('shake-anim');
+          void loginCard.offsetWidth; // force reflow
+          loginCard.classList.add('shake-anim');
+          
+          errorMsg.textContent = "Senha incorreta. Tente novamente.";
+          passwordInput.value = "";
+          passwordInput.focus();
+        }
+      };
+
+      document.getElementById('password-field').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') window.tentarLogin();
+      });
+
+      // --- LOGOUT ---
+      window.logout = () => {
+        if (confirm("Deseja realmente sair? Será necessário digitar a senha novamente.")) {
+          localStorage.removeItem(AUTH_KEY);
+          location.reload();
+        }
+      };
+
+      // --- MOSTRAR AJUDA ---
+      window.mostrarAjuda = () => {
+        alert("Bolão M.P. Outros\n\n• Ajuste o prêmio total e valor de cota diretamente nos cards.\n• Cadastre participantes no painel.\n• Clique em qualquer participante para editar cotas e valor pago.\n• Use a busca para filtrar rapidamente.\n• Navegue na tabela base com as setas ↑ ↓ e pressione Enter para editar.\n• Gere listas formatadas para WhatsApp e Rateios.");
+      };
+
+      // --- MOBILE SIDEBAR TOGGLE ---
+      window.toggleSidebar = (open) => {
+        const sidebar = document.getElementById('sidebar-menu');
+        const overlay = document.getElementById('sidebar-overlay');
+        if (open) {
+          sidebar.classList.remove('-translate-x-full');
+          overlay.classList.remove('hidden');
+        } else {
+          sidebar.classList.add('-translate-x-full');
+          overlay.classList.add('hidden');
+        }
+      };
+
+      // --- GLOBAL DATA STRUCTURES ---
+      const DEFAULT_PARTICIPANTES = [
+        "Alexandre Amaral", "Ana Paula", "Breno", "Denis", "Dr. Joel",
+        "Felipe", "Gabriela", "Larícia", "Levi", "Luis Gustavo",
+        "Marcos RH", "Osmar", "Reginaldo", "Renato Endo", "Renato Ribeiro",
+        "Salvador", "Vanessa", "Adevita", "Adriano", "Alexandre Isaías",
+        "Paulo Ernica", "Pedro"
+      ];
+
+      const DEFAULT_COTAS = {
+        "Alexandre Amaral": 1, "Ana Paula": 2, "Breno": 5, "Denis": 2, "Dr. Joel": 5,
+        "Felipe": 2, "Gabriela": 3, "Larícia": 1, "Levi": 2, "Luis Gustavo": 2,
+        "Marcos RH": 1, "Osmar": 2, "Reginaldo": 1, "Renato Endo": 2, "Renato Ribeiro": 2,
+        "Salvador": 2, "Vanessa": 1
+      };
+
+      const getEstadoInicial = () => {
+        const estado = {
+          participantes: [...DEFAULT_PARTICIPANTES],
+          cotas: {},
+          valorCota: 5,
+          premio: 0
+        };
+        estado.participantes.forEach(nome => {
+          estado.cotas[nome] = DEFAULT_COTAS[nome] !== undefined ? DEFAULT_COTAS[nome] : 0;
+        });
+        return estado;
+      };
+
+      window.estado = getEstadoInicial();
+
+      // --- SAVE DEBOUNCE ---
+      window.salvarNuvem = async () => {
+        const syncStatus = document.getElementById('sync-status');
+        const syncDot = document.getElementById('sync-status-dot');
+        
+        syncStatus.textContent = "Salvando...";
+        syncDot.className = "w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse";
+        
+        try {
+          await setDoc(docRef, window.estado);
+          const now = new Date();
+          const hrs = String(now.getHours()).padStart(2, '0');
+          const mins = String(now.getMinutes()).padStart(2, '0');
+          const secs = String(now.getSeconds()).padStart(2, '0');
+          
+          syncStatus.textContent = `Salvo: ${hrs}:${mins}:${secs}`;
+          syncDot.className = "w-1.5 h-1.5 rounded-full bg-emerald-500";
+        } catch (e) {
+          console.error("Erro ao salvar no Firestore:", e);
+          syncStatus.textContent = "Erro ao salvar";
+          syncDot.className = "w-1.5 h-1.5 rounded-full bg-red-500";
+        }
+      };
+
+      let debounceTimeout;
+      const fSalvar = () => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+          window.salvarNuvem();
+        }, 300);
+      };
+
+      // --- REAL TIME SYNC WITH FIRESTORE ---
+      onSnapshot(docRef, (snap) => {
+        if (snap.exists()) {
+          const data = snap.data();
+          window.estado = {
+            participantes: data.participantes || [],
+            cotas: data.cotas || {},
+            valorCota: data.valorCota !== undefined ? data.valorCota : 5,
+            premio: data.premio !== undefined ? data.premio : 0
+          };
+          window.recalcular();
+          const now = new Date();
+          const hrs = String(now.getHours()).padStart(2, '0');
+          const mins = String(now.getMinutes()).padStart(2, '0');
+          const secs = String(now.getSeconds()).padStart(2, '0');
+          
+          document.getElementById('sync-status').textContent = `Nuvem OK: ${hrs}:${mins}:${secs}`;
+          document.getElementById('sync-status-dot').className = "w-1.5 h-1.5 rounded-full bg-emerald-500";
+        } else {
+          document.getElementById('sync-status').textContent = "Inicializando...";
+          window.estado = getEstadoInicial();
+          window.salvarNuvem();
+        }
+      });
+
+      // --- HELPERS ---
+      const fmtReal = (n) => {
+        return n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      };
+
+      const parseReal = (str) => {
+        if (!str) return 0;
+        const limpo = str.trim().replace(/\./g, '').replace(',', '.');
+        const num = parseFloat(limpo);
+        return isNaN(num) ? 0 : num;
+      };
+
+      const centerStr = (str, width) => {
+        const padLeft = Math.floor((width - str.length) / 2);
+        const padRight = width - str.length - padLeft;
+        return ' '.repeat(padLeft) + str + ' '.repeat(padRight);
+      };
+
+      // --- SEARCH FILTER ---
+      window.searchFilter = "";
+      document.getElementById('topbar-search').addEventListener('input', function() {
+        window.searchFilter = this.value.toLowerCase().trim();
+        selectedIndex = -1; // Reset keyboard selection on filter change
+        
+        // Auto-expand list if it is collapsed during a search
+        const wrapper = document.getElementById('lista-base-wrapper');
+        const footer = document.getElementById('footer-base');
+        const btn = document.getElementById('btn-toggle-lista');
+        if (wrapper && wrapper.style.display === 'none') {
+          wrapper.style.display = '';
+          if (footer) footer.style.display = '';
+          if (btn) btn.textContent = 'Recolher';
+        }
+
+        window.recalcular();
+      });
+
+      // --- KEYBOARD SELECTION CACHE ---
+      let selectedIndex = -1;
+      let nomesOrdenadosCache = [];
+
+      const getSelectedName = () => {
+        if (selectedIndex >= 0 && selectedIndex < nomesOrdenadosCache.length) {
+          return nomesOrdenadosCache[selectedIndex];
+        }
+        return null;
+      };
+
+      // --- RECALCULATE & RENDER SCREEN ---
+      window.recalcular = () => {
+        const participantes = window.estado.participantes;
+        const cotas = window.estado.cotas;
+        const valorCota = window.estado.valorCota;
+        const premio = window.estado.premio;
+
+        // Update Inputs in Bento Cards if not focused
+        const inputValorCota = document.getElementById('config-valor-cota');
+        const inputPremioTotal = document.getElementById('config-premio-total');
+        
+        if (document.activeElement !== inputValorCota) {
+          inputValorCota.value = fmtReal(valorCota);
+        }
+        if (document.activeElement !== inputPremioTotal) {
+          inputPremioTotal.value = fmtReal(premio);
+        }
+
+        // Update display text values in bento cards
+        document.getElementById('card-premio-display').textContent = `R$ ${fmtReal(premio)}`;
+        document.getElementById('card-valor-display').textContent = `R$ ${fmtReal(valorCota)}`;
+
+        // Sort names
+        let nomesOrdenados = [...participantes].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+        
+        // Apply Topbar search filter
+        if (window.searchFilter) {
+          nomesOrdenados = nomesOrdenados.filter(nome => nome.toLowerCase().includes(window.searchFilter));
+        }
+        nomesOrdenadosCache = nomesOrdenados; // Cache for keyboard nav
+
+        // --- TABLE 1: ACTIVE PARTICIPANTS (cotas > 0) ---
+        const listaAtivosEl = document.getElementById('lista-ativos');
+        listaAtivosEl.innerHTML = "";
+
+        // Actives based on full list (not only filtered) for payout logic
+        const todosNomesOrdenados = [...participantes].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+        const ativos = todosNomesOrdenados.filter(nome => (cotas[nome] || 0) > 0);
+        const totalCotasAtivos = ativos.reduce((acc, nome) => acc + (cotas[nome] || 0), 0);
+
+        ativos.forEach(nome => {
+          const cotaUser = cotas[nome] || 0;
+          const receberVal = totalCotasAtivos > 0 ? (cotaUser / totalCotasAtivos) * premio : 0;
+          
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-surface-container-lowest/50 transition-colors cursor-pointer";
+          tr.onclick = () => window.abrirModal(nome);
+          
+          const cotaStr = Number.isInteger(cotaUser) ? cotaUser.toString() : cotaUser.toFixed(2).replace('.', ',');
+
+          tr.innerHTML = `
+            <td class="px-5 py-1 text-sm font-bold text-on-surface">${nome}</td>
+            <td class="px-5 py-1 text-center">
+              <span class="bg-outline-variant text-on-surface px-2 py-0.5 rounded text-xs font-mono font-bold">${cotaStr}</span>
+            </td>
+            <td class="px-5 py-1 text-right">
+              <span class="text-sm font-mono font-bold text-tertiary">R$ ${fmtReal(receberVal)}</span>
+            </td>
+          `;
+          listaAtivosEl.appendChild(tr);
+        });
+
+        // Update Active Footer
+        const footerAtivosEl = document.getElementById('footer-ativos');
+        footerAtivosEl.textContent = `${ativos.length} Ativo(s) | Total Cotas ${totalCotasAtivos.toLocaleString('pt-BR')} | Valor R$ ${fmtReal(premio)}`;
+
+        // --- TABLE 2: BASE / DIRECTORY LIST ---
+        const listaBaseEl = document.getElementById('lista-base');
+        listaBaseEl.innerHTML = "";
+
+        let totalCotasBase = 0;
+        let totalArrecadado = 0;
+
+        // Calculate totals for all participants (not just filtered ones)
+        todosNomesOrdenados.forEach(nome => {
+          const c = cotas[nome] || 0;
+          totalCotasBase += c;
+          totalArrecadado += c * valorCota;
+        });
+
+        // Render filtered base list
+        nomesOrdenados.forEach((nome, idx) => {
+          const cotaUser = cotas[nome] || 0;
+          const pagoUser = cotaUser * valorCota;
+          const isSelected = idx === selectedIndex;
+
+          const tr = document.createElement('tr');
+          tr.id = `row-base-${idx}`;
+          tr.className = `hover:bg-surface-container-lowest/50 transition-all cursor-pointer ${isSelected ? 'bg-primary-container/10 border-l-2 border-primary' : ''}`;
+          
+          tr.onclick = (e) => {
+            if (e.target.closest('button')) return;
+            selectedIndex = idx;
+            window.recalcular();
+            window.abrirModal(nome);
+          };
+
+          const cotaStr = Number.isInteger(cotaUser) ? cotaUser.toString() : cotaUser.toFixed(2).replace('.', ',');
+
+          tr.innerHTML = `
+            <td class="px-4 py-0.5.5">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary font-black text-xs font-headline uppercase shadow-sm">
+                  ${nome.slice(0, 2)}
+                </div>
+                <div>
+                  <p class="text-sm font-bold text-on-surface">${nome}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-0.5.5 text-center">
+              <span class="bg-outline-variant text-on-surface px-2.5 py-0.5 rounded text-xs font-mono font-bold">${cotaStr}</span>
+            </td>
+            <td class="px-6 py-0.5.5 text-right">
+              <span class="text-sm font-mono font-bold text-on-surface">R$ ${fmtReal(pagoUser)}</span>
+            </td>
+            <td class="px-6 py-0.5.5 text-center">
+              ${cotaUser > 0 
+                ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-container/20 text-tertiary text-[10px] font-bold uppercase border border-tertiary/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                    Confirmado
+                   </span>`
+                : `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-error-container/20 text-error text-[10px] font-bold uppercase border border-error/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                    Pendente
+                   </span>`
+              }
+            </td>
+            <td class="px-6 py-0.5.5 text-right">
+              <div class="flex justify-end gap-1.5">
+                <button class="p-1.5 text-secondary hover:text-primary hover:bg-primary/10 rounded transition-all" onclick="event.stopPropagation(); window.abrirModal('${nome}')" title="Editar cotas">
+                  <span class="material-symbols-outlined text-lg">edit</span>
+                </button>
+                <button class="p-1.5 text-secondary hover:text-error hover:bg-error/10 rounded transition-all" onclick="window.excluirParticipante(event, '${nome}')" title="Excluir participante">
+                  <span class="material-symbols-outlined text-lg">delete</span>
+                </button>
+              </div>
+            </td>
+          `;
+          listaBaseEl.appendChild(tr);
+        });
+
+        // Update Base stats displays (Bento Card 3 and Table Footer)
+        document.getElementById('card-cotas-display').textContent = totalCotasBase.toLocaleString('pt-BR');
+        document.getElementById('card-total-pago-display').textContent = `R$ ${fmtReal(totalArrecadado)} Arrecadado`;
+
+        // Progress bar percentage vs arbitrary meta of 200 (preserves target look)
+        const targetMeta = 200;
+        const metaPercentage = Math.min(Math.round((totalCotasBase / targetMeta) * 100), 100);
+        document.getElementById('progress-percentage-label').textContent = `${metaPercentage}%`;
+        document.getElementById('cotas-progress-bar').style.width = `${metaPercentage}%`;
+
+        const footerBaseEl = document.getElementById('footer-base');
+        footerBaseEl.textContent = `Total: ${participantes.length} Participantes | ${totalCotasBase.toLocaleString('pt-BR')} Cotas Ativas | R$ ${fmtReal(totalArrecadado)} Arrecadado`;
+      };
+
+      // --- ADD MEMBER ---
+      window.adicionarParticipante = () => {
+        const input = document.getElementById('novo-participante');
+        const nomeOriginal = input.value.trim();
+
+        if (!nomeOriginal) {
+          alert("Por favor, digite um nome válido.");
+          return;
+        }
+
+        const existe = window.estado.participantes.some(p => p.toLowerCase() === nomeOriginal.toLowerCase());
+        if (existe) {
+          alert("Este participante já existe na lista.");
+          return;
+        }
+
+        window.estado.participantes.push(nomeOriginal);
+        window.estado.cotas[nomeOriginal] = 0;
+
+        input.value = "";
+        input.focus();
+
+        window.recalcular();
+        fSalvar();
+      };
+
+      // --- DELETE MEMBER ---
+      window.excluirParticipante = (event, nome) => {
+        event.stopPropagation();
+        
+        if (confirm(`Tem certeza que deseja excluir "${nome}" permanentemente da lista?`)) {
+          window.estado.participantes = window.estado.participantes.filter(p => p !== nome);
+          delete window.estado.cotas[nome];
+
+          selectedIndex = -1;
+          window.recalcular();
+          fSalvar();
+        }
+      };
+
+      // --- CLEAR ALL COTAS ---
+      window.limparCotas = () => {
+        if (confirm("Deseja realmente zerar todas as cotas dos participantes? Os nomes serão mantidos na base.")) {
+          window.estado.participantes.forEach(nome => {
+            window.estado.cotas[nome] = 0;
+          });
+          window.recalcular();
+          fSalvar();
+          alert("Todas as cotas foram zeradas com sucesso!");
+        }
+      };
+
+      // --- WHATSAPP EXPORT REPORT ---
+      window.gerarListaConfirmados = () => {
+        const participantes = window.estado.participantes;
+        const cotas = window.estado.cotas;
+        const valorCota = window.estado.valorCota;
+
+        const nomesOrdenados = [...participantes].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+        const ativos = nomesOrdenados.filter(nome => (cotas[nome] || 0) > 0);
+
+        if (ativos.length === 0) {
+          alert("Nenhum participante com cotas ativas para listar.");
+          return;
+        }
+
+        let totalCotas = 0;
+        let totalValor = 0;
+
+        let text = "💎 *BOLÃO M.P. (OUTROS)* 💎\n";
+        text += "*Lista de Confirmados:*\n\n";
+
+        ativos.forEach((nome, index) => {
+          const qCotas = cotas[nome];
+          totalCotas += qCotas;
+          totalValor += qCotas * valorCota;
+          
+          const cotaStr = Number.isInteger(qCotas) ? qCotas.toString() : qCotas.toFixed(2).replace('.', ',');
+          const cotaLabel = qCotas === 1 ? "cota" : "cotas";
+
+          const numPref = String(index + 1).padStart(2, '0');
+          text += `• ${numPref}.\u00A0${nome}\u00A0\u00A0-\u00A0\u00A0${cotaStr}\u00A0${cotaLabel}\n`;
+        });
+
+        text += `\n─────────────────────\n`;
+        text += `*Total de Cotas:* ${totalCotas.toLocaleString('pt-BR')}\n`;
+        text += `*Valor Arrecadado:* R$ ${fmtReal(totalValor)}\n`;
+        text += `*Valor da Cota:* R$ ${fmtReal(valorCota)}`;
+
+        const exportText = document.getElementById('export-text');
+        const exportTitleText = document.getElementById('export-title-text');
+
+        exportTitleText.textContent = "Lista WhatsApp (Confirmados)";
+        exportText.value = text;
+        
+        document.getElementById('export-section').scrollIntoView({ behavior: 'smooth' });
+      };
+
+      // --- PRIZE SHARE REPORT ---
+      window.gerarRelatorioPremio = () => {
+        const participantes = window.estado.participantes;
+        const cotas = window.estado.cotas;
+        const premio = window.estado.premio;
+
+        const nomesOrdenados = [...participantes].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+        const ativos = nomesOrdenados.filter(nome => (cotas[nome] || 0) > 0);
+        const totalCotas = ativos.reduce((acc, nome) => acc + (cotas[nome] || 0), 0);
+
+        if (ativos.length === 0) {
+          alert("Nenhum participante com cotas ativas para rateio.");
+          return;
+        }
+
+        if (premio <= 0) {
+          alert("Informe um prêmio maior que zero para calcular o rateio.");
+          return;
+        }
+
+        const valorPorCota = totalCotas > 0 ? (premio / totalCotas) : 0;
+
+        let text = "💎 *BOLÃO M.P. (OUTROS)* 💎\n";
+        text += "🏆 *DISTRIBUIÇÃO DO PRÊMIO* 🏆\n\n";
+        
+        text += "Participante          |Cotas| Receber\n";
+        text += "──────────────────────┼─────┼────────────\n";
+
+        ativos.forEach(nome => {
+          const qCotas = cotas[nome];
+          const receber = (qCotas / totalCotas) * premio;
+
+          let nomeFormatado = nome;
+          if (nomeFormatado.length > 22) {
+            nomeFormatado = nomeFormatado.slice(0, 19) + "...";
+          } else {
+            nomeFormatado = nomeFormatado.padEnd(22, ' ');
+          }
+
+          const cotaStr = centerStr(Number.isInteger(qCotas) ? qCotas.toString() : qCotas.toFixed(1), 5);
+          const receberStr = `R$ ${fmtReal(receber)}`.padStart(11, ' ');
+
+          text += `${nomeFormatado}│${cotaStr}│${receberStr}\n`;
+        });
+
+        text += `─────────────────────\n`;
+        text += `*Prêmio Total:* R$ ${fmtReal(premio)}\n`;
+        text += `*Total de Cotas:* ${totalCotas.toLocaleString('pt-BR')}\n`;
+        text += `*Valor por Cota:* R$ ${fmtReal(valorPorCota)}`;
+
+        const exportText = document.getElementById('export-text');
+        const exportTitleText = document.getElementById('export-title-text');
+
+        exportTitleText.textContent = "Rateio do Prêmio";
+        exportText.value = text;
+        
+        document.getElementById('export-section').scrollIntoView({ behavior: 'smooth' });
+      };
+
+      // --- COPY REPORT ---
+      window.copiarTextoExport = () => {
+        const textarea = document.getElementById('export-text');
+        if (!textarea.value) {
+          alert("Não há relatório gerado para copiar.");
+          return;
+        }
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+
+        try {
+          const successful = document.execCommand('copy');
+          if (successful) {
+            alert("Relatório copiado com sucesso!");
+          } else {
+            alert("Falha ao copiar automaticamente.");
+          }
+        } catch (err) {
+          alert("Erro ao tentar copiar.");
+        }
+      };
+
+      // --- CONFIGURATION SAVE BINDINGS ---
+      const setupConfigListeners = () => {
+        const inputValorCota = document.getElementById('config-valor-cota');
+        const inputPremioTotal = document.getElementById('config-premio-total');
+
+        const salvarConfigValorCota = () => {
+          const valor = parseReal(inputValorCota.value);
+          if (valor <= 0) {
+            alert("O valor da cota deve ser maior que zero.");
+            inputValorCota.value = fmtReal(window.estado.valorCota);
+            return;
+          }
+          window.estado.valorCota = valor;
+          window.recalcular();
+          fSalvar();
+          inputValorCota.blur();
+        };
+
+        const salvarConfigPremioTotal = () => {
+          const valor = parseReal(inputPremioTotal.value);
+          window.estado.premio = valor;
+          window.recalcular();
+          fSalvar();
+          inputPremioTotal.blur();
+        };
+
+        inputValorCota.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') salvarConfigValorCota();
+        });
+        inputValorCota.addEventListener('blur', salvarConfigValorCota);
+
+        inputPremioTotal.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') salvarConfigPremioTotal();
+        });
+        inputPremioTotal.addEventListener('blur', salvarConfigPremioTotal);
+      };
+
+      // --- EDIT COTAS MODAL ---
+      let participanteEdicaoAtual = null;
+
+      window.abrirModal = (nome) => {
+        participanteEdicaoAtual = nome;
+        const modal = document.getElementById('modal-edicao');
+        const txtNome = document.getElementById('modal-nome-usuario');
+        const inputPago = document.getElementById('modal-input-pago');
+        const txtCotaVal = document.getElementById('modal-txt-valor-cota');
+
+        txtNome.textContent = nome;
+        txtCotaVal.textContent = `R$ ${fmtReal(window.estado.valorCota)}`;
+        
+        const cotaAtual = window.estado.cotas[nome] || 0;
+        const pagoAtual = cotaAtual * window.estado.valorCota;
+
+        inputPago.value = fmtReal(pagoAtual);
+        window.atualizarPreviaCotas();
+
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.firstElementChild.classList.remove('scale-95');
+        modal.firstElementChild.classList.add('scale-100');
+        
+        setTimeout(() => {
+          inputPago.focus();
+          inputPago.select();
+        }, 100);
+      };
+
+      window.fecharModal = () => {
+        const modal = document.getElementById('modal-edicao');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modal.firstElementChild.classList.remove('scale-100');
+        modal.firstElementChild.classList.add('scale-95');
+        participanteEdicaoAtual = null;
+
+        document.getElementById('lista-base-wrapper').focus();
+      };
+
+      window.atualizarPreviaCotas = () => {
+        const inputPago = document.getElementById('modal-input-pago');
+        const txtCalculoCotas = document.getElementById('modal-calculo-cotas');
+        
+        const valorPago = parseReal(inputPago.value);
+        const valorCota = window.estado.valorCota;
+
+        const cotasCalculadas = valorPago / valorCota;
+        const cotaStr = Number.isInteger(cotasCalculadas) 
+          ? cotasCalculadas.toString() 
+          : cotasCalculadas.toFixed(2).replace('.', ',');
+
+        txtCalculoCotas.textContent = cotaStr;
+      };
+
+      window.salvarModal = () => {
+        if (!participanteEdicaoAtual) return;
+
+        const inputPago = document.getElementById('modal-input-pago');
+        const valorPago = parseReal(inputPago.value);
+        const valorCota = window.estado.valorCota;
+        const novasCotas = valorPago / valorCota;
+
+        window.estado.cotas[participanteEdicaoAtual] = novasCotas;
+
+        window.fecharModal();
+        window.recalcular();
+        fSalvar();
+      };
+
+      const setupModalListeners = () => {
+        const inputPago = document.getElementById('modal-input-pago');
+        
+        inputPago.addEventListener('input', () => {
+          window.atualizarPreviaCotas();
+        });
+
+        inputPago.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            window.salvarModal();
+          }
+        });
+      };
+
+      // --- KEYBOARD TABLE NAVIGATION ---
+      const setupKeyboardNavigation = () => {
+        const containerBase = document.getElementById('lista-base-wrapper');
+
+        containerBase.addEventListener('keydown', (e) => {
+          if (nomesOrdenadosCache.length === 0) return;
+
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            selectedIndex++;
+            if (selectedIndex >= nomesOrdenadosCache.length) {
+              selectedIndex = 0;
+            }
+            window.recalcular();
+            const targetRow = document.getElementById(`row-base-${selectedIndex}`);
+            if (targetRow) targetRow.scrollIntoView({ block: 'nearest' });
+          } 
+          else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            selectedIndex--;
+            if (selectedIndex < 0) {
+              selectedIndex = nomesOrdenadosCache.length - 1;
+            }
+            window.recalcular();
+            const targetRow = document.getElementById(`row-base-${selectedIndex}`);
+            if (targetRow) targetRow.scrollIntoView({ block: 'nearest' });
+          }
+          else if (e.key === 'Enter') {
+            e.preventDefault();
+            const selectedName = getSelectedName();
+            if (selectedName) {
+              window.abrirModal(selectedName);
+            }
+          }
+        });
+      };
+
+      // --- BOOTSTRAP ---
+      window.addEventListener('DOMContentLoaded', () => {
+        checkInitialAuth();
+        setupConfigListeners();
+        setupModalListeners();
+        setupKeyboardNavigation();
+        window.recalcular();
+      });
+
+    })();
+  </script>
+  <script>
+    window.toggleListaBase = function() {
+      var wrapper = document.getElementById('lista-base-wrapper');
+      var footer = document.getElementById('footer-base');
+      var btn = document.getElementById('btn-toggle-lista');
+      if (wrapper.style.display === 'none') {
+        wrapper.style.display = '';
+        footer.style.display = '';
+        btn.textContent = 'Recolher';
+      } else {
+        wrapper.style.display = 'none';
+        footer.style.display = 'none';
+        btn.textContent = 'Mostrar';
+      }
+    };
+  </script>
+</body>
+</html>
