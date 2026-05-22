@@ -569,13 +569,33 @@
 
       window.estado = getEstadoInicial();
 
-      // --- SAVE DEBOUNCE ---
-      window.salvarNuvem = async () => {
+      // --- HELPER PARA ATUALIZAR STATUS DE SINCRONIZAÇÃO SEM DESTRUIR O PONTO ---
+      const atualizarStatusSync = (texto, classePonto) => {
         const syncStatus = document.getElementById('sync-status');
         const syncDot = document.getElementById('sync-status-dot');
-        
-        syncStatus.textContent = "Salvando...";
-        syncDot.className = "w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse";
+        if (syncStatus) {
+          let textNode = Array.from(syncStatus.childNodes).find(
+            node => node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== ""
+          );
+          if (textNode) {
+            textNode.textContent = " " + texto;
+          } else {
+            Array.from(syncStatus.childNodes).forEach(node => {
+              if (node.nodeType === Node.TEXT_NODE) {
+                syncStatus.removeChild(node);
+              }
+            });
+            syncStatus.appendChild(document.createTextNode(" " + texto));
+          }
+        }
+        if (syncDot && classePonto) {
+          syncDot.className = classePonto;
+        }
+      };
+
+      // --- SAVE DEBOUNCE ---
+      window.salvarNuvem = async () => {
+        atualizarStatusSync("Salvando...", "w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse");
         
         try {
           await setDoc(docRef, window.estado);
@@ -584,12 +604,10 @@
           const mins = String(now.getMinutes()).padStart(2, '0');
           const secs = String(now.getSeconds()).padStart(2, '0');
           
-          syncStatus.textContent = `Salvo: ${hrs}:${mins}:${secs}`;
-          syncDot.className = "w-1.5 h-1.5 rounded-full bg-emerald-500";
+          atualizarStatusSync(`Salvo: ${hrs}:${mins}:${secs}`, "w-1.5 h-1.5 rounded-full bg-emerald-500");
         } catch (e) {
           console.error("Erro ao salvar no Firestore:", e);
-          syncStatus.textContent = "Erro ao salvar";
-          syncDot.className = "w-1.5 h-1.5 rounded-full bg-red-500";
+          atualizarStatusSync("Erro ao salvar", "w-1.5 h-1.5 rounded-full bg-red-500");
         }
       };
 
@@ -617,17 +635,15 @@
           const mins = String(now.getMinutes()).padStart(2, '0');
           const secs = String(now.getSeconds()).padStart(2, '0');
           
-          document.getElementById('sync-status').textContent = `Nuvem OK: ${hrs}:${mins}:${secs}`;
-          document.getElementById('sync-status-dot').className = "w-1.5 h-1.5 rounded-full bg-emerald-500";
+          atualizarStatusSync(`Nuvem OK: ${hrs}:${mins}:${secs}`, "w-1.5 h-1.5 rounded-full bg-emerald-500");
         } else {
-          document.getElementById('sync-status').textContent = "Inicializando...";
+          atualizarStatusSync("Inicializando...", null);
           window.estado = getEstadoInicial();
           window.salvarNuvem();
         }
       }, (error) => {
         console.error("Firestore onSnapshot error:", error);
-        document.getElementById('sync-status').textContent = "Erro de conexão";
-        document.getElementById('sync-status-dot').className = "w-1.5 h-1.5 rounded-full bg-red-500";
+        atualizarStatusSync("Erro de conexão", "w-1.5 h-1.5 rounded-full bg-red-500");
       });
 
       // --- HELPERS ---
