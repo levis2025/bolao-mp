@@ -344,11 +344,11 @@
         <div class="px-5 py-2 bg-surface-container-high/30 border-b border-outline-variant flex items-center justify-between">
           <div class="flex items-center gap-2.5">
             <h5 class="text-sm font-bold text-on-surface">Base Geral de Participantes</h5>
-            <button id="btn-toggle-lista" class="btn-toggle-lista" onclick="window.toggleListaBase()">Recolher</button>
+            <button id="btn-toggle-lista" class="btn-toggle-lista" onclick="window.toggleListaBase()">Mostrar</button>
           </div>
           <span class="text-[10px] text-secondary font-bold uppercase tracking-wider hidden sm:inline">Pressione ↑ ↓ e Enter para Editar rapidamente</span>
         </div>
-        <div class="table-container panel-table-base outline-none overflow-x-auto" id="lista-base-wrapper" tabindex="0">
+        <div class="table-container panel-table-base outline-none overflow-x-auto" id="lista-base-wrapper" style="display: none;" tabindex="0">
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="bg-surface-container-high/50 border-b border-outline-variant">
@@ -364,7 +364,7 @@
             </tbody>
           </table>
         </div>
-        <div class="px-6 py-2 bg-surface-container-high/30 border-t border-outline-variant flex items-center justify-between text-xs text-secondary font-semibold" id="footer-base">
+        <div class="px-6 py-2 bg-surface-container-high/30 border-t border-outline-variant flex items-center justify-between text-xs text-secondary font-semibold" id="footer-base" style="display: none;">
           Total: 0 Participantes | 0 Cotas | R$ 0,00 Arrecadado
         </div>
       </div>
