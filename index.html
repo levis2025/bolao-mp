@@ -567,7 +567,19 @@
         return estado;
       };
 
-      window.estado = getEstadoInicial();
+      const getLocalEstado = () => {
+        try {
+          const cached = localStorage.getItem('bolao_state_mega');
+          if (cached) {
+            return JSON.parse(cached);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+        return getEstadoInicial();
+      };
+
+      window.estado = getLocalEstado();
 
       // --- SAVE DEBOUNCE ---
       window.salvarNuvem = async () => {
@@ -595,6 +607,8 @@
 
       let debounceTimeout;
       const fSalvar = () => {
+        window.estado.updatedAt = Date.now();
+        localStorage.setItem('bolao_state_mega', JSON.stringify(window.estado));
         clearTimeout(debounceTimeout);
         debounceTimeout = setTimeout(() => {
           window.salvarNuvem();
@@ -605,13 +619,25 @@
       onSnapshot(docRef, (snap) => {
         if (snap.exists()) {
           const data = snap.data();
-          window.estado = {
-            participantes: data.participantes || [],
-            cotas: data.cotas || {},
-            valorCota: data.valorCota !== undefined ? data.valorCota : 6,
-            premio: data.premio !== undefined ? data.premio : 0
-          };
-          window.recalcular();
+          const localData = localStorage.getItem('bolao_state_mega');
+          let localUpdatedAt = 0;
+          if (localData) {
+            try {
+              localUpdatedAt = JSON.parse(localData).updatedAt || 0;
+            } catch (e) {}
+          }
+          const serverUpdatedAt = data.updatedAt || 0;
+          if (serverUpdatedAt >= localUpdatedAt) {
+            window.estado = {
+              participantes: data.participantes || [],
+              cotas: data.cotas || {},
+              valorCota: data.valorCota !== undefined ? data.valorCota : 6,
+              premio: data.premio !== undefined ? data.premio : 0,
+              updatedAt: serverUpdatedAt
+            };
+            localStorage.setItem('bolao_state_mega', JSON.stringify(window.estado));
+            window.recalcular();
+          }
           const now = new Date();
           const hrs = String(now.getHours()).padStart(2, '0');
           const mins = String(now.getMinutes()).padStart(2, '0');
@@ -621,9 +647,13 @@
           document.getElementById('sync-status-dot').className = "w-1.5 h-1.5 rounded-full bg-emerald-500";
         } else {
           document.getElementById('sync-status').textContent = "Inicializando...";
-          window.estado = getEstadoInicial();
+          window.estado = getLocalEstado();
           window.salvarNuvem();
         }
+      }, (error) => {
+        console.error("Firestore onSnapshot error:", error);
+        document.getElementById('sync-status').textContent = "Modo Local";
+        document.getElementById('sync-status-dot').className = "w-1.5 h-1.5 rounded-full bg-orange-500";
       });
 
       // --- HELPERS ---
