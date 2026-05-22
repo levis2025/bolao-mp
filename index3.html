@@ -11,6 +11,15 @@
   <!-- Preload Dark Mode State to Prevent Flickering -->
   <script>
     (function() {
+      // Ocultar aviso de produção do CDN do Tailwind
+      const originalWarn = console.warn;
+      console.warn = function(...args) {
+        if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) {
+          return;
+        }
+        originalWarn.apply(console, args);
+      };
+
       const darkPref = localStorage.getItem('bolao_dark_ot');
       if (darkPref === 'true' || darkPref === null) {
         document.documentElement.classList.add('dark');
