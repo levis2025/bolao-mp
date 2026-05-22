@@ -567,19 +567,7 @@
         return estado;
       };
 
-      const getLocalEstado = () => {
-        try {
-          const cached = localStorage.getItem('bolao_state_lotofacil');
-          if (cached) {
-            return JSON.parse(cached);
-          }
-        } catch (e) {
-          console.error(e);
-        }
-        return getEstadoInicial();
-      };
-
-      window.estado = getLocalEstado();
+      window.estado = getEstadoInicial();
 
       // --- SAVE DEBOUNCE ---
       window.salvarNuvem = async () => {
@@ -607,8 +595,6 @@
 
       let debounceTimeout;
       const fSalvar = () => {
-        window.estado.updatedAt = Date.now();
-        localStorage.setItem('bolao_state_lotofacil', JSON.stringify(window.estado));
         clearTimeout(debounceTimeout);
         debounceTimeout = setTimeout(() => {
           window.salvarNuvem();
@@ -619,25 +605,13 @@
       onSnapshot(docRef, (snap) => {
         if (snap.exists()) {
           const data = snap.data();
-          const localData = localStorage.getItem('bolao_state_lotofacil');
-          let localUpdatedAt = 0;
-          if (localData) {
-            try {
-              localUpdatedAt = JSON.parse(localData).updatedAt || 0;
-            } catch (e) {}
-          }
-          const serverUpdatedAt = data.updatedAt || 0;
-          if (serverUpdatedAt >= localUpdatedAt) {
-            window.estado = {
-              participantes: data.participantes || [],
-              cotas: data.cotas || {},
-              valorCota: data.valorCota !== undefined ? data.valorCota : 3,
-              premio: data.premio !== undefined ? data.premio : 0,
-              updatedAt: serverUpdatedAt
-            };
-            localStorage.setItem('bolao_state_lotofacil', JSON.stringify(window.estado));
-            window.recalcular();
-          }
+          window.estado = {
+            participantes: data.participantes || [],
+            cotas: data.cotas || {},
+            valorCota: data.valorCota !== undefined ? data.valorCota : 3,
+            premio: data.premio !== undefined ? data.premio : 0
+          };
+          window.recalcular();
           const now = new Date();
           const hrs = String(now.getHours()).padStart(2, '0');
           const mins = String(now.getMinutes()).padStart(2, '0');
@@ -647,13 +621,13 @@
           document.getElementById('sync-status-dot').className = "w-1.5 h-1.5 rounded-full bg-emerald-500";
         } else {
           document.getElementById('sync-status').textContent = "Inicializando...";
-          window.estado = getLocalEstado();
+          window.estado = getEstadoInicial();
           window.salvarNuvem();
         }
       }, (error) => {
         console.error("Firestore onSnapshot error:", error);
-        document.getElementById('sync-status').textContent = "Modo Local";
-        document.getElementById('sync-status-dot').className = "w-1.5 h-1.5 rounded-full bg-orange-500";
+        document.getElementById('sync-status').textContent = "Erro de conexão";
+        document.getElementById('sync-status-dot').className = "w-1.5 h-1.5 rounded-full bg-red-500";
       });
 
       // --- HELPERS ---
