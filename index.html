@@ -291,7 +291,7 @@
             </div>
             <div class="mt-4">
               <div class="flex justify-between items-center text-[20px] font-bold uppercase tracking-wider text-secondary mb-1">
-                <span></span>
+                <span id="progress-engagement-label" class="text-xs font-semibold text-secondary self-end mb-1">0 de 0 ativos</span>
                 <span id="progress-percentage-label">0%</span>
               </div>
               <div class="w-full bg-surface-container-lowest border border-outline-variant h-2 rounded-full overflow-hidden">
@@ -849,11 +849,13 @@
         document.getElementById('card-cotas-display').textContent = totalCotasBase.toLocaleString('pt-BR');
         document.getElementById('card-total-pago-display').textContent = `R$ ${fmtReal(totalArrecadado)} Arrecadado`;
 
-        // Progress bar percentage vs arbitrary meta of 200 (preserves target look)
-        const targetMeta = 200;
-        const metaPercentage = Math.min(Math.round((totalCotasBase / targetMeta) * 100), 100);
-        document.getElementById('progress-percentage-label').textContent = `${metaPercentage}%`;
-        document.getElementById('cotas-progress-bar').style.width = `${metaPercentage}%`;
+        // Progress bar percentage based on participant engagement
+        const totalParticipantes = participantes.length;
+        const totalAtivos = ativos.length;
+        const engagementPercentage = totalParticipantes > 0 ? Math.min(Math.round((totalAtivos / totalParticipantes) * 100), 100) : 0;
+        document.getElementById('progress-engagement-label').textContent = `${totalAtivos} de ${totalParticipantes} ativos`;
+        document.getElementById('progress-percentage-label').textContent = `${engagementPercentage}%`;
+        document.getElementById('cotas-progress-bar').style.width = `${engagementPercentage}%`;
 
         const footerBaseEl = document.getElementById('footer-base');
         footerBaseEl.textContent = `Total: ${participantes.length} Participantes | ${totalCotasBase.toLocaleString('pt-BR')} Cotas Ativas | R$ ${fmtReal(totalArrecadado)} Arrecadado`;
