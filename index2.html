@@ -233,9 +233,12 @@
       </div>
       
       <div class="flex items-center gap-3 sm:gap-6">
-        <div class="relative group">
+        <div class="relative group flex items-center">
           <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-secondary text-xs sm:text-sm">search</span>
-          <input id="topbar-search" class="bg-surface-container-lowest border border-outline-variant rounded-lg pl-8 pr-3 py-1 text-xs w-28 min-[400px]:w-36 sm:w-48 md:w-64 focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all text-on-surface" placeholder="Filtrar..." type="text"/>
+          <input id="topbar-search" class="bg-surface-container-lowest border border-outline-variant rounded-lg pl-8 pr-8 py-1 text-xs w-28 min-[400px]:w-36 sm:w-48 md:w-64 focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all text-on-surface" placeholder="Filtrar..." type="text"/>
+          <button id="clear-search" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-on-surface transition-colors hidden" onclick="window.clearSearch()">
+            <span class="material-symbols-outlined text-xs sm:text-sm">close</span>
+          </button>
         </div>
       </div>
     </header>
@@ -680,18 +683,42 @@
         window.searchFilter = this.value.toLowerCase().trim();
         selectedIndex = -1; // Reset keyboard selection on filter change
         
-        // Auto-expand list if it is collapsed during a search
         const wrapper = document.getElementById('lista-base-wrapper');
         const footer = document.getElementById('footer-base');
         const btn = document.getElementById('btn-toggle-lista');
-        if (wrapper && wrapper.style.display === 'none') {
-          wrapper.style.display = '';
-          if (footer) footer.style.display = '';
-          if (btn) btn.textContent = 'Recolher';
+        const clearBtn = document.getElementById('clear-search');
+
+        if (window.searchFilter) {
+          if (clearBtn) clearBtn.classList.remove('hidden');
+          // Auto-expand list if it is collapsed during a search
+          if (wrapper && wrapper.style.display === 'none') {
+            wrapper.style.display = '';
+            if (footer) footer.style.display = '';
+            if (btn) btn.textContent = 'Recolher';
+          }
+        } else {
+          if (clearBtn) clearBtn.classList.add('hidden');
+          // Collapse list when search is empty
+          if (wrapper && wrapper.style.display !== 'none') {
+            wrapper.style.display = 'none';
+            if (footer) footer.style.display = 'none';
+            if (btn) btn.textContent = 'Mostrar';
+          }
         }
 
         window.recalcular();
       });
+
+      // --- CLEAR SEARCH ---
+      window.clearSearch = () => {
+        const searchInput = document.getElementById('topbar-search');
+        if (searchInput) {
+          searchInput.value = "";
+          // Dispatch input event to trigger the listener
+          searchInput.dispatchEvent(new Event('input'));
+          searchInput.focus();
+        }
+      };
 
       // --- KEYBOARD SELECTION CACHE ---
       let selectedIndex = -1;
