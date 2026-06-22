@@ -327,6 +327,10 @@
             <span class="material-symbols-outlined text-sm">add</span>
             Adicionar
           </button>
+          <button class="flex items-center gap-1.5 bg-transparent border border-primary/30 text-primary px-4 py-2 rounded-lg text-xs font-normal hover:bg-primary/10 active:scale-95 transition-all" onclick="window.abrirModalLista()">
+            <span class="material-symbols-outlined text-sm">playlist_add</span>
+            Adicionar Lista
+          </button>
           <div class="h-6 w-px bg-outline-variant mx-1"></div>
           <button class="flex items-center gap-1.5 bg-transparent border border-outline-variant text-primary px-4 py-2 rounded-lg text-xs font-medium hover:bg-surface-container-high active:scale-95 transition-all" onclick="window.gerarListaConfirmados()">
             <span class="material-symbols-outlined text-sm">share</span>
@@ -339,6 +343,10 @@
           <button class="flex items-center gap-1.5 bg-transparent border border-error/30 text-error px-3 py-2 rounded-lg text-xs font-medium hover:bg-error-container/20 active:scale-95 transition-all" onclick="window.limparCotas()">
             <span class="material-symbols-outlined text-sm">clear_all</span>
             Zerar Cotas
+          </button>
+          <button class="flex items-center gap-1.5 bg-transparent border border-error/30 text-error px-3 py-2 rounded-lg text-xs font-medium hover:bg-error-container/20 active:scale-95 transition-all" onclick="window.limparParticipantes()">
+            <span class="material-symbols-outlined text-sm">delete_sweep</span>
+            Excluir Todos
           </button>
         </div>
       </div>
@@ -453,6 +461,35 @@
         </button>
         <button class="bg-primary text-on-primary px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all" onclick="window.salvarModal()">
           Salvar Alterações
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL DE ADICÃO DE LISTA DE PARTICIPANTES ================= -->
+  <div class="fixed inset-0 bg-background/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300" id="modal-lista" onclick="if(event.target===this) window.fecharModalLista()">
+    <div class="bg-surface-container border border-outline-variant w-full max-w-md rounded-2xl p-6 shadow-2xl relative overflow-hidden transform scale-95 transition-all duration-300">
+      <div class="flex justify-between items-center pb-4 border-b border-outline-variant/60">
+        <h3 class="text-base font-bold text-on-surface">Adicionar Lista</h3>
+        <button class="text-secondary hover:text-on-surface transition-colors" onclick="window.fecharModalLista()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div class="py-6">
+        <div class="flex flex-col gap-2">
+          <label for="modal-input-lista" class="text-[10px] font-bold text-secondary uppercase tracking-widest">Nomes dos Participantes</label>
+          <p class="text-[11px] text-secondary">Insira ou cole a lista. Você pode separar por quebra de linha, vírgula (,) ou ponto e vírgula (;).</p>
+          <textarea id="modal-input-lista" class="w-full h-48 bg-surface-container-lowest border border-outline-variant rounded-xl p-4 text-xs font-mono text-on-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all resize-none" placeholder="Exemplo:&#10;Ana Paula&#10;Marcos Silva, João Andrade&#10;Pedro Bento; Carlos Souza"></textarea>
+        </div>
+      </div>
+      
+      <div class="flex justify-end gap-3 pt-4 border-t border-outline-variant/60">
+        <button class="bg-transparent border border-outline-variant text-on-surface px-5 py-2.5 rounded-xl text-xs font-semibold hover:bg-surface-container-high active:scale-95 transition-all" onclick="window.fecharModalLista()">
+          Cancelar
+        </button>
+        <button class="bg-primary text-on-primary px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all" onclick="window.salvarModalLista()">
+          Adicionar Participantes
         </button>
       </div>
     </div>
@@ -889,28 +926,117 @@
         footerBaseEl.textContent = `Total: ${participantes.length} Participantes | ${totalCotasBase.toLocaleString('pt-BR')} Cotas Ativas | R$ ${fmtReal(totalArrecadado)} Arrecadado`;
       };
 
+      // Helper to split and clean names from string
+      const obterNomesDaString = (texto) => {
+        return texto
+          .split(/[\n,;]+/)
+          .map(nome => nome.trim())
+          .filter(nome => nome.length > 0);
+      };
+
       // --- ADD MEMBER ---
       window.adicionarParticipante = () => {
         const input = document.getElementById('novo-participante');
-        const nomeOriginal = input.value.trim();
+        const texto = input.value.trim();
 
-        if (!nomeOriginal) {
-          alert("Por favor, digite um nome válido.");
+        if (!texto) {
+          alert("Por favor, digite um nome válido ou uma lista de nomes.");
           return;
         }
 
-        const existe = window.estado.participantes.some(p => p.toLowerCase() === nomeOriginal.toLowerCase());
-        if (existe) {
-          alert("Este participante já existe na lista.");
+        const nomesParaAdicionar = obterNomesDaString(texto);
+        if (nomesParaAdicionar.length === 0) {
+          alert("Nenhum nome válido encontrado.");
           return;
         }
 
-        window.estado.participantes.push(nomeOriginal);
-        window.estado.cotas[nomeOriginal] = 0;
+        let adicionadosCount = 0;
+        let nomesExistentes = [];
+
+        nomesParaAdicionar.forEach(nome => {
+          const existe = window.estado.participantes.some(p => p.toLowerCase() === nome.toLowerCase());
+          if (existe) {
+            nomesExistentes.push(nome);
+          } else {
+            window.estado.participantes.push(nome);
+            window.estado.cotas[nome] = 0;
+            adicionadosCount++;
+          }
+        });
+
+        if (nomesExistentes.length > 0 && adicionadosCount === 0) {
+          alert(`Todos os participantes já existem na lista: ${nomesExistentes.join(', ')}`);
+        } else if (nomesExistentes.length > 0) {
+          alert(`${adicionadosCount} participante(s) adicionado(s). Os seguintes já existiam: ${nomesExistentes.join(', ')}`);
+        }
 
         input.value = "";
         input.focus();
 
+        window.recalcular();
+        fSalvar();
+      };
+
+      // --- ADD LIST OF PARTICIPANTS MODAL ---
+      window.abrirModalLista = () => {
+        const modal = document.getElementById('modal-lista');
+        const textarea = document.getElementById('modal-input-lista');
+
+        textarea.value = "";
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.firstElementChild.classList.remove('scale-95');
+        modal.firstElementChild.classList.add('scale-100');
+        
+        setTimeout(() => {
+          textarea.focus();
+        }, 100);
+      };
+
+      window.fecharModalLista = () => {
+        const modal = document.getElementById('modal-lista');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modal.firstElementChild.classList.remove('scale-100');
+        modal.firstElementChild.classList.add('scale-95');
+      };
+
+      window.salvarModalLista = () => {
+        const textarea = document.getElementById('modal-input-lista');
+        const texto = textarea.value.trim();
+
+        if (!texto) {
+          alert("Por favor, insira pelo menos um nome.");
+          return;
+        }
+
+        const nomesParaAdicionar = obterNomesDaString(texto);
+        if (nomesParaAdicionar.length === 0) {
+          alert("Nenhum nome válido encontrado.");
+          return;
+        }
+
+        let adicionadosCount = 0;
+        let nomesExistentes = [];
+
+        nomesParaAdicionar.forEach(nome => {
+          const existe = window.estado.participantes.some(p => p.toLowerCase() === nome.toLowerCase());
+          if (existe) {
+            nomesExistentes.push(nome);
+          } else {
+            window.estado.participantes.push(nome);
+            window.estado.cotas[nome] = 0;
+            adicionadosCount++;
+          }
+        });
+
+        if (nomesExistentes.length > 0 && adicionadosCount === 0) {
+          alert(`Todos os participantes já existem na lista: ${nomesExistentes.join(', ')}`);
+        } else if (nomesExistentes.length > 0) {
+          alert(`${adicionadosCount} participante(s) adicionado(s). Os seguintes já existiam: ${nomesExistentes.join(', ')}`);
+        } else {
+          alert(`${adicionadosCount} participante(s) adicionado(s) com sucesso!`);
+        }
+
+        window.fecharModalLista();
         window.recalcular();
         fSalvar();
       };
@@ -938,6 +1064,19 @@
           window.recalcular();
           fSalvar();
           alert("Todas as cotas foram zeradas com sucesso!");
+        }
+      };
+
+      // --- DELETE ALL MEMBERS ---
+      window.limparParticipantes = () => {
+        if (confirm("ATENÇÃO: Deseja realmente excluir TODOS os participantes da lista permanentemente? Esta ação não pode ser desfeita!")) {
+          window.estado.participantes = [];
+          window.estado.cotas = {};
+          
+          selectedIndex = -1;
+          window.recalcular();
+          fSalvar();
+          alert("Todos os participantes foram excluídos com sucesso!");
         }
       };
 
@@ -1186,6 +1325,16 @@
             window.salvarModal();
           }
         });
+
+        const textareaLista = document.getElementById('modal-input-lista');
+        if (textareaLista) {
+          textareaLista.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+              e.preventDefault();
+              window.salvarModalLista();
+            }
+          });
+        }
       };
 
       // --- KEYBOARD TABLE NAVIGATION ---
