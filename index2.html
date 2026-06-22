@@ -926,12 +926,47 @@
         footerBaseEl.textContent = `Total: ${participantes.length} Participantes | ${totalCotasBase.toLocaleString('pt-BR')} Cotas Ativas | R$ ${fmtReal(totalArrecadado)} Arrecadado`;
       };
 
-      // Helper to split and clean names from string
+      // Helper to split and clean names from string, preserving decimal commas
       const obterNomesDaString = (texto) => {
-        return texto
+        const temp = texto.replace(/(\d+),(\d+)/g, '$1__COMMA__$2');
+        return temp
           .split(/[\n,;]+/)
-          .map(nome => nome.trim())
-          .filter(nome => nome.length > 0);
+          .map(item => item.replace(/__COMMA__/g, ',').trim())
+          .filter(item => item.length > 0);
+      };
+
+      // Helper to parse name and cotas/value from an item string
+      const parseParticipanteItem = (item, valorCota) => {
+        const regex = /^(.*?)\s*(?:[-:]\s*)?(?:R\$\s*)?(\d+(?:[.,]\d+)?)\s*(c|cotas?)?$/i;
+        const match = item.match(regex);
+
+        if (!match) {
+          return { nome: item, cotas: 0 };
+        }
+
+        const nome = match[1].trim();
+        const valStr = match[2];
+        const unit = match[3];
+
+        const valNum = parseFloat(valStr.replace(',', '.'));
+        if (isNaN(valNum)) {
+          return { nome: item, cotas: 0 };
+        }
+
+        let cotas = 0;
+        if (unit) {
+          cotas = valNum;
+        } else if (item.toLowerCase().includes('r$') || valStr.includes(',')) {
+          cotas = valNum / valorCota;
+        } else {
+          if (valNum > 0 && valNum % valorCota === 0) {
+            cotas = valNum / valorCota;
+          } else {
+            cotas = valNum;
+          }
+        }
+
+        return { nome, cotas };
       };
 
       // --- ADD MEMBER ---
@@ -944,30 +979,36 @@
           return;
         }
 
-        const nomesParaAdicionar = obterNomesDaString(texto);
-        if (nomesParaAdicionar.length === 0) {
+        const itensParaAdicionar = obterNomesDaString(texto);
+        if (itensParaAdicionar.length === 0) {
           alert("Nenhum nome válido encontrado.");
           return;
         }
 
         let adicionadosCount = 0;
-        let nomesExistentes = [];
+        let atualizadosCount = 0;
 
-        nomesParaAdicionar.forEach(nome => {
-          const existe = window.estado.participantes.some(p => p.toLowerCase() === nome.toLowerCase());
-          if (existe) {
-            nomesExistentes.push(nome);
+        itensParaAdicionar.forEach(item => {
+          const parsed = parseParticipanteItem(item, window.estado.valorCota);
+          if (!parsed.nome) return;
+
+          const nomeExistente = window.estado.participantes.find(p => p.toLowerCase() === parsed.nome.toLowerCase());
+          if (nomeExistente) {
+            window.estado.cotas[nomeExistente] = parsed.cotas;
+            atualizadosCount++;
           } else {
-            window.estado.participantes.push(nome);
-            window.estado.cotas[nome] = 0;
+            window.estado.participantes.push(parsed.nome);
+            window.estado.cotas[parsed.nome] = parsed.cotas;
             adicionadosCount++;
           }
         });
 
-        if (nomesExistentes.length > 0 && adicionadosCount === 0) {
-          alert(`Todos os participantes já existem na lista: ${nomesExistentes.join(', ')}`);
-        } else if (nomesExistentes.length > 0) {
-          alert(`${adicionadosCount} participante(s) adicionado(s). Os seguintes já existiam: ${nomesExistentes.join(', ')}`);
+        if (adicionadosCount > 0 && atualizadosCount > 0) {
+          alert(`${adicionadosCount} participante(s) adicionado(s) e ${atualizadosCount} cota(s) atualizada(s).`);
+        } else if (adicionadosCount > 0) {
+          alert(`${adicionadosCount} participante(s) adicionado(s) com sucesso.`);
+        } else if (atualizadosCount > 0) {
+          alert(`Cotas de ${atualizadosCount} participante(s) atualizadas.`);
         }
 
         input.value = "";
@@ -1008,32 +1049,36 @@
           return;
         }
 
-        const nomesParaAdicionar = obterNomesDaString(texto);
-        if (nomesParaAdicionar.length === 0) {
+        const itensParaAdicionar = obterNomesDaString(texto);
+        if (itensParaAdicionar.length === 0) {
           alert("Nenhum nome válido encontrado.");
           return;
         }
 
         let adicionadosCount = 0;
-        let nomesExistentes = [];
+        let atualizadosCount = 0;
 
-        nomesParaAdicionar.forEach(nome => {
-          const existe = window.estado.participantes.some(p => p.toLowerCase() === nome.toLowerCase());
-          if (existe) {
-            nomesExistentes.push(nome);
+        itensParaAdicionar.forEach(item => {
+          const parsed = parseParticipanteItem(item, window.estado.valorCota);
+          if (!parsed.nome) return;
+
+          const nomeExistente = window.estado.participantes.find(p => p.toLowerCase() === parsed.nome.toLowerCase());
+          if (nomeExistente) {
+            window.estado.cotas[nomeExistente] = parsed.cotas;
+            atualizadosCount++;
           } else {
-            window.estado.participantes.push(nome);
-            window.estado.cotas[nome] = 0;
+            window.estado.participantes.push(parsed.nome);
+            window.estado.cotas[parsed.nome] = parsed.cotas;
             adicionadosCount++;
           }
         });
 
-        if (nomesExistentes.length > 0 && adicionadosCount === 0) {
-          alert(`Todos os participantes já existem na lista: ${nomesExistentes.join(', ')}`);
-        } else if (nomesExistentes.length > 0) {
-          alert(`${adicionadosCount} participante(s) adicionado(s). Os seguintes já existiam: ${nomesExistentes.join(', ')}`);
-        } else {
-          alert(`${adicionadosCount} participante(s) adicionado(s) com sucesso!`);
+        if (adicionadosCount > 0 && atualizadosCount > 0) {
+          alert(`${adicionadosCount} participante(s) adicionado(s) e ${atualizadosCount} cota(s) atualizada(s).`);
+        } else if (adicionadosCount > 0) {
+          alert(`${adicionadosCount} participante(s) adicionado(s) com sucesso.`);
+        } else if (atualizadosCount > 0) {
+          alert(`Cotas de ${atualizadosCount} participante(s) atualizadas.`);
         }
 
         window.fecharModalLista();
