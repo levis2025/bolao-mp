@@ -318,33 +318,33 @@
           </h4>
         </div>
         
-        <div class="flex flex-wrap items-center gap-3">
-          <div class="relative w-full sm:w-64">
+        <div class="flex flex-nowrap items-center gap-3 overflow-x-auto w-full pb-2">
+          <div class="relative w-48 sm:w-64 shrink-0">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-sm">person_add</span>
             <input type="text" id="novo-participante" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-9 pr-4 py-2 text-xs text-on-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Nome do participante..." onkeydown="if(event.key==='Enter') window.adicionarParticipante()"/>
           </div>
-          <button class="flex items-center gap-1.5 bg-transparent border border-primary/30 text-primary px-4 py-2 rounded-lg text-xs font-normal hover:bg-primary/10 active:scale-95 transition-all" onclick="window.adicionarParticipante()">
+          <button class="flex items-center gap-1.5 bg-transparent border border-primary/30 text-primary px-4 py-2 rounded-lg text-xs font-normal hover:bg-primary/10 active:scale-95 transition-all shrink-0" onclick="window.adicionarParticipante()">
             <span class="material-symbols-outlined text-sm">add</span>
             Adicionar
           </button>
-          <button class="flex items-center gap-1.5 bg-transparent border border-primary/30 text-primary px-4 py-2 rounded-lg text-xs font-normal hover:bg-primary/10 active:scale-95 transition-all" onclick="window.abrirModalLista()">
+          <button class="flex items-center gap-1.5 bg-transparent border border-primary/30 text-primary px-4 py-2 rounded-lg text-xs font-normal hover:bg-primary/10 active:scale-95 transition-all shrink-0" onclick="window.abrirModalLista()">
             <span class="material-symbols-outlined text-sm">playlist_add</span>
             Adicionar Lista
           </button>
-          <div class="h-6 w-px bg-outline-variant mx-1"></div>
-          <button class="flex items-center gap-1.5 bg-transparent border border-outline-variant text-primary px-4 py-2 rounded-lg text-xs font-medium hover:bg-surface-container-high active:scale-95 transition-all" onclick="window.gerarListaConfirmados()">
+          <div class="h-6 w-px bg-outline-variant mx-1 shrink-0"></div>
+          <button class="flex items-center gap-1.5 bg-transparent border border-outline-variant text-primary px-4 py-2 rounded-lg text-xs font-medium hover:bg-surface-container-high active:scale-95 transition-all shrink-0" onclick="window.gerarListaConfirmados()">
             <span class="material-symbols-outlined text-sm">share</span>
             WhatsApp
           </button>
-          <button class="flex items-center gap-1.5 bg-transparent border border-outline-variant text-primary px-4 py-2 rounded-lg text-xs font-medium hover:bg-surface-container-high active:scale-95 transition-all" onclick="window.gerarRelatorioPremio()">
+          <button class="flex items-center gap-1.5 bg-transparent border border-outline-variant text-primary px-4 py-2 rounded-lg text-xs font-medium hover:bg-surface-container-high active:scale-95 transition-all shrink-0" onclick="window.gerarRelatorioPremio()">
             <span class="material-symbols-outlined text-sm">receipt_long</span>
             Rateio
           </button>
-          <button class="flex items-center gap-1.5 bg-transparent border border-error/30 text-error px-3 py-2 rounded-lg text-xs font-medium hover:bg-error-container/20 active:scale-95 transition-all" onclick="window.limparCotas()">
+          <button class="flex items-center gap-1.5 bg-transparent border border-error/30 text-error px-3 py-2 rounded-lg text-xs font-medium hover:bg-error-container/20 active:scale-95 transition-all shrink-0" onclick="window.limparCotas()">
             <span class="material-symbols-outlined text-sm">clear_all</span>
             Zerar Cotas
           </button>
-          <button class="flex items-center gap-1.5 bg-transparent border border-error/30 text-error px-3 py-2 rounded-lg text-xs font-medium hover:bg-error-container/20 active:scale-95 transition-all" onclick="window.limparParticipantes()">
+          <button class="flex items-center gap-1.5 bg-transparent border border-error/30 text-error px-3 py-2 rounded-lg text-xs font-medium hover:bg-error-container/20 active:scale-95 transition-all shrink-0" onclick="window.limparParticipantes()">
             <span class="material-symbols-outlined text-sm">delete_sweep</span>
             Excluir Todos
           </button>
